@@ -773,11 +773,11 @@ function cast(){
  };
  // プランターは個人天体5つだけで数える（世代天体は除く）
  const score={"火":0,"地":0,"水":0,"風":0};
- const PWEIGHT={sun:1,moon:1,mer:1,ven:1,mar:1};
+ const PWEIGHT={sun:2.625,moon:1.875,mer:1,ven:1,mar:1};
  natal.filter(p=>PWEIGHT[p.k]).forEach(p=>{score[signOf(p.lon).e]+=PWEIGHT[p.k];});
  const maxE=Object.keys(score).reduce((a,b)=>score[a]>=score[b]?a:b);
  const minE=Object.keys(score).reduce((a,b)=>score[a]<=score[b]?a:b);
- const totalE=5;
+ const totalE=7.5;
  const lacking=["火","地","風","水"].filter(e=>score[e]===0); // 0個の要素＝欠け
  // ズバッと一言見出し（一番豊かなエレメントで決める）
  const HEADLINE={
@@ -792,10 +792,12 @@ function cast(){
    "風":"情報をつかみ、人とつなぐ。頭の回転で進む人。",
    "水":"気持ちと共感で動く。情に厚く、人に寄り添う人。"
  };
+ const countE={"火":0,"地":0,"水":0,"風":0};
+ natal.filter(p=>PWEIGHT[p.k]).forEach(p=>{countE[signOf(p.lon).e]+=1;});
  const carBars=["火","地","風","水"].map(e=>{
    const pct=Math.round(score[e]/totalE*100);
    return `<div class="grow"><div class="gl2"><b>${e}</b> ${CAR[e].part}<span class="sm">（${CAR[e].role}）</span></div>
-     <div class="bar"><div class="fill e${e}" style="width:${pct}%"></div><span class="pc">${score[e]}/5</span></div></div>`;
+     <div class="bar"><div class="fill e${e}" style="width:${pct}%"></div><span class="pc">${countE[e]}/5</span></div></div>`;
  }).join("");
  const headline=`<div class="headline"><div class="hl-lead">あなたは</div><div class="hl-main">${HEADLINE[maxE]}</div><div class="hl-sub">${HEADSUB[maxE]}</div></div>`;
  let carVerdict=`${who}は<b>「${CAR[maxE].part}」がいちばん強い</b>タイプ。${CAR[maxE].hi}`;
