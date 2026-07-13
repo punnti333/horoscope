@@ -124,7 +124,31 @@
   .stars{position:fixed;inset:0;pointer-events:none;z-index:-1;}
   .stars i{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:.6;animation:tw 4s infinite;box-shadow:0 0 4px rgba(255,255,255,.6);}
   @keyframes tw{0%,100%{opacity:.25}50%{opacity:.9}}
+
+/* ===== 会員制（codoc）・無料期間バナー ===== */
+.freebanner{display:block;cursor:pointer;margin:18px auto 0;max-width:560px;text-align:center;
+padding:12px 16px;border-radius:12px;border:1px solid var(--gold);
+background:linear-gradient(160deg,rgba(201,162,75,.18),rgba(201,162,75,.05));
+color:var(--gold-soft);font-size:13.5px;letter-spacing:.08em;line-height:1.8;}
+.freebanner b{font-size:15px;letter-spacing:.12em;}
+.freebanner .fb-sub{font-size:12px;opacity:.85;display:block;}
+#member-gate{position:fixed;inset:0;z-index:9000;overflow-y:auto;display:none;
+background:linear-gradient(165deg,#3a3168 0%,#2c2656 48%,#221c44 100%);}
+#member-gate.on{display:block;}
+.gate-inner{max-width:640px;margin:0 auto;padding:48px 20px 80px;}
+.gate-title{font-family:'Shippori Mincho',serif;font-size:26px;color:var(--gold-soft);
+text-align:center;letter-spacing:.2em;margin-bottom:8px;}
+.gate-sub{text-align:center;color:var(--mist);font-size:13.5px;letter-spacing:.1em;margin-bottom:28px;line-height:2;}
+.gate-box{border:1px solid var(--line);border-radius:14px;padding:20px 18px;margin-bottom:22px;
+background:rgba(20,15,45,.5);}
+.gate-box h3{font-family:'Shippori Mincho',serif;font-size:15px;color:var(--gold);letter-spacing:.2em;margin:0 0 12px;}
+.gate-box ul{margin:0;padding-left:1.2em;color:#f5f1ff;font-size:13.5px;line-height:2.1;letter-spacing:.03em;}
+.gate-box ul b{color:var(--gold-soft);}
+.codoc-wrap{background:#f7f5f0;border-radius:14px;padding:14px;}
+.gate-back-link{display:block;text-align:center;margin-top:24px;color:var(--mist);cursor:pointer;
+text-decoration:underline;font-size:14px;}
 </style>
+<script src="https://codoc.jp/js/cms.js" data-usercode="YhOlOTkM4A" defer></script>
 </head>
 <body>
 <div class="stars" id="stars"></div>
@@ -134,6 +158,10 @@
     <h1>かぴの西洋占星術</h1>
     <div class="sub">ホロスコープで「あなたの本質」を読む</div>
   </header>
+  <div id="free-banner" class="freebanner" onclick="openGate()" style="display:none;">
+    <b>8月15日まで 無料公開中</b>（あと<span id="fb-days">--</span>日）
+    <span class="fb-sub">以降は月330円の会員制になります ▶ 詳しく見る・先に登録する</span>
+  </div>
 
   <div class="card">
     <div class="form-grid">
@@ -899,6 +927,77 @@ function cast(){
  r.innerHTML=html;r.style.display="block";
  r.scrollIntoView({behavior:"smooth",block:"start"});
 }
+</script>
+
+<!-- ===== 会員ゲート（8月16日以降は関所、それまでは案内画面） ===== -->
+<div id="member-gate">
+  <div class="gate-inner">
+    <div class="gate-title">三命クロス法</div>
+    <div class="gate-sub" id="gate-msg">会員のご案内</div>
+    <div class="gate-box">
+      <h3>会員プランでできること（三命クロス法アプリと共通）</h3>
+      <ul>
+        <li>ホロスコープ（西洋占星術で本質を読む）</li>
+        <li>今日の運勢（昨日・今日・明日の三日占断)</li>
+        <li>運勢占断（年運・月運の信号と命式）／相性診断</li>
+        <li>月330円・<b>最初の7日間は無料</b>でお試し</li>
+      </ul>
+    </div>
+    <div class="gate-box">
+      <h3>お支払いについて</h3>
+      <ul>
+        <li>月330円。<b>入会した日があなたの起算日</b>になり、毎月その日に更新されます。月末に入っても損はありません</li>
+        <li><b>最初の7日間は無料</b>。7日以内に解約すれば、料金は一切かかりません</li>
+        <li>解約はcodocのマイページから<b>いつでも</b>できます。引き止めや違約金はありません</li>
+        <li>決済はcodoc（コードク）社のシステムを利用。<b>カード情報が当方に伝わることはありません</b></li>
+      </ul>
+    </div>
+    <div class="codoc-wrap">
+      <div id="codoc-entry-jRBN6Pyw9w" class="codoc-entries">読み込み中です。表示されない場合は再読み込みしてください。</div>
+    </div>
+    <a class="gate-back-link" id="gate-back" onclick="closeGate()">&#9664;　アプリにもどる</a>
+  </div>
+</div>
+<script>
+// ===== 会員制（codoc）：無料期間バナーとゲート =====
+const FREE_END = new Date(2026, 7, 15, 23, 59, 59); // 2026年8月15日まで無料
+const UNLOCK_MARK = '開門';
+function isFreePeriod(){ return new Date() <= FREE_END; }
+function openGate(){ document.getElementById('member-gate').classList.add('on'); }
+function closeGate(){
+  if(isFreePeriod() || window.__unlocked) document.getElementById('member-gate').classList.remove('on');
+}
+(function memberInit(){
+  try{
+    const banner=document.getElementById('free-banner');
+    if(isFreePeriod()){
+      const days=Math.max(0, Math.ceil((FREE_END - new Date())/86400000));
+      document.getElementById('fb-days').textContent=days;
+      banner.style.display='block';
+      document.getElementById('gate-msg').innerHTML='会員のご案内<br>（8月15日までは全機能を無料でお使いいただけます）';
+    }else{
+      banner.style.display='none';
+      document.getElementById('gate-back').style.display='none';
+      document.getElementById('gate-msg').innerHTML='ここから先は会員の方の占い処です<br>ご購読またはログインをお願いします';
+      openGate();
+    }
+    const entry=document.getElementById('codoc-entry-jRBN6Pyw9w');
+    if(entry){
+      const check=function(){
+        if(entry.innerText && entry.innerText.indexOf(UNLOCK_MARK)>=0){
+          window.__unlocked=true;
+          document.getElementById('member-gate').classList.remove('on');
+          return true;
+        }
+        return false;
+      };
+      if(!check()){
+        const mo=new MutationObserver(function(){ if(check()) mo.disconnect(); });
+        mo.observe(entry,{childList:true,subtree:true,characterData:true});
+      }
+    }
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
