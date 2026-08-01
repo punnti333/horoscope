@@ -16,18 +16,18 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap');
   :root{
     --gold:#c9a24b;--gold-soft:#e6cd8e;--paper:#231d3f;--mist:#c2b9de;
-    --line:rgba(201,162,75,.30);
+    --line:rgba(201,162,75,.52);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     font-family:'Shippori Mincho',serif;
     background:
-      radial-gradient(680px 480px at 78% -8%, rgba(232,140,180,.22), transparent 62%),
-      radial-gradient(620px 520px at 12% 8%, rgba(120,150,255,.26), transparent 60%),
-      radial-gradient(760px 600px at 88% 70%, rgba(150,110,235,.28), transparent 62%),
-      radial-gradient(700px 560px at -8% 108%, rgba(90,190,210,.22), transparent 60%),
-      radial-gradient(900px 700px at 50% 120%, rgba(201,162,75,.16), transparent 62%),
-      linear-gradient(165deg, #3a3168 0%, #2c2656 48%, #221c44 100%);
+      radial-gradient(680px 480px at 78% -8%, rgba(232,140,180,.07), transparent 62%),
+      radial-gradient(620px 520px at 12% 8%, rgba(120,150,255,.16), transparent 60%),
+      radial-gradient(760px 600px at 88% 70%, rgba(110,140,230,.14), transparent 62%),
+      radial-gradient(700px 560px at -8% 108%, rgba(90,190,210,.12), transparent 60%),
+      radial-gradient(900px 700px at 50% 120%, rgba(201,162,75,.10), transparent 62%),
+      linear-gradient(165deg, #1f2340 0%, #191b32 48%, #0e1122 100%);
     background-attachment:fixed;
     color:#f5f1ff;min-height:100vh;line-height:1.85;
   }
@@ -37,23 +37,29 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   h1{font-size:30px;font-weight:700;margin:10px 0 6px;letter-spacing:.06em;
     background:linear-gradient(180deg,#fff,var(--gold-soft));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
   .sub{color:var(--mist);font-size:13.5px;letter-spacing:.04em;}
-  .card{background:linear-gradient(180deg, rgba(48,40,82,.7), rgba(34,28,62,.7));
-    border:1px solid var(--line);border-radius:18px;padding:24px 20px;margin:18px 0;
+  .card{background:linear-gradient(180deg, rgba(34,39,70,.74), rgba(21,24,44,.74));
+    border:2px solid var(--line);border-radius:18px;padding:24px 20px;margin:18px 0;
     box-shadow:0 18px 50px -28px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.04);}
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .field{display:flex;flex-direction:column;gap:6px;}
   .field.full{grid-column:1/-1;}
   label{font-size:12px;letter-spacing:.12em;color:var(--gold-soft);}
   .hint{font-size:11px;color:var(--mist);opacity:.8;letter-spacing:0;}
-  input{font-family:inherit;font-size:15px;background:rgba(255,255,255,.04);border:1px solid var(--line);
+  input{font-family:inherit;font-size:15px;background:rgba(255,255,255,.04);border:1.5px solid var(--line);
     color:#fff;border-radius:10px;padding:11px 12px;outline:none;transition:border .2s,box-shadow .2s;}
   input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.15);}
   .ymd-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;}
   .ymd-grid .field.full{grid-column:1/-1;}
   .ymd-grid input{font-family:inherit;font-size:16px;width:100%;background:rgba(255,255,255,.04);
-    border:1px solid var(--line);color:#fff;border-radius:10px;padding:13px 14px;outline:none;}
+    border:1.5px solid var(--line);color:#fff;border-radius:10px;padding:13px 14px;outline:none;}
   .ymd-grid input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.15);}
   @media(max-width:560px){.ymd-grid{grid-template-columns:1fr;}}
+  input[type=checkbox],.ymd-grid input[type=checkbox]{width:19px;height:19px;padding:0;flex:none;
+    accent-color:var(--gold);border-radius:4px;cursor:pointer;}
+  .unknown-row{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13.5px;color:var(--mist);
+    border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;background:rgba(255,255,255,.03);}
+  .unknown-row span{letter-spacing:.02em;}
+  .field.dim{opacity:.4;}
   .ymd-u{color:var(--gold-soft);font-size:14px;margin-right:4px;}
   button.cast{grid-column:1/-1;margin-top:6px;font-weight:700;letter-spacing:.18em;font-size:15px;color:#1a1428;cursor:pointer;
     background:linear-gradient(180deg,var(--gold-soft),var(--gold));border:none;border-radius:12px;padding:14px;
@@ -77,7 +83,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     color:#fff;font-size:21px;font-weight:700;letter-spacing:.08em;margin:34px 0 2px;}
   .num-title .num{font-size:22px;font-weight:700;color:var(--gold);}
   .num-title .num::after{content:".";color:var(--gold);}
-  .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:8px 0 18px;}
+  .rule{height:2px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:8px 0 18px;}
   .pl{display:flex;gap:13px;align-items:flex-start;margin:0 0 15px;}
   .pl .gl{font-size:22px;color:var(--gold-soft);width:30px;text-align:center;flex:none;line-height:1.4;}
   .pl .body .hd{font-size:15px;color:#fff;font-weight:700;}
@@ -100,25 +106,25 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .e水{background:linear-gradient(90deg,#7fd1c0,#4f9fb0);}
   .pc{position:absolute;right:7px;top:-1px;font-size:11px;color:#fff;opacity:.85;}
   .verdict{font-size:15px;color:#ece7ff;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);}
-  .headline{text-align:center;margin:6px 0 26px;padding:22px 18px;border:1px solid var(--line);border-radius:16px;
+  .headline{text-align:center;margin:6px 0 26px;padding:22px 18px;border:2px solid var(--line);border-radius:16px;
     background:radial-gradient(120% 120% at 50% 0%, rgba(201,162,75,.14), rgba(255,255,255,.02));}
   .hl-lead{font-size:14px;color:var(--mist);letter-spacing:.2em;}
   .hl-main{font-size:30px;font-weight:700;letter-spacing:.06em;margin:6px 0 10px;
     background:linear-gradient(180deg,#fff,var(--gold-soft));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
   .hl-sub{font-size:14.5px;color:#ece7ff;line-height:1.7;}
-  .lackbox{margin-top:16px;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.03);}
+  .lackbox{margin-top:16px;border:2px solid var(--line);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.03);}
   .lackhd{color:var(--gold-soft);font-weight:700;font-size:14px;margin-bottom:10px;letter-spacing:.04em;}
   .lackrow{font-size:14.5px;color:#ece7ff;margin:0 0 10px;}
   .lackrow:last-child{margin-bottom:0;}
   .lackrow b{color:var(--gold-soft);}
   .verdict b{color:var(--gold-soft);}
-  .cross{margin-top:26px;border:1px dashed var(--line);border-radius:16px;padding:20px;background:rgba(120,90,200,.08);}
+  .cross{margin-top:26px;border:2px dashed var(--line);border-radius:16px;padding:20px;background:rgba(120,90,200,.08);}
   .cross h3{font-size:16px;letter-spacing:.08em;margin-bottom:8px;color:#fff;}
   .cross .role{display:flex;gap:10px;align-items:baseline;margin:8px 0;font-size:14.5px;}
   .cross .role b{color:var(--gold-soft);min-width:74px;display:inline-block;}
   .cross .now{color:var(--mist);font-size:13px;}
   .note{font-size:12px;color:var(--mist);text-align:center;margin-top:30px;opacity:.8;line-height:1.7;}
-  .cta-wrap{margin-top:30px;padding-top:26px;border-top:1px solid var(--line);text-align:center;}
+  .cta-wrap{margin-top:30px;padding-top:26px;border-top:2px solid var(--line);text-align:center;}
   .cta-lead{font-size:15.5px;color:#ece7ff;margin-bottom:18px;line-height:1.7;}
   .cta-lead b{color:var(--gold-soft);font-size:17px;}
   .cta-btn{display:inline-block;text-decoration:none;font-family:'Shippori Mincho',serif;font-weight:700;
@@ -135,7 +141,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 
 /* ===== 会員制（codoc）・無料期間バナー ===== */
 .freebanner{display:block;cursor:pointer;margin:18px auto 0;max-width:560px;text-align:center;
-padding:12px 16px;border-radius:12px;border:1px solid var(--gold);
+padding:12px 16px;border-radius:12px;border:2px solid var(--gold);
 background:linear-gradient(160deg,rgba(201,162,75,.18),rgba(201,162,75,.05));
 color:var(--gold-soft);font-size:13.5px;letter-spacing:.08em;line-height:1.8;}
 .freebanner b{font-size:15px;letter-spacing:.12em;}
@@ -147,7 +153,7 @@ background:linear-gradient(165deg,#3a3168 0%,#2c2656 48%,#221c44 100%);}
 .gate-title{font-family:'Shippori Mincho',serif;font-size:26px;color:var(--gold-soft);
 text-align:center;letter-spacing:.2em;margin-bottom:8px;}
 .gate-sub{text-align:center;color:var(--mist);font-size:13.5px;letter-spacing:.1em;margin-bottom:28px;line-height:2;}
-.gate-box{border:1px solid var(--line);border-radius:14px;padding:20px 18px;margin-bottom:22px;
+.gate-box{border:2px solid var(--line);border-radius:14px;padding:20px 18px;margin-bottom:22px;
 background:rgba(20,15,45,.5);}
 .gate-box h3{font-family:'Shippori Mincho',serif;font-size:15px;color:var(--gold);letter-spacing:.2em;margin:0 0 12px;}
 .gate-box ul{margin:0;padding-left:1.2em;color:#f5f1ff;font-size:13.5px;line-height:2.1;letter-spacing:.03em;}
@@ -193,6 +199,20 @@ text-decoration:underline;font-size:14px;}
           <label>日</label>
           <input id="ddd" type="number" inputmode="numeric" min="1" max="31" placeholder="15">
         </div>
+        <div class="field" id="fld-h">
+          <label>生まれた時刻（時）</label>
+          <input id="hhh" type="number" inputmode="numeric" min="0" max="23" placeholder="12">
+        </div>
+        <div class="field" id="fld-mi">
+          <label>分</label>
+          <input id="mii" type="number" inputmode="numeric" min="0" max="59" placeholder="0">
+        </div>
+        <div class="field full">
+          <label class="unknown-row">
+            <input type="checkbox" id="unknown-time">
+            <span>出生時間がわからない（12時として計算します）</span>
+          </label>
+        </div>
       </div>
       <button class="cast" onclick="cast()">ホロスコープを描く</button>
     </div>
@@ -202,8 +222,9 @@ text-decoration:underline;font-size:14px;}
 
   <div class="note">
     天体位置は astronomy-engine による高精度計算です。<br>
-    出生時刻は12時固定の簡易版（ソーラーサイン表示）のため、月の度数のみ最大±6.5°ほどの幅があります。<br>
-    アセンダント・ハウスは出生時刻が必要なため表示していません。
+    出生時刻を入れると、月の位置まで正確に計算します。<br>
+    わからない場合は12時として計算するため、月の度数のみ最大±6.5°ほどの幅が出ます。<br>
+    アセンダント・ハウスは表示していません。
   </div>
 </div>
 
@@ -484,11 +505,24 @@ for(let i=0;i<60;i++){const s=document.createElement('i');s.style.left=Math.rand
  // 三命クロス法から渡された生年月日があれば受け取る（例: ?y=1990&m=5&d=15&name=かぴ）
  const q=new URLSearchParams(location.search);
  const qy=q.get('y'), qm=q.get('m'), qd=q.get('d'), qn=q.get('name');
+ const qh=q.get('h'), qmi=q.get('mi');
  let handed=false;
  if(qy&&qm&&qd){
    yEl.value=qy; mEl.value=qm; dEl.value=qd; handed=true;
  }
  if(qn&&nEl) nEl.value=qn;
+ // 出生時間「わからない」チェックの連動
+ const hEl=document.getElementById('hhh'), miEl=document.getElementById('mii');
+ const unkEl=document.getElementById('unknown-time');
+ function syncUnknown(){
+   const off=unkEl.checked;
+   hEl.disabled=off; miEl.disabled=off;
+   document.getElementById('fld-h').classList.toggle('dim',off);
+   document.getElementById('fld-mi').classList.toggle('dim',off);
+ }
+ unkEl.addEventListener('change',syncUnknown);
+ if(qh!==null&&qh!==''){ hEl.value=qh; if(qmi!==null&&qmi!=='') miEl.value=qmi; }
+ syncUnknown();
  // 初期値は入れない（薄い手本＝placeholderだけ表示）
  fillDays();
  yEl.addEventListener('input',fillDays);
@@ -643,8 +677,19 @@ function cast(){
  const m=+document.getElementById('mmm').value;
  const dd=+document.getElementById('ddd').value;
  if(!y||!m||!dd){alert("生年月日を入力してください");return;}
- // 12時固定（JST）→ UTCのDateに変換（JST=UTC+9 なので UTC 03:00）
- const birthUTC=new Date(Date.UTC(y, m-1, dd, 3, 0, 0));
+
+ // 出生時刻（日本時間）。「わからない」または未入力なら12時00分として扱う
+ const hEl2=document.getElementById('hhh'), miEl2=document.getElementById('mii');
+ const unknownTime=document.getElementById('unknown-time').checked;
+ const timeKnown = !unknownTime && hEl2.value!=='';
+ let bh=12, bmi=0;
+ if(timeKnown){
+   bh=+hEl2.value; bmi=(miEl2.value===''?0:+miEl2.value);
+   if(!(bh>=0&&bh<=23)){alert("時は0〜23で入れてください");return;}
+   if(!(bmi>=0&&bmi<=59)){alert("分は0〜59で入れてください");return;}
+ }
+ // JST → UTC（JST=UTC+9）。Date.UTCは負の時でも前日へ正しく繰り下がります
+ const birthUTC=new Date(Date.UTC(y, m-1, dd, bh-9, bmi, 0));
 
  const natal=ALL.map(p=>({...p,lon:eclipticLon(p.k, birthUTC)}));
  const transitDate=new Date(); // 今この瞬間
@@ -664,9 +709,9 @@ function cast(){
  const rAspect  = R-118;    // アスペクト線の半径
  let svg=`<svg viewBox="0 0 460 460" width="460">`;
  // 背景リング
- svg+=`<circle cx="${cx}" cy="${cy}" r="${rZodOut}" fill="rgba(255,255,255,.02)" stroke="#c9a24b" stroke-opacity=".55"/>`;
- svg+=`<circle cx="${cx}" cy="${cy}" r="${rZodIn}" fill="none" stroke="#c9a24b" stroke-opacity=".4"/>`;
- svg+=`<circle cx="${cx}" cy="${cy}" r="${rAspect}" fill="rgba(120,90,200,.06)" stroke="#c9a24b" stroke-opacity=".18"/>`;
+ svg+=`<circle cx="${cx}" cy="${cy}" r="${rZodOut}" fill="rgba(255,255,255,.02)" stroke="#c9a24b" stroke-opacity=".7" stroke-width="1.8"/>`;
+ svg+=`<circle cx="${cx}" cy="${cy}" r="${rZodIn}" fill="none" stroke="#c9a24b" stroke-opacity=".55" stroke-width="1.8"/>`;
+ svg+=`<circle cx="${cx}" cy="${cy}" r="${rAspect}" fill="rgba(120,90,200,.06)" stroke="#c9a24b" stroke-opacity=".3" stroke-width="1.4"/>`;
  // 外周にトランジット用の薄いガイド円
  svg+=`<circle cx="${cx}" cy="${cy}" r="${rTransit+14}" fill="none" stroke="#9fb8ff" stroke-opacity=".15" stroke-dasharray="2 4"/>`;
 
@@ -679,7 +724,7 @@ function cast(){
  // 星座帯（区切り線＋グリフ）
  for(let s=0;s<12;s++){
    const lon=s*30;const [x1,y1]=pt(lon,rZodOut);const [x2,y2]=pt(lon,rZodIn);
-   svg+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#c9a24b" stroke-opacity=".45"/>`;
+   svg+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#c9a24b" stroke-opacity=".55" stroke-width="1.3"/>`;
    const [gx,gy]=pt(lon+15,(rZodOut+rZodIn)/2);
    svg+=`<text x="${gx}" y="${gy+5}" fill="#e6cd8e" font-size="16" text-anchor="middle">${SIGNS[s].g}</text>`;
  }
@@ -848,7 +893,11 @@ function cast(){
    carVerdict += `<br>四つの要素がそろった、バランスのいい人。これといった欠けはありません。`;
  }
 
- const timeNote=`<div style="text-align:center;font-size:12px;color:var(--mist);margin-top:6px;opacity:.85">12時固定の簡易版（ソーラーサイン）で表示しています</div>`;
+ const timeNote=`<div style="text-align:center;font-size:12px;color:var(--mist);margin-top:6px;opacity:.85">`
+   + (timeKnown
+       ? `出生時刻 ${bh}時${String(bmi).padStart(2,"0")}分（日本時間）で計算しています`
+       : `出生時刻が不明のため、12時として計算しています（月の度数に最大±6.5°の幅）`)
+   + `</div>`;
 
  /* ===== トランジット解説（T社会・トランス天体 × N個人天体） ===== */
  const TANG=[{a:0,o:6,nm:0},{a:90,o:5,nm:90},{a:120,o:5,nm:120},{a:180,o:6,nm:180}];
