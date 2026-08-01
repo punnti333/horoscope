@@ -79,6 +79,26 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     color:var(--gold-soft);background:rgba(255,255,255,.04);border:1.5px solid var(--line);
     border-radius:20px;padding:9px 18px;}
   .share-btn:hover{filter:brightness(1.25);}
+  .sv-back{position:fixed;inset:0;background:rgba(12,14,28,.72);z-index:60;display:none;
+    align-items:center;justify-content:center;padding:22px;}
+  .sv-back.on{display:flex;}
+  .sv-box{width:100%;max-width:340px;background:linear-gradient(180deg, rgba(40,44,76,.98), rgba(26,29,52,.98));
+    border:2px solid var(--line);border-radius:18px;padding:22px 20px;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,.9);}
+  .sv-title{font-size:15px;color:var(--gold-soft);letter-spacing:.08em;text-align:center;margin-bottom:16px;}
+  .sv-lab{font-size:12px;letter-spacing:.12em;color:var(--gold-soft);display:block;margin-bottom:6px;}
+  .sv-note{font-size:11.5px;color:var(--mist);opacity:.8;line-height:1.6;margin:6px 0 0;}
+  .sv-sex{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:6px;}
+  .sv-sex button{font-family:inherit;font-size:14px;cursor:pointer;padding:11px 0;border-radius:10px;
+    color:var(--mist);background:rgba(255,255,255,.04);border:1.5px solid var(--line);transition:all .18s;}
+  .sv-sex button.on{color:#1a1428;font-weight:700;border-color:var(--gold);
+    background:linear-gradient(180deg,var(--gold-soft),var(--gold));}
+  .sv-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;}
+  .sv-row button{font-family:inherit;font-size:14.5px;letter-spacing:.08em;cursor:pointer;
+    padding:12px 0;border-radius:11px;border:1.5px solid var(--line);
+    color:var(--mist);background:rgba(255,255,255,.04);}
+  .sv-row button.ok{color:#1a1428;font-weight:700;border:none;
+    background:linear-gradient(180deg,var(--gold-soft),var(--gold));}
   .ymd-u{color:var(--gold-soft);font-size:14px;margin-right:4px;}
   button.cast{grid-column:1/-1;margin-top:6px;font-weight:700;letter-spacing:.18em;font-size:15px;color:#1a1428;cursor:pointer;
     background:linear-gradient(180deg,var(--gold-soft),var(--gold));border:none;border-radius:12px;padding:14px;
@@ -240,6 +260,25 @@ text-decoration:underline;font-size:14px;}
   </div>
 
   <div id="result"></div>
+
+  <div class="sv-back" id="sv-back">
+    <div class="sv-box">
+      <div class="sv-title">この人を保存する</div>
+      <label class="sv-lab">お名前</label>
+      <input id="sv-name" placeholder="例：母、たろう、山田さん" style="width:100%">
+      <label class="sv-lab" style="margin-top:16px">性別</label>
+      <div class="sv-sex">
+        <button type="button" id="sv-m" onclick="svSex(1)">男</button>
+        <button type="button" id="sv-f" onclick="svSex(0)">女</button>
+        <button type="button" id="sv-n" class="on" onclick="svSex(-1)">未設定</button>
+      </div>
+      <p class="sv-note">ホロスコープでは性別を使いません。三命クロス法と名簿を共有しているため、そちらの計算用にお伺いしています。</p>
+      <div class="sv-row">
+        <button type="button" onclick="svClose()">やめる</button>
+        <button type="button" class="ok" onclick="svCommit()">保存する</button>
+      </div>
+    </div>
+  </div>
 
   <div class="note">
     天体位置は astronomy-engine による高精度計算です。<br>
@@ -562,6 +601,15 @@ function storeTimes(obj){try{localStorage.setItem('horo_times',JSON.stringify(ob
 function escHTML(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;')
   .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 
+let svSexVal=-1;   // 1=男 0=女 -1=未設定
+function svSex(v){
+  svSexVal=v;
+  document.getElementById('sv-m').classList.toggle('on',v===1);
+  document.getElementById('sv-f').classList.toggle('on',v===0);
+  document.getElementById('sv-n').classList.toggle('on',v===-1);
+}
+function svClose(){ document.getElementById('sv-back').classList.remove('on'); }
+
 function savePerson(){
   const y=+document.getElementById('yyy').value,
         m=+document.getElementById('mmm').value,
@@ -570,17 +618,25 @@ function savePerson(){
     alert('先に生年月日を入れてください。');return;
   }
   const nEl=document.getElementById('name');
-  const nm=(prompt('お名前をどうぞ（例：母、たろう、山田さん）', nEl?nEl.value.trim():'')||'').trim();
-  if(!nm)return;
+  const svN=document.getElementById('sv-name');
+  svN.value = nEl ? nEl.value.trim() : '';
+  // 登録済みの人なら、前に選んだ性別を復元しておく
+  const known=loadPeople().filter(function(e){return e.name===svN.value;})[0];
+  svSex(known&&typeof known.male==='boolean' ? (known.male?1:0) : -1);
+  document.getElementById('sv-back').classList.add('on');
+  setTimeout(function(){ svN.focus(); },50);
+}
+
+function svCommit(){
+  const y=+document.getElementById('yyy').value,
+        m=+document.getElementById('mmm').value,
+        d=+document.getElementById('ddd').value;
+  const nm=(document.getElementById('sv-name').value||'').trim();
+  if(!nm){ alert('お名前を入れてください。'); return; }
   const name=nm.slice(0,12);
-  // 三命クロス法と同じ形式。性別は向こうの大運計算で使うので、分かる範囲で控える
-  let male;
-  const ans=prompt('性別を入れてください（男 または 女）。\nホロスコープでは使いませんが、三命クロス法と共有します。','');
-  if(ans!==null){ const a=ans.trim(); if(a==='男'||a==='男性'||a==='m'||a==='M')male=true;
-                  else if(a==='女'||a==='女性'||a==='f'||a==='F')male=false; }
   let list=loadPeople().filter(function(e){return e.name!==name;});
   const rec={name:name,y:y,m:m,d:d};
-  if(typeof male==='boolean')rec.male=male;
+  if(svSexVal!==-1) rec.male=(svSexVal===1);   // 未設定なら male を持たせない
   list.unshift(rec);
   if(list.length>12)list=list.slice(0,12);
   // 出生時刻はホロスコープ専用の控えに
@@ -590,7 +646,8 @@ function savePerson(){
   if(!unk&&hv!==''){ times[name]={h:+hv, mi:(mv===''?0:+mv)}; } else { delete times[name]; }
   storeTimes(times);
   storePeople(list);
-  if(nEl) nEl.value=name;
+  const nEl=document.getElementById('name'); if(nEl) nEl.value=name;
+  svClose();
 }
 
 function delPerson(i,ev){
@@ -636,6 +693,12 @@ function renderPeople(){
   el.innerHTML=s;
 }
 try{ renderPeople(); }catch(e){}
+(function svInit(){
+  const back=document.getElementById('sv-back');
+  if(back) back.addEventListener('click',function(ev){ if(ev.target===back) svClose(); });
+  const n=document.getElementById('sv-name');
+  if(n) n.addEventListener('keydown',function(ev){ if(ev.key==='Enter') svCommit(); });
+})();
 
 /* ===== 結果のURLをコピー ===== */
 function copyResultUrl(){
