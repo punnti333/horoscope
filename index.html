@@ -74,11 +74,13 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .pdate{opacity:.75;font-size:12px;}
   .pdel{opacity:.55;padding:0 2px;font-size:14px;}
   .pdel:hover{opacity:1;color:#e9a8b4;}
-  .share-row{margin-top:16px;text-align:center;}
-  .share-btn{display:inline-block;cursor:pointer;font-family:inherit;font-size:13px;letter-spacing:.06em;
-    color:var(--gold-soft);background:rgba(255,255,255,.04);border:1.5px solid var(--line);
-    border-radius:20px;padding:9px 18px;}
-  .share-btn:hover{filter:brightness(1.25);}
+  .share-row{margin:30px 0 0;padding-top:28px;text-align:center;
+    border-top:2px solid var(--line);}
+  .share-btn{display:inline-block;cursor:pointer;font-family:'Shippori Mincho',serif;font-weight:700;
+    font-size:15px;letter-spacing:.1em;color:var(--gold-soft);
+    background:rgba(255,255,255,.05);border:1.5px solid var(--gold);
+    border-radius:26px;padding:14px 34px;min-width:min(78%,300px);transition:filter .2s,transform .2s;}
+  .share-btn:hover{filter:brightness(1.25);transform:translateY(-1px);}
   .sv-back{position:fixed;inset:0;background:rgba(12,14,28,.72);z-index:60;display:none;
     align-items:center;justify-content:center;padding:22px;}
   .sv-back.on{display:flex;}
@@ -163,7 +165,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .cross .role b{color:var(--gold-soft);min-width:74px;display:inline-block;}
   .cross .now{color:var(--mist);font-size:13px;}
   .note{font-size:12px;color:var(--mist);text-align:center;margin-top:30px;opacity:.8;line-height:1.7;}
-  .cta-wrap{margin-top:30px;padding-top:26px;border-top:2px solid var(--line);text-align:center;}
+  .cta-wrap{margin-top:28px;padding-top:28px;border-top:2px solid var(--line);text-align:center;}
   .cta-lead{font-size:15.5px;color:#ece7ff;margin-bottom:18px;line-height:1.7;}
   .cta-lead b{color:var(--gold-soft);font-size:17px;}
   .cta-btn{display:inline-block;text-decoration:none;font-family:'Shippori Mincho',serif;font-weight:700;
@@ -700,22 +702,19 @@ try{ renderPeople(); }catch(e){}
   if(n) n.addEventListener('keydown',function(ev){ if(ev.key==='Enter') svCommit(); });
 })();
 
-/* ===== 結果のURLをコピー ===== */
-function copyResultUrl(){
-  const q=new URLSearchParams();
-  q.set('y',document.getElementById('yyy').value);
-  q.set('m',document.getElementById('mmm').value);
-  q.set('d',document.getElementById('ddd').value);
-  const nm=document.getElementById('name').value.trim(); if(nm)q.set('name',nm);
-  if(!document.getElementById('unknown-time').checked && document.getElementById('hhh').value!==''){
-    q.set('h',document.getElementById('hhh').value);
-    q.set('mi',document.getElementById('mii').value||'0');
-  }
-  const url=location.origin+location.pathname+'?'+q.toString();
-  function done(){ alert('この結果のURLをコピーしました。\n貼り付けて送れば、同じ結果が開きます。'); }
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(url).then(done,function(){ prompt('コピーしてお使いください',url); });
-  }else{ prompt('コピーしてお使いください',url); }
+/* ===== 別の人で占う（入力欄を空にして先頭へ戻る） ===== */
+function resetForm(){
+  ['name','yyy','mmm','ddd','hhh','mii'].forEach(function(id){
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  const unk=document.getElementById('unknown-time');
+  if(unk){ unk.checked=false; unk.dispatchEvent(new Event('change')); }
+  const r=document.getElementById('result');
+  if(r){ r.style.display='none'; r.innerHTML=''; }
+  const f=document.getElementById('form-card') || document.querySelector('.card');
+  if(f) f.scrollIntoView({behavior:'smooth',block:'start'});
+  else window.scrollTo({top:0,behavior:'smooth'});
+  const nEl=document.getElementById('name'); if(nEl) setTimeout(function(){ nEl.focus(); },420);
 }
 
 const SIGNS=[
@@ -1164,11 +1163,12 @@ function cast(){
    <p style="font-size:13px;color:var(--mist);margin:-4px 0 14px;text-align:center">今この時期、空の星があなたの天体にどう響いているか</p>
    <ul class="asp">${trHtml}</ul>
 
+   <div class="share-row"><button type="button" class="share-btn" onclick="resetForm()">別の人で占う</button></div>
+
    <div class="cta-wrap">
      <p class="cta-lead">本質と今の流れは見えました。<br>では──<b>いま動くべきか、待つべきか？</b></p>
      <a class="cta-btn" href="https://punnti333.github.io/sanmei-cross/?y=${y}&m=${m}&d=${dd}" target="_blank" rel="noopener" onclick="window.open('https://punnti333.github.io/sanmei-cross/?y=${y}&m=${m}&d=${dd}','_blank','noopener');return false;">今動くべきか診断する（三命クロス法へ）</a>
      <p class="cta-note">四柱推命と九星気学を重ねて、いまのタイミングを読み解きます</p>
-     <div class="share-row"><button type="button" class="share-btn" onclick="copyResultUrl()">この結果のURLをコピー</button></div>
    </div>
   </div>`;
  const r=document.getElementById('result');
