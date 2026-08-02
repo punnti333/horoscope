@@ -840,6 +840,75 @@ const TR={
  "plu_mer":{0:"一つのことが頭から離れなくなる時。気になる相手や疑問を、とことん調べ尽くす。隠された本音や裏側が見えてくる。",120:"調べもの・研究・分析にどっぷりハマれる時。掘れば掘るほど核心に届く。とことん追いかけて。",90:"「絶対こうだ」と思い込んで、人を言い負かしたくなる時。その勝ちたい気持ち、何を守ろうとしてる？",180:"言い合いがヒートアップしやすい時。相手を論破したくなるが、勝っても何も残らないことに気づけるか。"},
  "plu_mar":{0:"鬼気迫る行動力がわく時。すべてを賭けて大きな変革に挑める。ただし力が強すぎる。何のためにやるのかを、先に決めておいて。",120:"底知れぬ粘りが出る時。どんな困難もねじ伏せられる。長期戦になる勝負を、この時期に始めて。",90:"攻撃性が暴走する時。力で押し通そうとして、取り返しのつかない衝突を招く。事故とケガにも直結する配置。怒りに任せて動いた一回が、数年を台無しにする。",180:"むき出しの敵意にさらされる時。相手も引かないので、正面からぶつかれば共倒れになる。真っ向勝負を避けて、記録を残す。感情で戦った側が負ける。"}
 };
+
+/* ===== プログレス月＝出来事を起こすきっかけの針 =====
+   キー: "N天体" → {0:合, 90:スクエア, 120:トライン, 180:オポジション}
+   ネイタル水星は省略（重要度が低いため）
+   オーブ前後1度。当たっていないときは何も表示しない。 */
+const PRG_TARGETS=["sun","moon","ven","mar","jup","sat","ura","nep","plu"];
+const PRG_ORB=1.0;
+const PRG={
+ // 通常の天体：合(0)と吉角(120)が吉、凶角(90/180)が凶
+ sun:{
+  good:"新しく踏み出す時。独立、開業、住まいや仕事を変えるなど、生き方そのものが動く。声がかかれば受けて。ここで始めたことは長く続きます。",
+  bad:"足元が危うくなる時。体調を崩したり、立場が揺らいだりする。無理を通そうとせず、体を先に立て直して。健康診断を先延ばしにしないこと。"
+ },
+ moon:{
+  good:"暮らしが変わり、良いほうへ向かう時。住まいや家族の形が動き、気持ちが落ち着く。満たされた感覚が戻ってきます。",
+  bad:"気持ちが乱れる時。落ち着かず、身近な人との間に波が立つ。眠りと食事だけ守って、大きな決断は先送りに。"
+ },
+ ven:{
+  good:"心が華やぐ時。人との縁に恵まれ、楽しみが増える。贈り物や誘いが向こうからやってくる。素直に受け取って。",
+  bad:"縁とお金がこじれる時。別れ話が出たり、女性との間で問題が起きたりする。金銭の貸し借りは、この時期は避けて。"
+ },
+ mar:{
+  good:"火が点く時。恋も仕事も一気に動く。押せば通るが、勢いが強いぶん男女のもつれも起きやすい。動くなら今、ただし相手のある話は慎重に。",
+  bad:"荒れる時。言い争い、盗難、思わぬケガや事故が起きやすい。急ぐ移動と、刃物・火の扱いに注意。腹が立った相手に、その場で返さないこと。"
+ },
+ jup:{
+  good:"運が開く時。人が集まり、機会が向こうからやってくる。誘いは断らないこと。この時期に広げたものは、あとあと効いてきます。",
+  bad:"気が大きくなりすぎる時。「自分なら大丈夫」で引き受けすぎたり、使いすぎたりする。返事は一晩置いて。手を広げるより、今あるものを仕上げて。"
+ },
+ ura:{
+  good:"環境が入れ替わる時。転職、引っ越し、今までにない世界に足を踏み入れる。変化そのものは悪くないが、勢いだけで決めないで。一週間置いてから。",
+  bad:"予告なく崩れる時。予定が白紙になったり、頼りにしていたものが急になくなったりする。予備の道を一つ用意しておいて。"
+ },
+ plu:{
+  good:"立て直しの時。一度崩れたものが、根本から作り直される。仕事も人間関係も入れ替わるが、これは再生の過程です。流れに乗って。",
+  bad:"積み上げたものが崩れる時。人が離れ、これまでの努力が形にならない。しがみつくほど痛みが増します。何を残すか、自分で選んで。"
+ },
+ // 土星と海王星だけは、合(0)も凶側に入る。吉は120度のみ
+ sat:{
+  hardConj:true,
+  good:"努力が認められる時。長く続けたことに、ようやく評価がつく。昇進、合格、信用の積み上げ。派手さはないが、確かな話が来ます。",
+  bad:"重い局面に入る時。仕事や事業が行き詰まったり、体に無理が出たりする。前に進めない苛立ちも重なる。一人で抱えず、休む予定を先に入れて。"
+ },
+ nep:{
+  hardConj:true,
+  good:"愉快で楽しい経験に恵まれる時。理屈でないことが、するすると運ぶ。誘われたら乗ってみて。",
+  bad:"話がこじれ、出口が見えなくなる時。約束が曖昧になったり、抱えた問題が長引いたりする。うまい話に乗らないこと。契約は必ず書面で。"
+ }
+};
+// その天体・その角度が吉か凶か
+function prgIsGood(nk, ang){
+  if(ang===120) return true;
+  if(ang===0) return !(PRG[nk]&&PRG[nk].hardConj);  // 土星・海王星は合も凶
+  return false;                                      // 90・180 は凶
+}
+
+// プログレス月の黄経（セカンダリ・プログレッション：生後1日＝1年）
+function progressedMoonLon(birthUTC, nowUTC){
+  const yrs=(nowUTC-birthUTC)/(365.2422*86400000);
+  const pdate=new Date(birthUTC.getTime()+yrs*86400000);
+  return eclipticLon("moon", pdate);
+}
+// プログレス月が1年に進む度数（人により12〜15度）
+function progressedMoonSpeed(birthUTC, nowUTC){
+  const a=progressedMoonLon(birthUTC,nowUTC);
+  const b=progressedMoonLon(birthUTC,new Date(nowUTC.getTime()+365.2422*86400000));
+  return ((b-a)%360+360)%360;
+}
+
 const TR_PLANETS=["jup","sat","ura","nep","plu"]; // トランジット側
 const TR_NAME={jup:"木星",sat:"土星",ura:"天王星",nep:"海王星",plu:"冥王星"};
 const ANGLE_NAME={0:"合",90:"スクエア",120:"トライン",180:"オポジション"};
@@ -1129,6 +1198,36 @@ function cast(){
    return `<li style="font-size:15.5px"><span class="nm" style="font-size:16px">N${h.Nname} <span style="color:${angCol[h.ang]};font-size:18px">${angMark[h.ang]}</span> T${h.Tname}</span>${flag}<br>${h.txt}</li>`;
  }).join(""):`<li>今は、空の星が強く当たっていない静かな時期です。外から押される力が少ないぶん、自分で決めたことがそのまま進みます。動くなら今のうち。</li>`;
 
+ // ===== プログレス月の暗示 =====
+ // 出来事を起こす針。オーブ前後1度に入っているときだけ出す
+ let prgHtml="";
+ {
+   const pLon=progressedMoonLon(birthUTC, transitDate);
+   const speed=progressedMoonSpeed(birthUTC, transitDate);
+   let best=null;
+   for(const nk of PRG_TARGETS){
+     const N=natal.find(p=>p.k===nk); if(!N) continue;
+     for(const a of [0,90,120,180]){
+       const orb=orbTo(pLon, N.lon, a);
+       if(orb<=PRG_ORB && (!best || orb<best.orb)){
+         const good=prgIsGood(nk,a);
+         best={nk:nk, Nname:N.n, ang:a, orb:orb, good:good,
+               txt:(PRG[nk]||{})[good?"good":"bad"]||""};
+       }
+     }
+   }
+   if(best && best.txt){
+     const f=best.good?{t:"吉角",c:"#7fd1a8"}:{t:"凶角",c:"#e9a8b4"};
+     const flag=`<span style="display:inline-block;font-size:12px;color:#1a1428;background:${f.c};border-radius:6px;padding:1px 9px;margin-left:8px;vertical-align:middle;letter-spacing:.04em">${f.t}</span>`;
+     prgHtml=`
+   <div class="num-title"><span class="num">4</span>プログレス月の暗示</div>
+   <div class="rule"></div>
+   <p style="font-size:13px;color:var(--mist);margin:-4px 0 14px;text-align:center">出来事を起こす時計の針が、いまあなたの生まれつきの${best.Nname}を指しています</p>
+   <ul class="asp"><li style="font-size:15.5px"><span class="nm" style="font-size:16px">P月 <span style="color:${angCol[best.ang]};font-size:18px">${angMark[best.ang]}</span> N${best.Nname}</span>${flag}<br>${best.txt}</li></ul>
+`;
+   }
+ }
+
  const personalTitle = name
    ? `<div class="personal-title"><span class="pt-name">${name}</span>さんのホロスコープ</div>`
    : `<div class="personal-title">あなたのホロスコープ</div>`;
@@ -1158,7 +1257,9 @@ function cast(){
    <div class="rule"></div>
    <ul class="asp">${persHtml}</ul>
 
-   <div class="num-title"><span class="num">4</span>今の状況</div>
+   ${prgHtml}
+
+   <div class="num-title"><span class="num">${prgHtml?5:4}</span>今の状況</div>
    <div class="rule"></div>
    <p style="font-size:13px;color:var(--mist);margin:-4px 0 14px;text-align:center">今この時期、空の星があなたの天体にどう響いているか</p>
    <ul class="asp">${trHtml}</ul>
