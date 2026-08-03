@@ -111,6 +111,9 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.15);}
   select option,select optgroup{background:#232645;color:#fff;}
   .manual-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;}
+  .signrow{display:flex;gap:6px;}
+  .signrow select{width:auto;flex:none;padding-right:34px;background-position:calc(100% - 16px) calc(50% + 1px),calc(100% - 10px) calc(50% + 1px);}
+  .signrow input{flex:1;min-width:0;}
   @media(max-width:480px){.manual-grid{grid-template-columns:1fr;}}
   .warnbox{margin-top:10px;border:1.5px solid rgba(233,168,180,.55);border-radius:10px;
     background:rgba(233,168,180,.08);padding:10px 12px;font-size:12.5px;color:#f3d9de;line-height:1.7;}
@@ -334,9 +337,15 @@ text-decoration:underline;font-size:14px;}
           <select id="pref"><option value="">選んでください</option></select>
         </div>
         <div class="field full manual-grid" id="fld-manual" style="display:none">
-          <div class="field"><label>緯度（北が＋）</label><input id="mlat" type="number" step="0.01" placeholder="40.71"></div>
-          <div class="field"><label>経度（東が＋）</label><input id="mlon" type="number" step="0.01" placeholder="-74.01"></div>
-          <div class="field"><label>時差（UTCから）</label><input id="mtz" type="number" step="0.5" placeholder="-5"></div>
+          <div class="field"><label>緯度</label><div class="signrow">
+            <select id="mlatns"><option value="1">北緯</option><option value="-1">南緯</option></select>
+            <input id="mlat" type="number" inputmode="decimal" step="0.01" min="0" max="90" placeholder="40.71"></div></div>
+          <div class="field"><label>経度</label><div class="signrow">
+            <select id="mlonew"><option value="1">東経</option><option value="-1">西経</option></select>
+            <input id="mlon" type="number" inputmode="decimal" step="0.01" min="0" max="180" placeholder="74.01"></div></div>
+          <div class="field"><label>時差<span class="hint"> ／ 経度から自動で入ります</span></label><div class="signrow">
+            <select id="mtzsg"><option value="1">＋</option><option value="-1">−</option></select>
+            <input id="mtz" type="number" inputmode="decimal" step="0.5" min="0" max="14" placeholder="9"></div></div>
         </div>
         <div class="field full" id="dst-warn" style="display:none">
           <div class="warnbox">
@@ -745,6 +754,9 @@ function svCommit(){
       trec.lat=document.getElementById('mlat').value;
       trec.lon=document.getElementById('mlon').value;
       trec.tz =document.getElementById('mtz').value;
+      trec.sg =[document.getElementById('mlatns').value,
+                document.getElementById('mlonew').value,
+                document.getElementById('mtzsg').value].join(',');
     }
   }
   if(Object.keys(trec).length){ times[name]=trec; } else { delete times[name]; }
@@ -782,6 +794,10 @@ function usePerson(i){
     document.getElementById('mlat').value=t.lat||'';
     document.getElementById('mlon').value=t.lon||'';
     document.getElementById('mtz').value =t.tz||'';
+    const sg=(t.sg||'1,1,1').split(',');
+    document.getElementById('mlatns').value=sg[0]||'1';
+    document.getElementById('mlonew').value=sg[1]||'1';
+    document.getElementById('mtzsg').value =sg[2]||'1';
   }
   sel.dispatchEvent(new Event('change'));
   unk.dispatchEvent(new Event('change'));
@@ -834,6 +850,10 @@ function resetForm(){
   });
   const sel=document.getElementById('pref');
   if(sel){ sel.value=''; sel.dispatchEvent(new Event('change')); }
+  ['mlatns','mlonew','mtzsg'].forEach(function(id){
+    const el=document.getElementById(id); if(el) el.value='1';
+  });
+  const tzEl=document.getElementById('mtz'); if(tzEl) delete tzEl.dataset.touched;
   const unk=document.getElementById('unknown-time');
   if(unk){ unk.checked=false; unk.dispatchEvent(new Event('change')); }
   const r=document.getElementById('result');
@@ -1125,18 +1145,37 @@ PLACES.forEach(function(g){g[1].forEach(function(e){PLACE_INDEX[e[0]]=[e[1],e[2]
   sel.addEventListener('change',function(){
     document.getElementById('fld-manual').style.display=(sel.value==='manual')?'grid':'none';
   });
+  // 経度を入れたら時差の候補を埋める。経度15度で1時間ぶんずれるため。
+  function guessTz(){
+    const tzEl=document.getElementById('mtz');
+    if(tzEl.dataset.touched==='1') return;              // 手で直したあとは触らない
+    const v=parseFloat(document.getElementById('mlon').value);
+    if(!isFinite(v)) return;
+    const signed=Math.abs(v)*(+document.getElementById('mlonew').value);
+    const h=Math.round(signed/15);
+    document.getElementById('mtzsg').value = h<0 ? "-1" : "1";
+    tzEl.value=Math.abs(h);
+  }
+  ['mlon','mlonew'].forEach(function(id){
+    const el=document.getElementById(id); if(el) el.addEventListener('input',guessTz);
+    if(el) el.addEventListener('change',guessTz);
+  });
+  const tzEl=document.getElementById('mtz');
+  if(tzEl) tzEl.addEventListener('input',function(){ tzEl.dataset.touched='1'; });
 })();
 
 // 選ばれている出生地を返す。未選択・入力不足なら null
 function getPlace(){
   const sel=document.getElementById('pref'); if(!sel||!sel.value) return null;
   if(sel.value==='manual'){
-    const la=parseFloat(document.getElementById('mlat').value);
-    const lo=parseFloat(document.getElementById('mlon').value);
-    const tz=parseFloat(document.getElementById('mtz').value);
-    if(!isFinite(la)||!isFinite(lo)||la<-89.9||la>89.9||lo<-180||lo>180) return null;
-    const nm=`北緯${la.toFixed(2)}° ${lo>=0?"東経":"西経"}${Math.abs(lo).toFixed(2)}°`;
-    return {name:nm, lat:la, lon:lo, tz:(isFinite(tz)?tz:9), manual:true};
+    const sgn=id=>+document.getElementById(id).value;
+    const la=Math.abs(parseFloat(document.getElementById('mlat').value))*sgn('mlatns');
+    const lo=Math.abs(parseFloat(document.getElementById('mlon').value))*sgn('mlonew');
+    const tzv=parseFloat(document.getElementById('mtz').value);
+    const tz=isFinite(tzv)?Math.abs(tzv)*sgn('mtzsg'):9;
+    if(!isFinite(la)||!isFinite(lo)||Math.abs(la)>89.9||Math.abs(lo)>180) return null;
+    const nm=`${la>=0?"北緯":"南緯"}${Math.abs(la).toFixed(2)}° ${lo>=0?"東経":"西経"}${Math.abs(lo).toFixed(2)}°`;
+    return {name:nm, lat:la, lon:lo, tz:tz, manual:true};
   }
   const f=PLACE_INDEX[sel.value];
   return f?{name:sel.value, lat:f[0], lon:f[1], tz:9, manual:false}:null;
