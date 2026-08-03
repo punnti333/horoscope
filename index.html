@@ -110,11 +110,13 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     background-size:6px 6px,6px 6px;background-repeat:no-repeat;}
   select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.15);}
   select option,select optgroup{background:#232645;color:#fff;}
-  .manual-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;}
-  .signrow{display:flex;gap:6px;}
-  .signrow select{width:auto;flex:none;padding-right:34px;background-position:calc(100% - 16px) calc(50% + 1px),calc(100% - 10px) calc(50% + 1px);}
-  .signrow input{flex:1;min-width:0;}
-  @media(max-width:480px){.manual-grid{grid-template-columns:1fr;}}
+  /* 3列に押し込むと数字の欄が70px以下まで潰れるので、縦に積む */
+  .manual-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;}
+  .signrow{display:flex;gap:8px;}
+  .signrow select{width:auto;flex:none;min-width:92px;padding-right:34px;
+    background-position:calc(100% - 16px) calc(50% + 1px),calc(100% - 10px) calc(50% + 1px);}
+  .signrow input{flex:1;min-width:110px;}
+
   .warnbox{margin-top:10px;border:1.5px solid rgba(233,168,180,.55);border-radius:10px;
     background:rgba(233,168,180,.08);padding:10px 12px;font-size:12.5px;color:#f3d9de;line-height:1.7;}
   .angle-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 2px;}
