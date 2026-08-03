@@ -129,11 +129,13 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     border-bottom:1px solid rgba(255,255,255,.08);}
   .hrow.top{background:rgba(201,162,75,.10);border-radius:10px;
     border:1.5px solid rgba(201,162,75,.5);border-bottom:1.5px solid rgba(201,162,75,.5);margin-bottom:4px;}
+  /* 室番号と部屋名は同じ行の高さにして、上端をきっちり揃える */
   .hrow .hno{flex:none;width:44px;text-align:center;color:var(--gold-soft);
-    font-weight:700;font-size:14.5px;line-height:1.5;}
+    font-weight:700;font-size:14.5px;line-height:1.6;}
   .hrow .hbody{flex:1;min-width:0;}
   .hrow .hname{font-size:14.5px;color:#fff;font-weight:700;letter-spacing:.03em;
-    display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;}
+    line-height:1.6;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;
+    min-height:1.6em;}
   .hrow .hname .star{font-size:11.5px;color:#1a1428;background:var(--gold-soft);
     border-radius:6px;padding:2px 9px;letter-spacing:.04em;font-weight:700;white-space:nowrap;}
   .hrow .hpl{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 14px;}
@@ -145,6 +147,20 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .askbox{border:1.5px dashed var(--line);border-radius:14px;padding:16px 16px;margin:16px 0 2px;
     background:rgba(255,255,255,.03);text-align:center;}
   .askbox b{color:var(--gold-soft);}
+  .askbtn{font-family:inherit;font-size:14px;margin-top:12px;cursor:pointer;
+    background:rgba(201,162,75,.14);border:1.5px solid var(--gold);color:var(--gold-soft);
+    border-radius:10px;padding:10px 22px;letter-spacing:.06em;font-weight:700;}
+  .askbtn:hover{background:rgba(201,162,75,.24);}
+  .topnudge{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 14px;
+    border:1.5px dashed var(--line);border-radius:12px;padding:11px 14px;margin:0 0 16px;
+    background:rgba(255,255,255,.03);font-size:13.5px;color:#efe9ff;}
+  .topnudge b{color:var(--gold-soft);}
+  .topnudge button{font-family:inherit;font-size:13px;cursor:pointer;white-space:nowrap;
+    background:rgba(201,162,75,.14);border:1.5px solid var(--gold);color:var(--gold-soft);
+    border-radius:8px;padding:7px 16px;letter-spacing:.05em;font-weight:700;}
+  @keyframes flashfield{0%,100%{box-shadow:0 0 0 0 rgba(201,162,75,0);}
+    30%,70%{box-shadow:0 0 0 4px rgba(201,162,75,.45);}}
+  .flashing{animation:flashfield 1.6s ease-in-out 2;border-radius:12px;}
   .week{margin:12px 0 4px;}
   .week li{list-style:none;border-left:2.5px solid var(--gold);padding:2px 0 2px 12px;margin:0 0 14px;}
   .week .ttl{font-size:15px;color:#fff;font-weight:700;letter-spacing:.03em;
@@ -797,6 +813,21 @@ try{ renderPeople(); }catch(e){}
 })();
 
 /* ===== 別の人で占う（入力欄を空にして先頭へ戻る） ===== */
+// 足りない項目の入力欄まで戻って、そこを光らせる
+function focusMissing(){
+  const unk=document.getElementById('unknown-time').checked;
+  const target = unk ? document.getElementById('unknown-time').closest('.field')
+                     : document.getElementById('fld-place');
+  const card = document.querySelector('.card');
+  if(card) card.scrollIntoView({behavior:'smooth', block:'start'});
+  [document.getElementById('fld-place'),
+   document.getElementById('unknown-time').closest('.field')].forEach(function(el){
+    if(!el) return;
+    el.classList.remove('flashing'); void el.offsetWidth; el.classList.add('flashing');
+  });
+  setTimeout(function(){ if(!unk){ const p=document.getElementById('pref'); if(p) p.focus(); } }, 700);
+}
+
 function resetForm(){
   ['name','yyy','mmm','ddd','hhh','mii','mlat','mlon','mtz'].forEach(function(id){
     const el=document.getElementById(id); if(el) el.value='';
@@ -1333,7 +1364,7 @@ function cast(){
    if(H){
      const h=houseOf(np.lon,H.cusps);
      rm=`<span class="rm">／ ${h}室</span>`;
-     hs=`<div class="hs"><b>${HOUSE_LEAD[p.k]}｜${HOUSE_NAME[h-1]}</b><br>${PLANET_HOUSE[p.k][h-1]}</div>`;
+     hs=`<div class="hs"><b>${HOUSE_LEAD[p.k]} → ${HOUSE_NAME[h-1]}</b><br>${PLANET_HOUSE[p.k][h-1]}</div>`;
    }
    return `<div class="pl">
      <div class="gl">${p.g}</div>
@@ -1449,6 +1480,15 @@ function cast(){
  }
 
  // 入れた内容の確認だけ。計算方式は書きません
+ // 足りないものがあるときだけ、結果の先頭にも出す
+ const lackTop = !timeKnown && !place ? "出生時刻と生まれた場所"
+               : !timeKnown ? "出生時刻" : !place ? "生まれた場所" : "";
+ const topNudge = lackTop
+   ? `<div class="topnudge"><span><b>${lackTop}</b>を足すと、アセンダント（初対面の印象）と
+      ハウス（力が出る場面）も出ます。</span>
+      <button onclick="focusMissing()">入力する</button></div>`
+   : ``;
+
  const timeNote=`<div style="text-align:center;font-size:12px;color:var(--mist);margin-top:6px;opacity:.85">`
    + `${y}年${m}月${dd}日`
    + (timeKnown ? ` ${bh}時${String(bmi).padStart(2,"0")}分` : ``)
@@ -1486,6 +1526,7 @@ function cast(){
    <div class="rule"></div>
    <div class="askbox">
      <b>${lack}</b>を入れると、ここに<br>アセンダント（初対面の印象）が出ます。
+     <div><button class="askbtn" onclick="focusMissing()">入力する</button></div>
    </div>`;
  }
 
@@ -1584,6 +1625,7 @@ function cast(){
    <div class="rule"></div>
    <div class="askbox">
      <b>${lack}</b>を入れると、ここに<br>10天体それぞれの「力が出る場面」が出ます。
+     <div><button class="askbtn" onclick="focusMissing()">入力する</button></div>
    </div>`;
  }
 
@@ -1595,11 +1637,11 @@ function cast(){
   <div class="card">
    ${personalTitle}
    <div class="rule"></div>
+   ${topNudge}
    <div class="wheel-wrap">${svg}</div>
    <div class="legend">
      <span><b style="color:#c9a24b">●</b> 生まれた時の天体</span>
-     ${H?`<span><b style="color:#e6cd8e">│</b> 太い線＝ASC・MC</span><span>細い点線＝ハウスの区切り</span>`
-        :`<span>内側の数字＝ハウス</span>`}
+     ${H?`<span><b style="color:#e6cd8e">│</b> 太い線＝ASC・MC</span><span>細い点線＝ハウスの区切り</span>`:``}
    </div>
    ${timeNote}
 
