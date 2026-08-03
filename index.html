@@ -102,6 +102,51 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .sv-row button.ok{color:#1a1428;font-weight:700;border:none;
     background:linear-gradient(180deg,var(--gold-soft),var(--gold));}
   .ymd-u{color:var(--gold-soft);font-size:14px;margin-right:4px;}
+  select{font-family:inherit;font-size:15px;width:100%;background:rgba(255,255,255,.04);
+    border:1.5px solid var(--line);color:#fff;border-radius:10px;padding:12px 12px;outline:none;
+    appearance:none;-webkit-appearance:none;cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,var(--gold-soft) 50%),linear-gradient(135deg,var(--gold-soft) 50%,transparent 50%);
+    background-position:calc(100% - 18px) calc(50% + 1px),calc(100% - 12px) calc(50% + 1px);
+    background-size:6px 6px,6px 6px;background-repeat:no-repeat;}
+  select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.15);}
+  select option,select optgroup{background:#232645;color:#fff;}
+  .manual-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;}
+  @media(max-width:480px){.manual-grid{grid-template-columns:1fr;}}
+  .warnbox{margin-top:10px;border:1.5px solid rgba(233,168,180,.55);border-radius:10px;
+    background:rgba(233,168,180,.08);padding:10px 12px;font-size:12.5px;color:#f3d9de;line-height:1.7;}
+  .angle-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 2px;}
+  @media(max-width:520px){.angle-grid{grid-template-columns:1fr;}}
+  .angle{border:1.5px solid var(--line);border-radius:14px;padding:14px 15px;background:rgba(255,255,255,.03);}
+  .angle .cap{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--gold-soft);opacity:.9;}
+  .angle .jp{font-size:13px;color:var(--gold-soft);letter-spacing:.04em;margin-top:3px;}
+  .angle .jp b{color:#fff;font-weight:700;}
+  .angle .val{font-size:19px;font-weight:700;color:#fff;margin:6px 0 6px;letter-spacing:.04em;}
+  .angle .val .deg{font-size:13px;font-weight:500;color:var(--mist);margin-left:5px;}
+  .angle p{font-size:14px;color:#efe9ff;}
+  .hlist{margin:12px 0 4px;}
+  .hrow{display:flex;gap:12px;align-items:flex-start;padding:11px 10px;
+    border-bottom:1px solid rgba(255,255,255,.08);}
+  .hrow.top{background:rgba(201,162,75,.10);border-radius:10px;
+    border:1.5px solid rgba(201,162,75,.5);border-bottom:1.5px solid rgba(201,162,75,.5);margin-bottom:4px;}
+  .hrow .hno{flex:none;width:44px;text-align:center;color:var(--gold-soft);
+    font-weight:700;font-size:14.5px;line-height:1.5;}
+  .hrow .hbody{flex:1;min-width:0;}
+  .hrow .hname{font-size:14.5px;color:#fff;font-weight:700;letter-spacing:.03em;}
+  .hrow .hname .star{font-size:11.5px;color:#1a1428;background:var(--gold-soft);
+    border-radius:6px;padding:1px 8px;margin-left:8px;vertical-align:middle;letter-spacing:.04em;font-weight:700;}
+  .hrow .hpl{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 14px;}
+  .hrow .hpl span{font-size:13.5px;color:#ece7ff;white-space:nowrap;}
+  .hrow .hpl span i{font-style:normal;color:var(--gold-soft);font-size:15px;margin-right:3px;}
+  .hs-note{border-left:2.5px solid var(--gold);padding:2px 0 2px 12px;margin:14px 0 0;}
+  .hs-note .lb{font-size:12px;letter-spacing:.1em;color:var(--gold-soft);}
+  .hs-note p{font-size:14.5px;color:#efe9ff;margin-top:2px;}
+  .askbox{border:1.5px dashed var(--line);border-radius:14px;padding:16px 16px;margin:16px 0 2px;
+    background:rgba(255,255,255,.03);text-align:center;}
+  .askbox b{color:var(--gold-soft);}
+  .solar-tag{font-size:12.5px;color:var(--mist);line-height:1.75;margin-top:14px;
+    border:1.5px dashed var(--line);border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.03);}
+  .solar-tag b{color:var(--gold-soft);}
   button.cast{grid-column:1/-1;margin-top:6px;font-weight:700;letter-spacing:.18em;font-size:15px;color:#1a1428;cursor:pointer;
     background:linear-gradient(180deg,var(--gold-soft),var(--gold));border:none;border-radius:12px;padding:14px;
     box-shadow:0 10px 30px -10px rgba(201,162,75,.6);transition:transform .15s, filter .2s;}
@@ -131,6 +176,10 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .pl .body .hd .sign{color:var(--gold-soft);}
   .pl .body .tp{color:var(--gold-soft);font-weight:700;}
   .pl .body p{font-size:14.5px;color:#ece7ff;margin-top:2px;}
+  .pl .body .hs{font-size:13.5px;color:#cfc6ec;margin-top:5px;padding-left:10px;
+    border-left:2px solid rgba(201,162,75,.6);}
+  .pl .body .hs b{color:var(--gold-soft);font-weight:700;}
+  .pl .body .hd .rm{color:var(--gold-soft);font-size:12.5px;font-weight:700;margin-left:2px;}
   .asp li{list-style:none;margin:0 0 13px;font-size:14.5px;}
   .asp .nm{color:var(--gold-soft);font-weight:700;}
   ul{padding:0;}
@@ -254,6 +303,22 @@ text-decoration:underline;font-size:14px;}
             <span>出生時間がわからない（12時として計算します）</span>
           </label>
         </div>
+        <div class="field full" id="fld-place">
+          <label>生まれた場所<span class="hint"> ／ いちばん近いところを選んでください</span></label>
+          <select id="pref"><option value="">選んでください</option></select>
+        </div>
+        <div class="field full manual-grid" id="fld-manual" style="display:none">
+          <div class="field"><label>緯度（北が＋）</label><input id="mlat" type="number" step="0.01" placeholder="40.71"></div>
+          <div class="field"><label>経度（東が＋）</label><input id="mlon" type="number" step="0.01" placeholder="-74.01"></div>
+          <div class="field"><label>時差（UTCから）</label><input id="mtz" type="number" step="0.5" placeholder="-5"></div>
+        </div>
+        <div class="field full" id="dst-warn" style="display:none">
+          <div class="warnbox">
+            <b>サマータイムにご注意</b><br>
+            日本では1948〜1951年の夏（おおむね5月〜9月）にサマータイムが実施されていました。
+            当時の記録がサマータイムの時刻であれば、<b>1時間引いた時刻</b>を入れてください。
+          </div>
+        </div>
       </div>
       <button class="cast" onclick="cast()">ホロスコープを描く</button>
       <button type="button" class="save-btn" onclick="savePerson()">＋ この人を名前をつけて保存</button>
@@ -283,10 +348,10 @@ text-decoration:underline;font-size:14px;}
   </div>
 
   <div class="note">
-    天体位置は astronomy-engine による高精度計算です。<br>
-    出生時刻を入れると、月の位置まで正確に計算します。<br>
-    わからない場合は12時として計算するため、月の度数のみ最大±6.5°ほどの幅が出ます。<br>
-    アセンダント・ハウスは表示していません。
+    生まれた場所は、いちばん近いところをお選びください。<br>
+    一覧にない場合や海外生まれの場合は、「海外・その他」で緯度経度を入れられます。<br>
+    出生時刻がわからないときは12時として計算します。このときアセンダントとハウスは出ません。<br>
+    天体の位置は astronomy-engine、ハウスはプラシーダスで計算しています。
   </div>
 </div>
 
@@ -645,7 +710,18 @@ function svCommit(){
   const times=loadTimes();
   const unk=document.getElementById('unknown-time').checked;
   const hv=document.getElementById('hhh').value, mv=document.getElementById('mii').value;
-  if(!unk&&hv!==''){ times[name]={h:+hv, mi:(mv===''?0:+mv)}; } else { delete times[name]; }
+  const plv=document.getElementById('pref').value;
+  const trec={};
+  if(!unk&&hv!==''){ trec.h=+hv; trec.mi=(mv===''?0:+mv); }
+  if(plv){
+    trec.pl=plv;
+    if(plv==='manual'){
+      trec.lat=document.getElementById('mlat').value;
+      trec.lon=document.getElementById('mlon').value;
+      trec.tz =document.getElementById('mtz').value;
+    }
+  }
+  if(Object.keys(trec).length){ times[name]=trec; } else { delete times[name]; }
   storeTimes(times);
   storePeople(list);
   const nEl=document.getElementById('name'); if(nEl) nEl.value=name;
@@ -666,14 +742,22 @@ function usePerson(i){
   document.getElementById('mmm').value=p.m;
   document.getElementById('ddd').value=p.d;
   const nEl=document.getElementById('name'); if(nEl)nEl.value=p.name;
-  const t=loadTimes()[p.name];
+  const t=loadTimes()[p.name]||{};
   const unk=document.getElementById('unknown-time');
   const hEl=document.getElementById('hhh'), miEl=document.getElementById('mii');
-  if(t&&typeof t.h==='number'){
+  if(typeof t.h==='number'){
     unk.checked=false; hEl.value=t.h; miEl.value=t.mi||0;
   }else{
     unk.checked=true; hEl.value=''; miEl.value='';
   }
+  const sel=document.getElementById('pref');
+  sel.value=t.pl||'';
+  if(t.pl==='manual'){
+    document.getElementById('mlat').value=t.lat||'';
+    document.getElementById('mlon').value=t.lon||'';
+    document.getElementById('mtz').value =t.tz||'';
+  }
+  sel.dispatchEvent(new Event('change'));
   unk.dispatchEvent(new Event('change'));
   try{ cast(); }catch(e){}
 }
@@ -704,9 +788,11 @@ try{ renderPeople(); }catch(e){}
 
 /* ===== 別の人で占う（入力欄を空にして先頭へ戻る） ===== */
 function resetForm(){
-  ['name','yyy','mmm','ddd','hhh','mii'].forEach(function(id){
+  ['name','yyy','mmm','ddd','hhh','mii','mlat','mlon','mtz'].forEach(function(id){
     const el=document.getElementById(id); if(el) el.value='';
   });
+  const sel=document.getElementById('pref');
+  if(sel){ sel.value=''; sel.dispatchEvent(new Event('change')); }
   const unk=document.getElementById('unknown-time');
   if(unk){ unk.checked=false; unk.dispatchEvent(new Event('change')); }
   const r=document.getElementById('result');
@@ -804,114 +890,210 @@ const TYPE={
 };
 const PROLE={sun:"本質",moon:"感情",mer:"思考",ven:"愛情",mar:"行動"};
 
-/* ===== トランジット解説 =====
-   キー: "T天体_N天体" → {0:合, 90:スクエア, 120:トライン, 180:オポジション}
-   T = 木星/土星/天王星/海王星/冥王星、N = 太陽/月/水星/金星/火星
-   ※サンプルとして代表的な組み合わせを収録。未収録は汎用文でフォロー。 */
-const TR={
- // 木星（拡大・幸運・チャンス）— 「世界が一気に広がる高揚感」
- "jup_sun":{0:"運の扉が開く時。声がかかったり、話が大きく動いたりして、追い風を感じる。遠慮していると通り過ぎるので、迷ったら受ける側に倒して。誘いは断らないこと。",120:"流れが味方する時。動けば思った以上のところまで行けて、人の紹介も生きる。今のうちに、前から気になっていたことを一つ始めて。",90:"気が大きくなりすぎる時。「自分なら大丈夫」で予定を詰め込んだり、実力以上の話を引き受けたりしやすい。返事をする前に一晩置いて。手を広げるより、今あるものを仕上げて。",180:"話を盛りたくなる時。見栄を張ったり、できると言い切ったりして、あとで信用を落としやすい。実際にやれる量だけ言う。誰かの期待に合わせて背伸びしていないか、確かめて。"},
- "jup_moon":{0:"心が満たされる時。人が集まり、家のことも回りやすい。よくしてもらった分を返すつもりで、誰かを食事に誘ってみて。ご縁が広がる。",120:"気持ちに余裕が出る時。身近な人にもいい波が及び、家の中が明るくなる。家族や親しい人と過ごす予定を、意識して入れて。",90:"気がゆるむ時。食べすぎ、使いすぎ、寝すぎ。心の満腹が体に出やすい。ごほうびの回数を先に決めておく。財布と冷蔵庫を、一度のぞいてみて。",180:"情に飲み込まれる時。やさしさが甘やかしに化けて、相手の分まで背負い込みやすい。頼まれごとを全部引き受けない。どこまでやるか、自分の中で線を引いて。"},
- "jup_ven":{0:"恋も金運も上向く時。人の目を惹き、贈り物や誘いが向こうからやってくる。せっかくなので、身なりを一つ新しくして出かけて。",120:"愛される時期。出会いにも、ご褒美にも恵まれる。楽しいことに素直に乗って。ずっと行きたかった場所へ、この時期に。",90:"脇が甘くなる時。財布のひもも恋の判断もゆるみ、勢いで買ったり付き合ったりしやすい。高い買い物は一週間置く。相手の言葉より、してくれたことを見て。",180:"欲が出る時。もっといい相手、もっといい条件と欲張って、手元にあるものを取りこぼしやすい。今あるものを数えてみる。比べるのをやめると、見え方が変わる。"},
- "jup_mer":{0:"言いたいことが大きく膨らむ時。SNSの投稿が伸びたり、人前で話す機会が舞い込んだり。出し惜しみせず発信してみて。",120:"勉強や資格、新しい学びがスッと頭に入る時。気になっていた本や講座に申し込むと、ちゃんと身につく。",90:"「これくらいできます」とつい大きく言ってしまう時。引き受けた後で抱えきれず慌てないよう、安請け合いに注意。",180:"予定もメッセージも情報も多すぎてパンクする時。全部やろうとして、結局どれも中途半端になっていないか。"},
- "jup_mar":{0:"エンジンが全開になる時。勝負に出るなら今で、攻めの一手が道を開く。やろうか迷っていたことに、この時期に手を付けて。",120:"動いた分だけ結果が返る時。体力もあり、挑戦がうまく転がる。運動でも仕事でも、量を増やして。今は無理が利く。",90:"勢い任せで突っ走る時。無理な拡大や、勝算のない勝負に出やすい。予算と期限を先に決めてから動く。車の運転と、怒りに任せた発言に注意。",180:"張りきりすぎて空回る時。力みがまわりとの摩擦を生み、一人で先走りがちになる。動く前に一言、相手に伝えて。ペースを合わせるほうが早く着く。"},
- // 土星（試練・責任・成熟）— 「逃げられない、向き合うしかない」
- "sat_sun":{0:"肩の荷が増える時。役職や親の介護など、断りにくい役目が回ってきやすい。しんどいが、ここで引き受けたものが数年後の信用になる。全部背負おうとせず、一つに絞って腹を決めて。",120:"地道にやってきたことが評価される時。昇進、資格の合格、長く続けた仕事への声かけ。派手さはないが確かな話が来る。遠慮して断らず、素直に受けて。",90:"やりたいことにブレーキがかかる時。上司や年長者に止められたり、お金や体力が足りず動けない。焦って突破しようとせず、期限を切って待つ。何が足りないのかを紙に書き出すと、次の一手が見える。",180:"目上の人と正面からぶつかる時。責任の押し付け合いや、評価をめぐる対立が起きやすい。言い返したくなるが、その場で勝とうとしない。記録を残して、時間をかけて筋を通すほうが結果的に通る。"},
- "sat_moon":{0:"心が重くなる時。人が離れたり、家のことで気を張ったりして、ひとりで抱え込みやすい。さみしさは事実ではなく状態なので、消そうとしなくていい。信頼できる人に一度だけ弱音を吐いて。",120:"気持ちが落ち着く時。生活のリズムが整い、住まいや家族との距離感がしっくりくる。派手な楽しさはないが、これが本物の安心。長く続く習慣を一つ始めるといい。",90:"気分が沈む時。人と会うのが億劫になり、夜に不安が押し寄せやすい。無理に元気を出そうとせず、睡眠と食事だけ守る。一人で考える時間を短く区切って。",180:"家族や近い人と、冷たい距離ができる時。会話が減り、義務だけが残りやすい。相手を変えようとせず、自分の側の当たり前を疑ってみる。連絡を一本入れるだけで溶けることもある。"},
- "sat_ven":{0:"愛とお金が試される時。関係が続くか見極める場面が来たり、支出を切り詰める必要が出たりする。飾りを削ぎ落とす時期なので、本当に必要なものだけ残す。家計とスケジュールを一度見直して。",120:"信頼で結ばれる時。長く付き合える相手との縁が深まり、お金の管理も安定する。ときめきは薄いが、これが土台になる。約束を一つ、きちんと守ることから。",90:"恋にもお金にも冷たい風が吹く時。相手が離れていくように感じたり、欲しいものが手に入らなかったりする。満たされなさを買い物で埋めない。今は減らす時期と割り切って。",180:"愛が義務に変わる時。「してあげているのに」という思いが溜まり、関係が重くなりやすい。相手への期待を一度下げる。我慢していることを一つだけ言葉にして。"},
- "sat_mer":{0:"後回しにしてきた手続きや勉強に、ついに向き合う時。面倒な書類、資格の勉強、苦手な連絡。今やれば、地に足がつく。",120:"じっくり腰を据えた作業がはかどる時。長い文章や資格の勉強など、コツコツ系がちゃんと実る。",90:"「自分の意見なんて」と口を閉ざしがちな時。言いたいことを飲み込みすぎていないか。それは謙虚ではなく我慢かも。",180:"言いにくい一言から逃げたくなる時。断りの連絡、謝罪、報告。先延ばすほど重くなる相手は誰か。"},
- "sat_mar":{0:"力をためる時。動きたいのに許可が下りない、体調が思わしくないなど、前に進めない場面が続く。焦って動くと事故やケガを招く。今は準備に徹して、根を張る。",120:"粘りが結果になる時。地味な努力がそのまま積み上がり、長期戦に強くなる。締め切りのある仕事や、体づくりに向く。毎日同じ量を続けて。",90:"動きたいのに動けず、苛立つ時。誰かに邪魔されたと感じたり、疲れが抜けなかったりする。腹が立った相手にすぐ返信しない。休む予定を先に入れて。",180:"抑えた力がぶつかる時。我慢の限界で人と衝突したり、無理が事故やケガになって出やすい。急ぐ移動と力仕事に注意。言いたいことは、時間を置いてから伝えて。"},
- // 天王星（変革・自由・突発）— 「予告なしに、常識がひっくり返る」
- "ura_sun":{0:"生き方が突然変わる時。転職、引っ越し、独立など、自分でも驚く決断をしやすい。変化そのものは悪くないが、勢いだけで動くと後で戻れない。決める前に、一週間だけ寝かせて。",120:"新しい自分に脱皮する時。今までのやり方を変えても、不思議とうまく回る。前から気になっていた分野に、この時期に足を踏み入れて。",90:"足元が急にぐらつく時。予定が崩れたり、頼りにしていたものが突然なくなったりする。「自分なら大丈夫」が裏目に出やすい。予備の道を一つ用意しておいて。",180:"人と激しくぶつかる時。急な方向転換で、周りが付いてこられなくなる。自分の変化を説明する手間を惜しまないで。一人で決めて事後報告、が一番こじれる。"},
- "ura_moon":{0:"暮らしが一変する時。住まい、家族の形、生活のリズムが思いがけず変わる。落ち着かないが、古い型が壊れているだけ。新しい環境に慣れるまで、判断を急がないで。",120:"新鮮な風が入る時。気分が軽くなり、よどんでいたものが吹き飛ぶ。部屋の模様替えや、生活時間の組み替えをしてみて。心が動く。",90:"感情が乱高下する時。急に人を好きになったり、突然すべて投げ出したくなったりする。強い衝動が来たら、その日は決断しない。眠って、翌朝もう一度考えて。",180:"気持ちも人間関係も急変する時。思いがけない別れや、突然の距離の変化に揺さぶられる。相手を引き止めようと焦らない。今は関係の形が変わる時期と受け止めて。"},
- "ura_ven":{0:"恋に雷が落ちる時。電撃的な出会いや別れがあり、好みや価値観ごと入れ替わる。刺激が強いぶん、判断が鈍る。大きな買い物と、急な約束は先送りして。",120:"型破りな縁が舞い込む時。今までなら選ばなかった相手や、新しい楽しみが心をときめかせる。誘われたら乗ってみて。自由でいられる関係が育つ。",90:"恋が突然燃えて、突然冷める時。刺激を追いかけて、落ち着きをなくしやすい。相手に振り回されていないか確かめて。会わない日を意識してつくると、頭が冷える。",180:"束縛と自由のあいだで揺れる時。関係が急展開し、続けるか離れるかを迫られやすい。相手のせいにする前に、自分がどうしたいかを言葉にして。"},
- "ura_mer":{0:"ずっと言えなかった一言を、ついに口に出せる時。「実は前から思ってた」が飛び出す。スマホやガジェットも一新したくなる。",120:"新しいツールややり方が、すんなり手になじむ時。今までのめんどうが、アプリ一つで解決したりする。",90:"思いつきをそのまま投稿・送信して、後で「しまった」となりやすい時。送る前に一回読み返して。",180:"「なんで皆これに従ってるの？」と急に反発したくなる時。そのモヤモヤ、何にそんなに縛られていたのかのサイン。"},
- "ura_mar":{0:"抑えていたものが噴き出す時。飛び出す勢いがあり、思い切った挑戦ができる。ただしブレーキも利かない。刃物、火、車の扱いに気をつけて。",120:"身軽に動ける時。新しいやり方や道具が手になじみ、挑戦が面白いほど転がる。試したかったことを、この時期に始めて。",90:"衝動が抑えきれない時。短気と勢いで、ケガや事故を招きやすい。カッとなったら、その場を離れる。急ぐ移動と、力任せの作業に注意。",180:"突発的にぶつかる時。無謀な行動が思わぬ反発を生み、話がこじれやすい。勝ち負けにこだわらない。今日中に決めなくていいことは、明日に回して。"},
- // 海王星（夢・癒やし・曖昧）— 「境目が溶けて、輪郭がぼやける」
- "nep_sun":{0:"自分が何をしたいのか分からなくなる時。流されやすく、理由もなく疲れが出る。無理に答えを出そうとしないで。休む時間を先に確保して、体調の変化には早めに手を打って。",120:"感性が冴える時。絵、音楽、癒やしなど、理屈でないことがしっくりくる。誰かをそっと支える役回りも合う。人の相談に乗る時間を、意識して持ってみて。",90:"やる気が出ず、現実から目をそらしがちな時。お酒やネットに逃げていないか、一度振り返って。やることを一つだけ決めて、それだけやる。大きな目標は今は立てないで。",180:"憧れていた人や目標に、がっかりさせられる時。相手が変わったのではなく、期待しすぎていただけかもしれない。人を理想で見ないで。事実だけを並べて判断して。"},
- "nep_moon":{0:"人の気持ちに敏感になりすぎる時。涙もろくなったり、相手の感情を自分ごとのように背負ったりする。人と会う量を少し減らして。眠りが浅くなりやすいので、夜は早めに切り上げて。",120:"心がやわらかくほどける時。映画や音楽で泣いたり、人にやさしくなれたりする。癒やされることに時間を使って。誰かを許せる時期でもある。",90:"気分が天気のように揺れる時。誰かに頼りすぎたり、相手の何気ない一言を悪いほうに受け取りやすい。思い込む前に、直接聞いて。一人で考える時間を短く区切って。",180:"理由のない不安や寂しさが押し寄せる時。それは事実ではなく気分のことが多い。夜に大事なことを決めないで。朝になれば違って見える。"},
- "nep_ven":{0:"恋に夢中になりやすい時。相手を実物以上に美しく見てしまう。浮かれすぎに注意して。買い物も衝動的になるので、金額の上限を先に決めておいて。",120:"やさしい気持ちで人とつながれる時。許し合えたり、美しいものに癒やされたりする。芸術に触れる時間を持って。関係が一段やわらかくなる。",90:"都合のいい相手に尽くしすぎる時。お金の貸し借りもあいまいになりやすい。断ることを覚えて。金銭のやりとりは、必ず記録に残して。",180:"好きだった人や物に幻滅する時。理想を相手に押しつけていなかったか、振り返る時期。相手の欠点ではなく、自分の期待の高さを疑ってみて。"},
- "nep_mer":{0:"頭がぼんやりして、約束の時間や物の置き場所をうっかり忘れやすい時。大事な連絡はメモして、二度確認を。",120:"言葉より雰囲気で伝わる時。文章・写真・音楽など、感覚で作るものが冴える。浮かんだイメージを形にして。",90:"「たぶん大丈夫」で確認を飛ばして、勘違いが起きやすい時。曖昧な返事のまま進めず、はっきりさせて。",180:"うまい話や調子のいい誘いに、つい乗せられそうになる時。契約書や条件をよく読まずにサインしないで。"},
- "nep_mar":{0:"気持ちはあるのに体が動かない時。だるさや眠気が出やすく、力が入らない。無理に頑張らないで。休息を予定に組み込んで、量より継続を選んで。",120:"力まず自然体で動ける時。夢中になれる趣味や創作が、するすると進む。締め切りのないことに、この時期は向いている。",90:"何から手をつけていいか分からず、空回りする時。「自分ばかり損をしている」と感じたり、やることの好き嫌いが激しくなりやすい。気の乗らない用事ほど先に片づけて。曖昧な指示は、その場で聞き返して。",180:"頑張っているのに手応えがなく、いらだちやすい時。相手の言葉が本当か確かめて。うまい話や調子のいい誘いには乗らない。契約は必ず書面で。"},
- // 冥王星（変容・再生・極限）— 「破壊と再生、もう元には戻れない」
- "plu_sun":{0:"生き方が根こそぎひっくり返る時。仕事も住む場所も、付き合う人まで変わる。抵抗しても止まらないので、いっそ振り切って。数年後、今の自分を懐かしむくらい別人になっている。ここで生まれ変われる人は、そう多くない。",120:"眠っていた力が目を覚ます時。今までなら怯んでいたことに、平気で手が届く。運命があなたを一段上の場所へ引き上げる時期。大きいと思っていた課題ほど、今なら動く。",90:"力ずくで押し通したくなる時。思い通りにならない相手を、支配しようとして泥沼になる。潰し合いになれば、勝っても手元には何も残らない。その執着は、本当に守る価値があるものか。",180:"主導権を奪い合う時。抵抗するほど締めつけが強まり、最後は手放すことを迫られる。どれだけ粘っても、持っていけないものは持っていけない。捨てる順番を、自分で決めるうちに決めて。"},
- "plu_moon":{0:"感情の地盤が入れ替わる時。古い傷が表に出てきて、しんどい時期になる。ただしこれは膿を出している最中。一人で抱えないで、専門家や信頼できる人の手を借りて。",120:"心の奥まで癒やされる時。長く抱えてきた古傷が、静かにほどける。過去の出来事を、今なら違う目で見られる。書き出してみるといい。",90:"抑え込んできた感情が噴き出す時。嫉妬と執着で、自分でも制御が利かなくなる。ここで感情のまま動くと、関係が壊れる。壊してから気づいても遅い。",180:"心の地盤ごと崩される時。別れや喪失が、逃げ場なく襲ってくる。立ち直りに時間がかかることは、覚悟しておいて。ただし、これを抜けた人は二度と同じことでは折れない。"},
- "plu_ven":{0:"関係が根本から作り変えられる時。強く惹かれ合うぶん、逃れられない相手に出会いやすい。のめり込む前に、周りの意見を一つ聞いて。",120:"深く結ばれる縁が育つ時。表面的でない、本物の関係に出会える。時間をかけて向き合う相手を、一人だけ選んで。",90:"嫉妬と独占欲が燃え上がる時。相手を縛りたくなり、監視や詮索に走りやすい。しがみつくほど相手は離れる。手放せないのは愛ではなく、失う恐怖のほうかもしれない。",180:"支配と執着が渦巻く時。飲み込むか、飲み込まれるかの関係になりやすい。ここで自分を差し出すと、抜け出すのに何年もかかる。おかしいと感じた時点が、引き返せる最後の地点。"},
- "plu_mer":{0:"一つのことが頭から離れなくなる時。気になる相手や疑問を、とことん調べ尽くす。隠された本音や裏側が見えてくる。",120:"調べもの・研究・分析にどっぷりハマれる時。掘れば掘るほど核心に届く。とことん追いかけて。",90:"「絶対こうだ」と思い込んで、人を言い負かしたくなる時。その勝ちたい気持ち、何を守ろうとしてる？",180:"言い合いがヒートアップしやすい時。相手を論破したくなるが、勝っても何も残らないことに気づけるか。"},
- "plu_mar":{0:"鬼気迫る行動力がわく時。すべてを賭けて大きな変革に挑める。ただし力が強すぎる。何のためにやるのかを、先に決めておいて。",120:"底知れぬ粘りが出る時。どんな困難もねじ伏せられる。長期戦になる勝負を、この時期に始めて。",90:"攻撃性が暴走する時。力で押し通そうとして、取り返しのつかない衝突を招く。事故とケガにも直結する配置。怒りに任せて動いた一回が、数年を台無しにする。",180:"むき出しの敵意にさらされる時。相手も引かないので、正面からぶつかれば共倒れになる。真っ向勝負を避けて、記録を残す。感情で戦った側が負ける。"}
+/* ===== アセンダントを読む（第一印象・外から見えるあなた） ===== */
+const ASC_TXT=[
+ "元気でまっすぐな人、という第一印象。動きも返事も速く、実年齢よりずっと若く見られます。",
+ "おっとりして落ち着いた印象。急かされるのが苦手で、自分の歩幅を崩さない人に見えます。",
+ "軽やかで話しやすい印象。表情がよく動き、初対面でも会話が途切れません。",
+ "親しみやすく、あたたかい印象。初対面でも警戒されにくく、身内のような距離で人と接します。",
+ "華やかで存在感のある印象。黙っていても目に留まり、自然と場の中心に置かれます。",
+ "清潔感があり、きちんとした印象。控えめですが、細かいところに気がつく人だと伝わります。",
+ "上品で感じのいい印象。人当たりがやわらかく、初対面の受けがとてもいい人です。",
+ "物静かで、奥が深そうな印象。簡単には内側を見せないぶん、強く印象に残ります。",
+ "明るくおおらかな印象。堅苦しさがなく、初対面から壁を感じさせません。",
+ "まじめで落ち着いた印象。若いころは年上に見られやすく、任せて安心という空気があります。",
+ "どこか独特で、掴みどころのない印象。人と同じ枠にはまらない雰囲気を持っています。",
+ "やわらかく、やさしい印象。雰囲気で人を安心させ、よく話しかけられる人です。"
+];
+/* ===== MC＝社会に向けた顔・仕事の方向 ===== */
+const MC_TXT=[
+ "先頭を切って開拓する立場。新しいことを始める役回りで力が出ます。",
+ "じっくり積み上げて形にする立場。手に職や、ものを扱う仕事に向きます。",
+ "情報を運び、人をつなぐ立場。話す・書く・教えるが仕事になります。",
+ "人を世話し、守る立場。身近な人を支える仕事で本領が出ます。",
+ "表に立って人を惹きつける立場。名前や顔が出る仕事に向きます。",
+ "細部を整え、支える立場。管理や実務の確かさで信頼を得ます。",
+ "人と人の間に立つ立場。交渉や調整、美に関わる仕事に向きます。",
+ "深く掘り下げ、任される立場。専門性と信頼で世に立ちます。",
+ "広い世界へ出ていく立場。学び、遠方、伝えることが軸になります。",
+ "責任を負い、地位を築く立場。時間をかけて信用を積み上げる人です。",
+ "既存のやり方を変える立場。新しい仕組みや技術に縁があります。",
+ "人を癒やし、支える立場。福祉・医療・芸術の方面に縁があります。"
+];
+/* ===== 12ハウス＝人生のどの場面か ===== */
+const HOUSE_NAME=["自分自身","お金・才能","会話・学び","家庭・住まい","恋愛・楽しみ","日々の仕事・健康",
+ "パートナー","深い縁","遠方・専門","立場・天職","仲間・希望","ひとりの時間"];
+const HOUSE_LEAD={sun:"人生の軸",moon:"心が安らぐ場面",mer:"頭が働く場面",ven:"好きが向かう場面",mar:"力が入る場面"};
+const PLANET_HOUSE={
+ sun:[
+  "自分の名前で立つ人。看板を背負う、独立する、顔が出る。自分が前に出る形でこそ力が出ます。",
+  "稼ぐ力と持ち物が軸。収入を増やす、技術を身につける、いい物を手元に置く。手応えのあるものが人生を作ります。",
+  "話す・書く・動き回るが軸。近所付き合い、兄弟姉妹、日々のやり取り。情報が集まる場所にいると力が出ます。",
+  "家と身内が軸。住まいを整える、家族を支える、地元に根を張る。帰る場所があってこそ外で戦えます。",
+  "好きなことと創ることが軸。趣味、恋愛、子ども、表現。楽しんでいない時のあなたは、本来の姿ではありません。",
+  "日々の仕事と体の管理が軸。任された実務をきちんと回すこと。地味な積み重ねがそのまま評価になります。",
+  "相手あってこその人。結婚、共同経営、一対一の付き合い。誰かと組んだ時にいちばん力が出ます。",
+  "深く関わることが軸。人のお金を扱う、受け継ぐ、腹を割って付き合う。浅い関係では持ち味が出ません。",
+  "遠くへ出ることが軸。学問、海外、専門分野、信じるもの。狭い世界に閉じ込められると窒息します。",
+  "社会での立場が軸。肩書き、実績、人前に出る役割。仕事で認められることが人生の中心になります。",
+  "仲間と目指す先が軸。チーム、同志、コミュニティ。ひとりより、同じ方向を向く人の中で伸びます。",
+  "表に出ないところが軸。裏方、支援、研究。人知れず続けてきたことが、いつか形になります。"
+ ],
+ moon:[
+  "気持ちがそのまま顔に出る人。取り繕えないぶん、素でいられる相手のそばが安心です。",
+  "手元に余裕があると落ち着く人。貯金、お気に入りの物、いつもの味。安心が形になっているかを気にします。",
+  "誰かと話していると落ち着く人。とりとめない会話や連絡が薬になります。黙って過ごす日が続くと不安になります。",
+  "家が心の充電場所。散らかった部屋や家族の不機嫌が、そのまま気分に響きます。",
+  "楽しいことがないと保たない人。趣味でも推しでも、「これがあるから頑張れる」が要ります。",
+  "やることがあると落ち着く人。予定が空きすぎると、かえって不安になります。少し忙しいくらいが薬。",
+  "そばに誰かいると安心する人。ひとりの時間が続くと、気持ちが沈みやすくなります。",
+  "深く付き合えないと満たされない人。当たり障りのない関係ばかりだと、心が飢えてきます。",
+  "心が自由でないと苦しい人。旅、新しい学び、知らない世界。同じ景色が続くと息が詰まります。",
+  "認められると心が満ちる人。仕事の評価や人からの視線が、そのまま気分を左右します。",
+  "仲間の中でほどける人。気の合う人たちと同じ方向を向いている時が、いちばん安心します。",
+  "ひとりの時間で回復する人。人といすぎると疲れが溜まるので、こもる時間を意識して取ってください。"
+ ],
+ mer:[
+  "自分の言葉で語る人。考えたことをすぐ口に出せて、話し方そのものが持ち味になります。",
+  "お金と損得を考えるのが得意。値段や見返りを、感情を挟まず計算できます。",
+  "情報の扱いがうまい人。調べる、まとめる、伝える。身近なやり取りの中で頭が回ります。",
+  "家のことを考えている人。住まい、家計、家族の段取り。内輪のことに頭が向きます。",
+  "面白がる力で頭が働く人。企画、遊び、表現。楽しくないことは、そもそも頭に入りません。",
+  "実務で頭が働く人。手順を整える、間違いを見つける。細かい作業に強さが出ます。",
+  "相手に合わせて考える人。交渉や打ち合わせで力が出ます。ひとりで考えるより、話しながらのほうが早い。",
+  "深く掘る人。表向きの説明では納得せず、裏側まで知りたくなります。調べもの・分析に向きます。",
+  "大きな枠で考える人。学問、思想、遠い世界の話。細部より全体像に興味が向きます。",
+  "仕事のことを考えている人。段取り、実績、先の見通し。頭の中身がそのまま仕事に直結します。",
+  "未来と仲間のことを考える人。「こうなったらいいね」を誰かと話している時に頭が冴えます。",
+  "ひとりで考える人。その場では言葉にならず、あとから的確な答えが浮かぶタイプです。"
+ ],
+ ven:[
+  "好きなものが見た目に出る人。装いや雰囲気そのものが魅力になります。",
+  "いい物に惹かれる人。手触りや味にこだわり、お金の使い方に好みがはっきり出ます。",
+  "話が合う人に惹かれる人。会話の楽しさが、そのまま好意に変わります。",
+  "家庭的なものに惹かれる人。家で過ごす時間や、身内のような関係に幸せを感じます。",
+  "恋を楽しめる人。ときめきと遊び心を大事にし、好きになると素直に表へ出します。",
+  "支えることで愛を示す人。手伝う、世話を焼く。役に立てている実感が愛情になります。",
+  "一対一の関係に本領がある人。パートナーができると、目に見えて生き生きします。",
+  "深く結びつきたい人。軽い付き合いでは物足りず、のめり込む形の愛し方になります。",
+  "遠くのものに惹かれる人。異文化、年の離れた相手、学びの場での出会いに縁があります。",
+  "立場のある人や、仕事の場に惹かれる人。仕事関係から縁が生まれやすいタイプです。",
+  "仲間の中から好きが生まれる人。友達付き合いの延長で、関係が始まりやすくなります。",
+  "秘めた恋になりやすい人。表に出せない想いや、尽くす形の愛し方に傾きます。"
+ ],
+ mar:[
+  "自分から前に出る人。やると決めたら真っ先に動き、勢いがそのまま相手に伝わります。",
+  "稼ぐことに力が入る人。収入や持ち物のためなら、いくらでも粘れます。",
+  "言葉で戦う人。議論や交渉で押しが強くなり、つい口が先に出ることもあります。",
+  "家のためなら強くなる人。身内が絡むと引きません。ただし家の中での衝突も起きやすい。",
+  "好きなことに全力を注ぐ人。趣味や恋愛で燃え上がり、勝負ごとにも熱くなります。",
+  "仕事で体を張る人。働きすぎて疲れを溜めやすいので、休む予定を先に入れてください。",
+  "相手がいると燃える人。競う相手や組む相手がいるほど力が出ます。ぶつかるのも同じ場所。",
+  "ここぞで底力が出る人。追い込まれてからが本番。深く関わる相手には激しさが出ます。",
+  "遠くを目指して動く人。挑戦、遠出、専門の追求。目標が大きいほど力が湧きます。",
+  "仕事で勝ちにいく人。地位や実績のために動き、野心がはっきりしています。",
+  "仲間のために動く人。みんなでやることに火がつき、旗振り役になりやすいタイプ。",
+  "表に出さず力を溜める人。怒りも我慢しがちなので、溜め込みすぎに気をつけて。"
+ ]
 };
 
-/* ===== プログレス月＝出来事を起こすきっかけの針 =====
-   キー: "N天体" → {0:合, 90:スクエア, 120:トライン, 180:オポジション}
-   ネイタル水星は省略（重要度が低いため）
-   オーブ前後1度。当たっていないときは何も表示しない。 */
-const PRG_TARGETS=["sun","moon","ven","mar","jup","sat","ura","nep","plu"];
-const PRG_ORB=1.0;
-const PRG={
- // 通常の天体：合(0)と吉角(120)が吉、凶角(90/180)が凶
- sun:{
-  good:"新しく踏み出す時。独立、開業、住まいや仕事を変えるなど、生き方そのものが動く。声がかかれば受けて。ここで始めたことは長く続きます。",
-  bad:"足元が危うくなる時。体調を崩したり、立場が揺らいだりする。無理を通そうとせず、体を先に立て直して。健康診断を先延ばしにしないこと。"
- },
- moon:{
-  good:"暮らしが変わり、良いほうへ向かう時。住まいや家族の形が動き、気持ちが落ち着く。満たされた感覚が戻ってきます。",
-  bad:"気持ちが乱れる時。落ち着かず、身近な人との間に波が立つ。眠りと食事だけ守って、大きな決断は先送りに。"
- },
- ven:{
-  good:"心が華やぐ時。人との縁に恵まれ、楽しみが増える。贈り物や誘いが向こうからやってくる。素直に受け取って。",
-  bad:"縁とお金がこじれる時。別れ話が出たり、女性との間で問題が起きたりする。金銭の貸し借りは、この時期は避けて。"
- },
- mar:{
-  good:"火が点く時。恋も仕事も一気に動く。押せば通るが、勢いが強いぶん男女のもつれも起きやすい。動くなら今、ただし相手のある話は慎重に。",
-  bad:"荒れる時。言い争い、盗難、思わぬケガや事故が起きやすい。急ぐ移動と、刃物・火の扱いに注意。腹が立った相手に、その場で返さないこと。"
- },
- jup:{
-  good:"運が開く時。人が集まり、機会が向こうからやってくる。誘いは断らないこと。この時期に広げたものは、あとあと効いてきます。",
-  bad:"気が大きくなりすぎる時。「自分なら大丈夫」で引き受けすぎたり、使いすぎたりする。返事は一晩置いて。手を広げるより、今あるものを仕上げて。"
- },
- ura:{
-  good:"環境が入れ替わる時。転職、引っ越し、今までにない世界に足を踏み入れる。変化そのものは悪くないが、勢いだけで決めないで。一週間置いてから。",
-  bad:"予告なく崩れる時。予定が白紙になったり、頼りにしていたものが急になくなったりする。予備の道を一つ用意しておいて。"
- },
- plu:{
-  good:"立て直しの時。一度崩れたものが、根本から作り直される。仕事も人間関係も入れ替わるが、これは再生の過程です。流れに乗って。",
-  bad:"積み上げたものが崩れる時。人が離れ、これまでの努力が形にならない。しがみつくほど痛みが増します。何を残すか、自分で選んで。"
- },
- // 土星と海王星だけは、合(0)も凶側に入る。吉は120度のみ
- sat:{
-  hardConj:true,
-  good:"努力が認められる時。長く続けたことに、ようやく評価がつく。昇進、合格、信用の積み上げ。派手さはないが、確かな話が来ます。",
-  bad:"重い局面に入る時。仕事や事業が行き詰まったり、体に無理が出たりする。前に進めない苛立ちも重なる。一人で抱えず、休む予定を先に入れて。"
- },
- nep:{
-  hardConj:true,
-  good:"愉快で楽しい経験に恵まれる時。理屈でないことが、するすると運ぶ。誘われたら乗ってみて。",
-  bad:"話がこじれ、出口が見えなくなる時。約束が曖昧になったり、抱えた問題が長引いたりする。うまい話に乗らないこと。契約は必ず書面で。"
- }
-};
-// その天体・その角度が吉か凶か
-function prgIsGood(nk, ang){
-  if(ang===120) return true;
-  if(ang===0) return !(PRG[nk]&&PRG[nk].hardConj);  // 土星・海王星は合も凶
-  return false;                                      // 90・180 は凶
-}
+/* ===== 出生地 =====
+   経度は地方恒星時にそのまま効き、アセンダントの度数を動かします。
+   経度1度＝時間にして4分＝アセンダントで約1度。
+   都道府県を基本にして、東西に広いところだけ分けています。 */
+const PLACES=[
+ ["北海道・東北",[
+  ["北海道（札幌・道央）",43.06,141.35],["北海道（函館・道南）",41.77,140.73],
+  ["北海道（旭川・道北）",43.77,142.36],["北海道（釧路・十勝）",42.98,144.38],
+  ["北海道（根室・網走）",43.33,145.58],
+  ["青森（青森市）",40.82,140.74],["青森（八戸）",40.51,141.49],
+  ["岩手（盛岡）",39.70,141.15],["宮城（仙台）",38.27,140.87],
+  ["秋田（秋田市）",39.72,140.10],["山形（山形市）",38.24,140.36],["福島（福島市）",37.75,140.47]
+ ]],
+ ["関東",[
+  ["茨城（水戸）",36.34,140.45],["栃木（宇都宮）",36.57,139.88],["群馬（前橋）",36.39,139.06],
+  ["埼玉（さいたま）",35.86,139.65],["千葉（千葉市）",35.61,140.12],
+  ["東京（23区・多摩）",35.69,139.69],["東京（伊豆諸島・八丈島）",33.11,139.79],
+  ["東京（小笠原・父島）",27.09,142.19],["神奈川（横浜）",35.45,139.64]
+ ]],
+ ["中部",[
+  ["新潟（新潟市）",37.90,139.02],["新潟（上越）",37.15,138.24],
+  ["富山（富山市）",36.70,137.21],["石川（金沢）",36.59,136.63],["福井（福井市）",36.07,136.22],
+  ["山梨（甲府）",35.66,138.57],["長野（長野市）",36.65,138.18],["岐阜（岐阜市）",35.39,136.72],
+  ["静岡（静岡市）",34.98,138.38],["静岡（浜松）",34.71,137.73],["愛知（名古屋）",35.18,136.91]
+ ]],
+ ["近畿",[
+  ["三重（津）",34.73,136.51],["滋賀（大津）",35.00,135.87],["京都（京都市）",35.02,135.76],
+  ["大阪（大阪市）",34.69,135.50],["兵庫（神戸）",34.69,135.20],["奈良（奈良市）",34.69,135.83],
+  ["和歌山（和歌山市）",34.23,135.17],["和歌山（新宮）",33.73,135.99]
+ ]],
+ ["中国・四国",[
+  ["鳥取（鳥取市）",35.50,134.24],["島根（松江）",35.47,133.05],["島根（浜田）",34.90,132.08],
+  ["岡山（岡山市）",34.66,133.93],["広島（広島市）",34.40,132.46],["広島（福山）",34.49,133.36],
+  ["山口（山口市）",34.19,131.47],["徳島（徳島市）",34.07,134.55],["香川（高松）",34.34,134.05],
+  ["愛媛（松山）",33.84,132.77],["高知（高知市）",33.56,133.53]
+ ]],
+ ["九州・沖縄",[
+  ["福岡（福岡市）",33.59,130.40],["佐賀（佐賀市）",33.25,130.30],["長崎（長崎市）",32.74,129.87],
+  ["熊本（熊本市）",32.79,130.74],["大分（大分市）",33.24,131.61],["宮崎（宮崎市）",31.91,131.42],
+  ["鹿児島（鹿児島市）",31.60,130.56],["鹿児島（奄美大島）",28.38,129.49],
+  ["沖縄（那覇・本島）",26.21,127.68],["沖縄（宮古島）",24.81,125.28],["沖縄（石垣・八重山）",24.34,124.16]
+ ]]
+];
+const PLACE_INDEX={};
+PLACES.forEach(function(g){g[1].forEach(function(e){PLACE_INDEX[e[0]]=[e[1],e[2]];});});
 
-// プログレス月の黄経（セカンダリ・プログレッション：生後1日＝1年）
-function progressedMoonLon(birthUTC, nowUTC){
-  const yrs=(nowUTC-birthUTC)/(365.2422*86400000);
-  const pdate=new Date(birthUTC.getTime()+yrs*86400000);
-  return eclipticLon("moon", pdate);
-}
-// プログレス月が1年に進む度数（人により12〜15度）
-function progressedMoonSpeed(birthUTC, nowUTC){
-  const a=progressedMoonLon(birthUTC,nowUTC);
-  const b=progressedMoonLon(birthUTC,new Date(nowUTC.getTime()+365.2422*86400000));
-  return ((b-a)%360+360)%360;
-}
+(function buildPlaceSelect(){
+  const sel=document.getElementById('pref'); if(!sel)return;
+  PLACES.forEach(function(g){
+    const og=document.createElement('optgroup'); og.label=g[0];
+    g[1].forEach(function(e){
+      const o=document.createElement('option'); o.value=e[0]; o.textContent=e[0]; og.appendChild(o);
+    });
+    sel.appendChild(og);
+  });
+  const og2=document.createElement('optgroup'); og2.label='日本以外';
+  const o2=document.createElement('option'); o2.value='manual'; o2.textContent='海外・その他（緯度経度を入れる）';
+  og2.appendChild(o2); sel.appendChild(og2);
+  sel.addEventListener('change',function(){
+    document.getElementById('fld-manual').style.display=(sel.value==='manual')?'grid':'none';
+  });
+})();
 
-const TR_PLANETS=["jup","sat","ura","nep","plu"]; // トランジット側
-const TR_NAME={jup:"木星",sat:"土星",ura:"天王星",nep:"海王星",plu:"冥王星"};
-const ANGLE_NAME={0:"合",90:"スクエア",120:"トライン",180:"オポジション"};
+// 選ばれている出生地を返す。未選択・入力不足なら null
+function getPlace(){
+  const sel=document.getElementById('pref'); if(!sel||!sel.value) return null;
+  if(sel.value==='manual'){
+    const la=parseFloat(document.getElementById('mlat').value);
+    const lo=parseFloat(document.getElementById('mlon').value);
+    const tz=parseFloat(document.getElementById('mtz').value);
+    if(!isFinite(la)||!isFinite(lo)||la<-89.9||la>89.9||lo<-180||lo>180) return null;
+    const nm=`北緯${la.toFixed(2)}° ${lo>=0?"東経":"西経"}${Math.abs(lo).toFixed(2)}°`;
+    return {name:nm, lat:la, lon:lo, tz:(isFinite(tz)?tz:9), manual:true};
+  }
+  const f=PLACE_INDEX[sel.value];
+  return f?{name:sel.value, lat:f[0], lon:f[1], tz:9, manual:false}:null;
+}
+// 日本のサマータイム（1948〜1951年の夏）にかかる生年月日か
+function maybeJapanDST(y,m){ return y>=1948&&y<=1951&&m>=4&&m<=9; }
+
+(function placeInit(){
+  const sel=document.getElementById('pref'); if(!sel)return;
+  // 三命クロス法や共有リンクから場所を受け取る（例: ?pl=広島（福山））
+  const q=new URLSearchParams(location.search);
+  const qp=q.get('pl');
+  if(qp&&(PLACE_INDEX[qp]||qp==='manual')){ sel.value=qp; sel.dispatchEvent(new Event('change')); }
+  // サマータイムの注意書きを、年と月に応じて出し入れ
+  const yEl=document.getElementById('yyy'), mEl=document.getElementById('mmm');
+  const warn=document.getElementById('dst-warn');
+  function syncDST(){
+    if(!warn)return;
+    warn.style.display=maybeJapanDST(+yEl.value, +mEl.value)?'block':'none';
+  }
+  if(yEl) yEl.addEventListener('input',syncDST);
+  if(mEl) mEl.addEventListener('input',syncDST);
+  syncDST();
+})();
 
 function norm(x){x%=360;return x<0?x+360:x;}
 // astronomy-engine の天体名マップ
@@ -925,6 +1107,64 @@ function eclipticLon(k, dateUTC){
 }
 function signIdx(lon){return Math.floor(norm(lon)/30);}
 function signOf(lon){return SIGNS[signIdx(lon)];}
+// 度数を「12°34'」の形に。切り上げで星座がずれないよう、分は切り捨て
+function degStr(lon){
+  const d=norm(lon)%30, deg=Math.floor(d), mi=Math.floor((d-deg)*60);
+  return deg+"°"+String(mi).padStart(2,"0")+"'";
+}
+
+/* ===== アセンダント・MC・ハウス（プラシーダス） =====
+   RAMC＝地方恒星時。ASCは地平線と黄道の交点、MCは子午線と黄道の交点。
+   プラシーダスの中間カスプは、その点が自分の半弧をどれだけ進んだかで決めるため、
+   数値を繰り返し当てはめて収束させます。 */
+const DEG=Math.PI/180;
+function computeHouses(dateUTC, lat, lon){
+  const ramc=norm(Astronomy.SiderealTime(dateUTC)*15+lon);   // 地方恒星時（度）
+  const eps=Astronomy.e_tilt(Astronomy.MakeTime(dateUTC)).tobl; // 真黄道傾斜角（度）
+  const e=eps*DEG, phi=lat*DEG, r=ramc*DEG;
+  const mc =norm(Math.atan2(Math.sin(r), Math.cos(r)*Math.cos(e))/DEG);
+  const asc=norm(Math.atan2(Math.cos(r), -(Math.sin(r)*Math.cos(e)+Math.tan(phi)*Math.sin(e)))/DEG);
+  const lonAtRA=function(ra){const q=ra*DEG;return norm(Math.atan2(Math.sin(q),Math.cos(q)*Math.cos(e))/DEG);};
+  function cusp(startRA,f,night,fromIC){
+    let ra=startRA;
+    for(let i=0;i<40;i++){
+      const l=lonAtRA(ra)*DEG;
+      const dec=Math.asin(Math.sin(e)*Math.sin(l));
+      const x=Math.tan(phi)*Math.tan(dec);
+      if(Math.abs(x)>=1) return null;               // 極圏：その点は沈まない／昇らない
+      const ad=Math.asin(x)/DEG;                    // 出没差
+      const sd=night?(90-ad):(90+ad);               // 半弧（昼／夜）
+      const next=fromIC?norm(ramc+180-f*sd):norm(ramc+f*sd);
+      const gap=Math.abs(((next-ra+540)%360)-180);
+      ra=next;
+      if(gap<1e-9) break;
+    }
+    return lonAtRA(ra);
+  }
+  const c11=cusp(norm(ramc+30),1/3,false,false);
+  const c12=cusp(norm(ramc+60),2/3,false,false);
+  const c2 =cusp(norm(ramc+120),2/3,true,true);
+  const c3 =cusp(norm(ramc+150),1/3,true,true);
+  const equal=function(reason){
+    const c=[]; for(let i=0;i<12;i++) c.push(norm(asc+i*30));
+    return {asc:asc,mc:mc,cusps:c,system:"イコールハウス",fallback:reason};  // reason は「〜のため」
+  };
+  if([c11,c12,c2,c3].some(function(v){return v===null;})) return equal("緯度が高い");
+  const cusps=[asc,c2,c3,norm(mc+180),norm(c11+180),norm(c12+180),
+               norm(asc+180),norm(c2+180),norm(c3+180),mc,c11,c12];
+  for(let i=0;i<12;i++){                            // カスプの並びが崩れていないか確認
+    const w=norm(cusps[(i+1)%12]-cusps[i]);
+    if(!(w>0&&w<180)) return equal("計算が収束しない");
+  }
+  return {asc:asc,mc:mc,cusps:cusps,system:"プラシーダス",fallback:null};
+}
+// その黄経が何室にあるか（1〜12）
+function houseOf(lon,cusps){
+  for(let i=0;i<12;i++){
+    if(norm(lon-cusps[i]) < norm(cusps[(i+1)%12]-cusps[i])) return i+1;
+  }
+  return 12;
+}
 
 function cast(){
  const name=document.getElementById('name').value.trim();
@@ -943,38 +1183,62 @@ function cast(){
    if(!(bh>=0&&bh<=23)){alert("時は0〜23で入れてください");return;}
    if(!(bmi>=0&&bmi<=59)){alert("分は0〜59で入れてください");return;}
  }
- // JST → UTC（JST=UTC+9）。Date.UTCは負の時でも前日へ正しく繰り下がります
- const birthUTC=new Date(Date.UTC(y, m-1, dd, bh-9, bmi, 0));
+ // 出生地。日本は一律 UTC+9、海外は入力された時差を使います
+ const place=getPlace();
+ const tz=place?place.tz:9;
+ // 現地時刻 → UTC。Date.UTCは負の時でも前日へ正しく繰り下がります
+ const birthUTC=new Date(Date.UTC(y, m-1, dd, bh-tz, bmi, 0));
 
  const natal=ALL.map(p=>({...p,lon:eclipticLon(p.k, birthUTC)}));
- const transitDate=new Date(); // 今この瞬間
- const transit=ALL.map(p=>({...p,lon:eclipticLon(p.k, transitDate)}));
- // 接近/離反の判定用に、少し先（5日後）の位置も求める
- const futureDate=new Date(transitDate.getTime()+5*24*3600*1000);
- const transitFuture=ALL.map(p=>({...p,lon:eclipticLon(p.k, futureDate)}));
+ // アセンダントは、出生時刻と場所の両方がそろったときだけ出せます
+ const H=(timeKnown&&place)?computeHouses(birthUTC, place.lat, place.lon):null;
+ // ハウスはプラシーダスが出せるときだけ。代用はしません
 
  const who=name?`${name}さん`:"あなた";
 
- const R=205,cx=230,cy=230;
+ const R=196,cx=230,cy=230;
  // リング構成（外側→内側）
- const rTransit = R;        // トランジット天体を置く半径
- const rZodOut  = R-26;     // 星座帯の外枠
- const rZodIn   = R-58;     // 星座帯の内枠
- const rNatal   = R-86;     // ネイタル天体を置く半径
- const rAspect  = R-118;    // アスペクト線の半径
+ const rZodOut  = R;        // 星座帯の外枠
+ const rZodIn   = R-34;     // 星座帯の内枠
+ const rNatal   = R-62;     // 天体を置く半径
+ const rHouseNo = R-112;    // ハウス番号の半径
+ const rAspect  = R-130;    // アスペクト線の半径
  let svg=`<svg viewBox="0 0 460 460" width="460">`;
  // 背景リング
  svg+=`<circle cx="${cx}" cy="${cy}" r="${rZodOut}" fill="rgba(255,255,255,.02)" stroke="#c9a24b" stroke-opacity=".7" stroke-width="1.8"/>`;
  svg+=`<circle cx="${cx}" cy="${cy}" r="${rZodIn}" fill="none" stroke="#c9a24b" stroke-opacity=".55" stroke-width="1.8"/>`;
  svg+=`<circle cx="${cx}" cy="${cy}" r="${rAspect}" fill="rgba(120,90,200,.06)" stroke="#c9a24b" stroke-opacity=".3" stroke-width="1.4"/>`;
- // 外周にトランジット用の薄いガイド円
- svg+=`<circle cx="${cx}" cy="${cy}" r="${rTransit+14}" fill="none" stroke="#9fb8ff" stroke-opacity=".15" stroke-dasharray="2 4"/>`;
 
+ // ハウスが出せるときはアセンダントを左（9時の位置）に、
+ // 出せないときは今までどおり太陽の星座の頭を左に置きます
  const sunNatal=natal.find(p=>p.k==="sun");
- const sunSignStart=signIdx(sunNatal.lon)*30;
- const rot=lon=>norm(lon-sunSignStart);
+ // ハウスが出せるときはアセンダントを左に。
+ // 出せないときは牡羊座0度を左に固定します。太陽の星座を左に置くと
+ // 太陽がつねにアセンダントの位置に来て、日の出の空に見えてしまうためです。
+ const originLon = H ? H.asc : 0;
+ const rot=lon=>norm(lon-originLon);
  const ang=lon=>(rot(lon))*Math.PI/180;
  const pt=(lon,r)=>{const a=ang(lon);return [cx-r*Math.cos(a), cy+r*Math.sin(a)];};
+
+ // ハウスの区切りと番号
+ if(H){
+   for(let i=0;i<12;i++){
+     const cl=H.cusps[i];
+     const major=(i===0||i===3||i===6||i===9);   // ASC・IC・DSC・MC
+     const [x1,y1]=pt(cl,rZodIn);const [x2,y2]=pt(cl,rAspect);
+     svg+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${major?'#e6cd8e':'#c9a24b'}" `
+        + `stroke-opacity="${major?.85:.32}" stroke-width="${major?1.6:1}" ${major?'':'stroke-dasharray="3 4"'}/>`;
+     // 番号は部屋の真ん中に
+     const w=norm(H.cusps[(i+1)%12]-cl);
+     const [nx,ny]=pt(norm(cl+w/2),rHouseNo);
+     svg+=`<text x="${nx}" y="${ny+4}" fill="#c9a24b" fill-opacity=".85" font-size="11" text-anchor="middle">${i+1}</text>`;
+   }
+   // ASCとMCの札を外側に
+   [["ASC",H.asc],["MC",H.mc]].forEach(function(o){
+     const [lx,ly]=pt(o[1],rZodOut+15);
+     svg+=`<text x="${lx}" y="${ly+4}" fill="#e6cd8e" font-size="11" text-anchor="middle" letter-spacing="1">${o[0]}</text>`;
+   });
+ }
 
  // 星座帯（区切り線＋グリフ）
  for(let s=0;s<12;s++){
@@ -1009,10 +1273,9 @@ function cast(){
    const m={}; sorted.forEach(o=>m[o.p.k]=o.disp); return m;
  }
  const natalDisp=spread(natal);
- const transDisp=spread(transit);
  const ptDisp=(disp,r)=>{const a=disp*Math.PI/180;return [cx-r*Math.cos(a), cy+r*Math.sin(a)];};
 
- // ネイタル天体（内側・金）＋度数
+ // 天体（金）＋度数
  for(const p of natal){
    const disp=natalDisp[p.k];
    const [x,y]=ptDisp(disp,rNatal);
@@ -1023,24 +1286,25 @@ function cast(){
    const [dx,dy]=ptDisp(disp,rNatal-19);
    svg+=`<text x="${dx}" y="${dy+4}" fill="#e6cd8e" font-size="10" text-anchor="middle">${deg}°</text>`;
  }
- // トランジット天体（外側・青）
- for(const p of transit){
-   const disp=transDisp[p.k];
-   const [x,y]=ptDisp(disp,rTransit+14);
-   svg+=`<circle cx="${x}" cy="${y}" r="11" fill="#0e1430" stroke="#9fb8ff" stroke-width="1.2"/>`;
-   svg+=`<text x="${x}" y="${y+4}" fill="#bcd0ff" font-size="12" text-anchor="middle">${p.g}</text>`;
- }
  svg+=`</svg>`;
 
  const persPlanets=PERSONAL.map(p=>{
    const np=natal.find(x=>x.k===p.k);
    const si=signIdx(np.lon);const s=SIGNS[si];
    const t=TYPE[p.k][si];
+   // ハウスが出せるときだけ「どの場面で出るか」を足します
+   let hs="", rm="";
+   if(H){
+     const h=houseOf(np.lon,H.cusps);
+     rm=`<span class="rm">／ ${h}室</span>`;
+     hs=`<div class="hs"><b>${HOUSE_LEAD[p.k]}｜${HOUSE_NAME[h-1]}</b><br>${PLANET_HOUSE[p.k][h-1]}</div>`;
+   }
    return `<div class="pl">
      <div class="gl">${p.g}</div>
      <div class="body">
-       <div class="hd"><span class="sign">${PROLE[p.k]}</span>　<span style="color:var(--mist);font-size:12px;font-weight:400">${p.n}・${s.n}</span></div>
+       <div class="hd"><span class="sign">${PROLE[p.k]}</span>　<span style="color:var(--mist);font-size:12px;font-weight:400">${p.n}・${s.n}</span>${rm}</div>
        <p>${t[1]}</p>
+       ${hs}
      </div>
    </div>`;
  }).join("");
@@ -1148,84 +1412,94 @@ function cast(){
    carVerdict += `<br>四つの要素がそろった、バランスのいい人。これといった欠けはありません。`;
  }
 
+ // 入れた内容の確認だけ。計算方式は書きません
  const timeNote=`<div style="text-align:center;font-size:12px;color:var(--mist);margin-top:6px;opacity:.85">`
-   + (timeKnown
-       ? `出生時刻 ${bh}時${String(bmi).padStart(2,"0")}分（日本時間）で計算しています`
-       : `出生時刻が不明のため、12時として計算しています（月の度数に最大±6.5°の幅）`)
+   + `${y}年${m}月${dd}日`
+   + (timeKnown ? ` ${bh}時${String(bmi).padStart(2,"0")}分` : ``)
+   + (place ? ` ／ ${escHTML(place.name)}` : ``)
+   + (timeKnown ? `` : `<br>出生時刻が不明のため、その日の正午の空で計算しています`)
    + `</div>`;
 
- /* ===== トランジット解説（T社会・トランス天体 × N個人天体） ===== */
- const TANG=[{a:0,o:7,nm:0},{a:90,o:6,nm:90},{a:120,o:6,nm:120},{a:180,o:7,nm:180}];
- function orbTo(tLon,nLon,target){
-   let diff=Math.abs(tLon-nLon);if(diff>180)diff=360-diff;
-   return Math.abs(diff-target);
- }
- const trHits=[];
- for(const tp of TR_PLANETS){
-   const T=transit.find(x=>x.k===tp);
-   const Tf=transitFuture.find(x=>x.k===tp);
-   for(const np of ["sun","moon","mer","ven","mar"]){
-     const N=natal.find(x=>x.k===np);
-     let diff=Math.abs(T.lon-N.lon);if(diff>180)diff=360-diff;
-     for(const ang of TANG){
-       const orbNow=Math.abs(diff-ang.a);
-       if(orbNow<=ang.o){
-         const key=tp+"_"+np;
-         const txt=(TR[key]&&TR[key][ang.nm])?TR[key][ang.nm]:null;
-         // 5日後のオーブと比べて、縮む＝接近中(applying)、広がる＝離反中(separating)
-         const orbFuture=orbTo(Tf.lon, N.lon, ang.a);
-         const applying = orbFuture < orbNow;
-         trHits.push({tp,np,ang:ang.nm,orb:orbNow,txt,Tname:TR_NAME[tp],Nname:N.n,applying});
-         break;
-       }
-     }
-   }
- }
- // 強まり中（接近中）だけを対象に、オーブの小さい順
- trHits.sort((a,b)=>a.orb-b.orb);
- const trShown=trHits.filter(h=>h.txt && h.applying).slice(0,5);
- const angMark={0:"☌",90:"□",120:"△",180:"☍"};
- const angCol={0:"#e6cd8e",90:"#d98a9a",120:"#7fd1a8",180:"#d98a9a"};
- // 角度で吉凶ラベル：120/60=追い風、90/180=注意、0=強く出る
- const FLAG={
-   120:{t:"追い風",c:"#7fd1a8"},60:{t:"追い風",c:"#7fd1a8"},
-   90:{t:"注意",c:"#e9a8b4"},180:{t:"注意",c:"#e9a8b4"},
-   0:{t:"強く出る",c:"#e6cd8e"}
- };
- const trHtml=trShown.length?trShown.map(h=>{
-   const f=FLAG[h.ang]||{t:"",c:"var(--mist)"};
-   const flag=`<span style="display:inline-block;font-size:12px;color:#1a1428;background:${f.c};border-radius:6px;padding:1px 9px;margin-left:8px;vertical-align:middle;letter-spacing:.04em">${f.t}</span>`;
-   return `<li style="font-size:15.5px"><span class="nm" style="font-size:16px">N${h.Nname} <span style="color:${angCol[h.ang]};font-size:18px">${angMark[h.ang]}</span> T${h.Tname}</span>${flag}<br>${h.txt}</li>`;
- }).join(""):`<li>今は、空の星が強く当たっていない静かな時期です。外から押される力が少ないぶん、自分で決めたことがそのまま進みます。動くなら今のうち。</li>`;
-
- // ===== プログレス月の暗示 =====
- // 出来事を起こす針。オーブ前後1度に入っているときだけ出す
- let prgHtml="";
- {
-   const pLon=progressedMoonLon(birthUTC, transitDate);
-   const speed=progressedMoonSpeed(birthUTC, transitDate);
-   let best=null;
-   for(const nk of PRG_TARGETS){
-     const N=natal.find(p=>p.k===nk); if(!N) continue;
-     for(const a of [0,90,120,180]){
-       const orb=orbTo(pLon, N.lon, a);
-       if(orb<=PRG_ORB && (!best || orb<best.orb)){
-         const good=prgIsGood(nk,a);
-         best={nk:nk, Nname:N.n, ang:a, orb:orb, good:good,
-               txt:(PRG[nk]||{})[good?"good":"bad"]||""};
-       }
-     }
-   }
-   if(best && best.txt){
-     const f=best.good?{t:"吉角",c:"#7fd1a8"}:{t:"凶角",c:"#e9a8b4"};
-     const flag=`<span style="display:inline-block;font-size:12px;color:#1a1428;background:${f.c};border-radius:6px;padding:1px 9px;margin-left:8px;vertical-align:middle;letter-spacing:.04em">${f.t}</span>`;
-     prgHtml=`
-   <div class="num-title"><span class="num">4</span>プログレス月の暗示</div>
+ /* ===== 3 アセンダント（時刻と場所がそろったときだけ） ===== */
+ let ascHtml="";
+ if(H){
+   const ai=signIdx(H.asc), mi2=signIdx(H.mc);
+   ascHtml=`
+   <div class="num-title"><span class="num">3</span>外から見えるあなた</div>
    <div class="rule"></div>
-   <p style="font-size:13px;color:var(--mist);margin:-4px 0 14px;text-align:center">出来事を起こす時計の針が、いまあなたの生まれつきの${best.Nname}を指しています</p>
-   <ul class="asp"><li style="font-size:15.5px"><span class="nm" style="font-size:16px">P月 <span style="color:${angCol[best.ang]};font-size:18px">${angMark[best.ang]}</span> N${best.Nname}</span>${flag}<br>${best.txt}</li></ul>
-`;
-   }
+   <p style="font-size:13px;color:var(--mist);margin:-4px 0 12px;text-align:center">初対面の印象と、仕事で見せる顔</p>
+   <div class="angle-grid">
+     <div class="angle">
+       <div class="cap">Ascendant</div>
+       <div class="jp">アセンダント ＝ <b>初対面の印象</b></div>
+       <div class="val">${SIGNS[ai].g} ${SIGNS[ai].n}<span class="deg">${degStr(H.asc)}</span></div>
+       <p>${ASC_TXT[ai]}</p>
+     </div>
+     <div class="angle">
+       <div class="cap">Midheaven</div>
+       <div class="jp">MC ＝ <b>仕事で見せる顔</b></div>
+       <div class="val">${SIGNS[mi2].g} ${SIGNS[mi2].n}<span class="deg">${degStr(H.mc)}</span></div>
+       <p>${MC_TXT[mi2]}</p>
+     </div>
+   </div>`;
+ } else {
+   const lack = !timeKnown && !place ? "出生時刻と生まれた場所"
+              : !timeKnown ? "出生時刻" : "生まれた場所";
+   ascHtml=`
+   <div class="num-title"><span class="num">3</span>外から見えるあなた</div>
+   <div class="rule"></div>
+   <div class="askbox">
+     <b>${lack}</b>を入れると、ここに<br>アセンダント（初対面の印象）が出ます。
+   </div>`;
+ }
+
+ /* ===== 5 場面ごとの一覧（ハウスが出せるときだけ） ===== */
+ let houseHtml="";
+ if(H){
+   const byHouse={};
+   natal.forEach(function(p){
+     const h=houseOf(p.lon,H.cusps);
+     (byHouse[h]=byHouse[h]||[]).push(p);
+   });
+   const order=Object.keys(byHouse).map(Number).sort(function(x,y){
+     return byHouse[y].length-byHouse[x].length || x-y;
+   });
+   const topN=byHouse[order[0]].length;
+   const hrows=order.map(function(h){
+     const list=byHouse[h];
+     const top=(list.length>=3 && list.length===topN);
+     const chips=list.map(function(p){return `<span><i>${p.g}</i>${p.n}</span>`;}).join("");
+     return `<div class="hrow${top?' top':''}">
+       <div class="hno">${h}室</div>
+       <div class="hbody">
+         <div class="hname">${HOUSE_NAME[h-1]}${top?'<span class="star">主戦場</span>':''}</div>
+         <div class="hpl">${chips}</div>
+       </div>
+     </div>`;
+   }).join("");
+   const heavy=order.filter(function(h){return byHouse[h].length>=3;});
+   houseHtml=`
+   <div class="num-title"><span class="num">5</span>どの場面で力が出るか</div>
+   <div class="rule"></div>
+   <p style="font-size:13px;color:var(--mist);margin:-4px 0 10px;text-align:center">星が入っている場面を、多い順に並べています</p>
+   <div class="hlist">${hrows}</div>
+   ${heavy.map(function(h){
+     return `<div class="hs-note"><div class="lb">${h}室・${HOUSE_NAME[h-1]}に${byHouse[h].length}天体</div>`
+       + `<p>${who}の人生は、この場面に時間とエネルギーが吸い寄せられます。`
+       + `他がうまくいかない時期でも、ここに戻れば力が湧きます。</p></div>`;
+   }).join("")}
+   ${H.fallback
+     ? `<p class="solar-tag">${H.fallback}ため<b>プラシーダス</b>が使えないので、<b>イコールハウス</b>で30度ずつ分割しています。</p>`
+     : `<p class="solar-tag">ハウスは<b>プラシーダス</b>で分割しています。</p>`}`;
+ } else {
+   const lack = !timeKnown && !place ? "出生時刻と生まれた場所"
+              : !timeKnown ? "出生時刻" : "生まれた場所";
+   houseHtml=`
+   <div class="num-title"><span class="num">5</span>どの場面で力が出るか</div>
+   <div class="rule"></div>
+   <div class="askbox">
+     <b>${lack}</b>を入れると、ここに<br>10天体それぞれの「力が出る場面」が出ます。
+   </div>`;
  }
 
  const personalTitle = name
@@ -1238,8 +1512,9 @@ function cast(){
    <div class="rule"></div>
    <div class="wheel-wrap">${svg}</div>
    <div class="legend">
-     <span><b style="color:#c9a24b">●</b> 内側＝あなた（生まれた時・本質）</span>
-     <span><b style="color:#9fb8ff">●</b> 外側＝今の空（トランジット・流れ）</span>
+     <span><b style="color:#c9a24b">●</b> 生まれた時の天体</span>
+     ${H?`<span><b style="color:#e6cd8e">│</b> 太い線＝ASC・MC</span><span>細い点線＝ハウスの区切り</span>`
+        :`<span>内側の数字＝ハウス</span>`}
    </div>
    ${timeNote}
 
@@ -1253,21 +1528,18 @@ function cast(){
    <div class="rule"></div>
    ${persPlanets}
 
-   <div class="num-title"><span class="num">3</span>性格のクセ</div>
+   ${ascHtml}
+
+   <div class="num-title"><span class="num">4</span>性格のクセ</div>
    <div class="rule"></div>
    <ul class="asp">${persHtml}</ul>
 
-   ${prgHtml}
-
-   <div class="num-title"><span class="num">${prgHtml?5:4}</span>今の状況</div>
-   <div class="rule"></div>
-   <p style="font-size:13px;color:var(--mist);margin:-4px 0 14px;text-align:center">今この時期、空の星があなたの天体にどう響いているか</p>
-   <ul class="asp">${trHtml}</ul>
+   ${houseHtml}
 
    <div class="share-row"><button type="button" class="share-btn" onclick="resetForm()">別の人で占う</button></div>
 
    <div class="cta-wrap">
-     <p class="cta-lead">本質と今の流れは見えました。<br>では──<b>いま動くべきか、待つべきか？</b></p>
+     <p class="cta-lead">生まれ持った本質は見えました。<br>では──<b>いま動くべきか、待つべきか？</b></p>
      <a class="cta-btn" href="https://punnti333.github.io/sanmei-cross/?y=${y}&m=${m}&d=${dd}" target="_blank" rel="noopener" onclick="window.open('https://punnti333.github.io/sanmei-cross/?y=${y}&m=${m}&d=${dd}','_blank','noopener');return false;">今動くべきか診断する（三命クロス法へ）</a>
      <p class="cta-note">四柱推命と九星気学を重ねて、いまのタイミングを読み解きます</p>
    </div>
