@@ -132,9 +132,10 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .hrow .hno{flex:none;width:44px;text-align:center;color:var(--gold-soft);
     font-weight:700;font-size:14.5px;line-height:1.5;}
   .hrow .hbody{flex:1;min-width:0;}
-  .hrow .hname{font-size:14.5px;color:#fff;font-weight:700;letter-spacing:.03em;}
+  .hrow .hname{font-size:14.5px;color:#fff;font-weight:700;letter-spacing:.03em;
+    display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;}
   .hrow .hname .star{font-size:11.5px;color:#1a1428;background:var(--gold-soft);
-    border-radius:6px;padding:1px 8px;margin-left:8px;vertical-align:middle;letter-spacing:.04em;font-weight:700;}
+    border-radius:6px;padding:2px 9px;letter-spacing:.04em;font-weight:700;white-space:nowrap;}
   .hrow .hpl{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 14px;}
   .hrow .hpl span{font-size:13.5px;color:#ece7ff;white-space:nowrap;}
   .hrow .hpl span i{font-style:normal;color:var(--gold-soft);font-size:15px;margin-right:3px;}
@@ -144,6 +145,15 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .askbox{border:1.5px dashed var(--line);border-radius:14px;padding:16px 16px;margin:16px 0 2px;
     background:rgba(255,255,255,.03);text-align:center;}
   .askbox b{color:var(--gold-soft);}
+  .week{margin:12px 0 4px;}
+  .week li{list-style:none;border-left:2.5px solid var(--gold);padding:2px 0 2px 12px;margin:0 0 14px;}
+  .week .ttl{font-size:15px;color:#fff;font-weight:700;letter-spacing:.03em;
+    display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;}
+  .week .ttl .sym{font-size:18px;}
+  .week .ttl .flag{font-size:11.5px;color:#1a1428;border-radius:6px;padding:2px 9px;
+    font-weight:700;letter-spacing:.04em;white-space:nowrap;}
+  .week p{font-size:14.5px;color:#efe9ff;margin-top:3px;}
+  .week .quiet{border-left-color:var(--line);}
   .solar-tag{font-size:12.5px;color:var(--mist);line-height:1.75;margin-top:14px;
     border:1.5px dashed var(--line);border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.03);}
   .solar-tag b{color:var(--gold-soft);}
@@ -923,6 +933,32 @@ const MC_TXT=[
 /* ===== 12ハウス＝人生のどの場面か ===== */
 const HOUSE_NAME=["自分自身","お金・才能","会話・学び","家庭・住まい","恋愛・楽しみ","日々の仕事・健康",
  "パートナー","深い縁","遠方・専門","立場・天職","仲間・希望","ひとりの時間"];
+/* ===== 今週の状況 =====
+   T＝金星・火星（動きが速く、数日〜10日ほどで通り過ぎる天体）
+   N＝太陽・月・水星・金星・火星
+   木星以遠は一つの角度が1年半〜8年続くため、「今週」には使いません。 */
+const TRW={
+ "ven_sun":{0:"人から良くしてもらえる。誘いや親切が向こうから来るので、遠慮せず受けて。",120:"気分よく過ごせる。人当たりが柔らかくなり、頼みごとが通りやすい。",90:"楽なほうへ流されやすい。やるべきことを後回しにしていないか、一度確かめて。",180:"人に合わせすぎる。いい顔をした結果、自分の予定が潰れる。断る練習を。"},
+ "ven_moon":{0:"心が満たされる。会いたい人に会うと、それだけで整う。",120:"家の中が穏やか。身近な人との時間を意識して取ると、あとで効いてくる。",90:"甘いものと衝動買いに注意。心の隙間を物で埋めようとしていないか。",180:"情に引きずられる。頼まれごとを全部引き受けて、あとで疲れが出る。"},
+ "ven_mer":{0:"会話が弾む。言いにくかったことも、今なら角が立たずに言える。",120:"連絡がうまく回る。返事が早く戻り、話がまとまりやすい。",90:"口先だけで済ませたくなる。その場しのぎの返事が、あとの負担になる。",180:"相手に合わせた言葉を選びすぎる。本音を飲み込むと、言い方があとできつくなる。"},
+ "ven_ven":{0:"一年でいちばん魅力が出る。人前に出る予定を入れると、うまくいく。",120:"好きなものに囲まれると調子が上がる。楽しみを我慢しないほうがいい。",90:"財布のひもがゆるむ。高い買い物は、日を置いてから決めて。",180:"隣の芝が青く見える。人と比べ始めると、手元にあるものが見えなくなる。"},
+ "ven_mar":{0:"好きなものに素直に動ける。気になっていた相手や場所へ、今のうちに。",120:"やりたいことと楽しさが噛み合う。勢いに任せて進めて大丈夫。",90:"欲しい気持ちが先に立つ。勢いで決めたことが、あとで重荷になりやすい。",180:"好意と苛立ちが同じ相手に向く。強く出る前に、一日置いてから話して。"},
+ "mar_sun":{0:"やる気が前に出る。迷っていたことに手を付けるなら今。",120:"動いた分だけ返ってくる。予定を詰めても息切れしない。",90:"焦りが出る。急かされて決めると、あとで直す羽目になる。",180:"人とぶつかりやすい。正論で押し切る前に、相手の言い分を最後まで聞いて。"},
+ "mar_moon":{0:"感情が直接出る。言いたいことは言えるが、勢い余りやすい。",120:"気持ちと体が噛み合う。家のことも仕事も、まとめて片付く。",90:"些細なことでいらつく。寝不足だと確実に悪化するので、まず寝る。",180:"身内と衝突しやすい。家の中でこそ、口調を一段落として。"},
+ "mar_mer":{0:"頭の回転が上がる。言葉が早く出るぶん、鋭くなりすぎることもある。",120:"話が前に進む。交渉や打ち合わせを入れるなら、この時期がいい。",90:"言い過ぎる。送信ボタンを押す前に、一度読み返して。",180:"議論が勝ち負けになりやすい。正しさより、その後の関係を優先して。"},
+ "mar_ven":{0:"好きなものに突き進む。欲しいものも会いたい人も、はっきりする。",120:"楽しみと行動が噛み合う。誘われたら乗ると、いい方に転がる。",90:"欲が急かす。勢いで買う、勢いで告げる。どちらも少し待てるか考えて。",180:"好きな相手ほど当たりが強くなる。甘えが出ていないか、一度引いて見て。"},
+ "mar_mar":{0:"一年でいちばん力が出る。勝負をかけるなら今。",120:"体が動く。運動でも仕事でも、量を増やして大丈夫。",90:"空回りする。力を入れるほど噛み合わないので、いったん手を止めて。",180:"競争心に火がつく。張り合う相手が現れるが、勝ち負けにこだわると消耗する。"}
+};
+const TRW_T={ven:"金星",mar:"火星"};
+const TRW_ANG={0:{m:"☌",n:"重なる",c:"#e6cd8e",f:"強く出る"},
+               120:{m:"△",n:"支え合う",c:"#7fd1a8",f:"追い風"},
+               90:{m:"□",n:"ぶつかる",c:"#d98a9a",f:"注意"},
+               180:{m:"☍",n:"引っぱり合う",c:"#d98a9a",f:"注意"}};
+const TRW_ORB=3;   // オーブ3度。金星で約5日、火星で約8日つづく幅
+
+/* 部屋の重み。天王星・海王星・冥王星は年単位で同じ場所にいるため、
+   同世代の全員が同じ配置になります。個人を表さないので軽く見ます。 */
+const PL_WEIGHT={sun:3,moon:3,mer:2,ven:2,mar:2,jup:1,sat:1,ura:.5,nep:.5,plu:.5};
 const HOUSE_LEAD={sun:"人生の軸",moon:"心が安らぐ場面",mer:"頭が働く場面",ven:"好きが向かう場面",mar:"力が入る場面"};
 const PLANET_HOUSE={
  sun:[
@@ -1453,6 +1489,48 @@ function cast(){
    </div>`;
  }
 
+ /* ===== 6 今週の状況 =====
+    いま空にいる金星・火星が、生まれた時の5天体に当たっているか。
+    オーブ3度以内、かつ接近中（これから重なりに向かう）ものだけを、近い順に3つまで。 */
+ let weekHtml="";
+ {
+   // 接近中か離反中かは見ません。数日で通り過ぎる天体なので、
+   // 窓に入っている＝いま効いている最中、と考えます。
+   const nowD=new Date();
+   const hits=[];
+   for(const tp of ["ven","mar"]){
+     const tNow=eclipticLon(tp, nowD);
+     for(const np of ["sun","moon","mer","ven","mar"]){
+       const N=natal.find(x=>x.k===np); if(!N) continue;
+       let diff=Math.abs(tNow-N.lon); if(diff>180) diff=360-diff;
+       for(const a of [0,120,90,180]){
+         const orbNow=Math.abs(diff-a);
+         if(orbNow<=TRW_ORB){
+           const txt=TRW[tp+"_"+np] && TRW[tp+"_"+np][a];
+           if(txt) hits.push({tp,np,a,orb:orbNow,txt,Nname:N.n});
+           break;
+         }
+       }
+     }
+   }
+   hits.sort(function(x,y){return x.orb-y.orb;});
+   const shown=hits.slice(0,3);
+   const body = shown.length
+     ? shown.map(function(h){
+         const A=TRW_ANG[h.a];
+         return `<li>
+           <div class="ttl">${escHTML(h.Nname)}<span class="sym" style="color:${A.c}">${A.m}</span>${TRW_T[h.tp]}`
+           + `<span class="flag" style="background:${A.c}">${A.f}</span></div>
+           <p>${h.txt}</p></li>`;
+       }).join("")
+     : `<li class="quiet"><div class="ttl">静かな週</div>
+        <p>今週は、空の星が強く当たっていません。外から押される力が少ないぶん、自分で決めたことがそのまま進みます。動くなら今のうち。</p></li>`;
+   weekHtml=`
+   <div class="num-title"><span class="num">6</span>今週の状況</div>
+   <div class="rule"></div>
+   <ul class="week">${body}</ul>`;
+ }
+
  /* ===== 5 場面ごとの一覧（ハウスが出せるときだけ） ===== */
  let houseHtml="";
  if(H){
@@ -1461,27 +1539,34 @@ function cast(){
      const h=houseOf(p.lon,H.cusps);
      (byHouse[h]=byHouse[h]||[]).push(p);
    });
+   // 天体ごとの重み＋同居ボーナス（2天体目以降に0.5点ずつ）。
+   // 集まっていること自体に意味があるので、単独の部屋に埋もれないようにします。
+   const score=function(h){
+     const list=byHouse[h];
+     const base=list.reduce(function(a,p){return a+(PL_WEIGHT[p.k]||1);},0);
+     return base + Math.max(0, list.length-1)*0.5;
+   };
    const order=Object.keys(byHouse).map(Number).sort(function(x,y){
-     return byHouse[y].length-byHouse[x].length || x-y;
+     return score(y)-score(x) || byHouse[y].length-byHouse[x].length || x-y;
    });
-   const topN=byHouse[order[0]].length;
+   const topScore=score(order[0]);
    const hrows=order.map(function(h){
      const list=byHouse[h];
-     const top=(list.length>=3 && list.length===topN);
+     const top=(score(h)>=7 && score(h)===topScore);
      const chips=list.map(function(p){return `<span><i>${p.g}</i>${p.n}</span>`;}).join("");
      return `<div class="hrow${top?' top':''}">
        <div class="hno">${h}室</div>
        <div class="hbody">
-         <div class="hname">${HOUSE_NAME[h-1]}${top?'<span class="star">主戦場</span>':''}</div>
+         <div class="hname">${HOUSE_NAME[h-1]}${top?'<span class="star">人生の主戦場</span>':''}</div>
          <div class="hpl">${chips}</div>
        </div>
      </div>`;
    }).join("");
-   const heavy=order.filter(function(h){return byHouse[h].length>=3;});
+   const heavy=order.filter(function(h){return score(h)>=7 && score(h)===topScore;});
    houseHtml=`
    <div class="num-title"><span class="num">5</span>どの場面で力が出るか</div>
    <div class="rule"></div>
-   <p style="font-size:13px;color:var(--mist);margin:-4px 0 10px;text-align:center">星が入っている場面を、多い順に並べています</p>
+   <p style="font-size:13px;color:var(--mist);margin:-4px 0 10px;text-align:center">人生の比重が大きい順に並べています</p>
    <div class="hlist">${hrows}</div>
    ${heavy.map(function(h){
      return `<div class="hs-note"><div class="lb">${h}室・${HOUSE_NAME[h-1]}に${byHouse[h].length}天体</div>`
@@ -1490,7 +1575,7 @@ function cast(){
    }).join("")}
    ${H.fallback
      ? `<p class="solar-tag">${H.fallback}ため<b>プラシーダス</b>が使えないので、<b>イコールハウス</b>で30度ずつ分割しています。</p>`
-     : `<p class="solar-tag">ハウスは<b>プラシーダス</b>で分割しています。</p>`}`;
+     : ``}`;
  } else {
    const lack = !timeKnown && !place ? "出生時刻と生まれた場所"
               : !timeKnown ? "出生時刻" : "生まれた場所";
@@ -1535,6 +1620,8 @@ function cast(){
    <ul class="asp">${persHtml}</ul>
 
    ${houseHtml}
+
+   ${weekHtml}
 
    <div class="share-row"><button type="button" class="share-btn" onclick="resetForm()">別の人で占う</button></div>
 
