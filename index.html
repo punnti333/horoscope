@@ -155,6 +155,18 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .askbox{border:1.5px dashed var(--line);border-radius:14px;padding:16px 16px;margin:16px 0 2px;
     background:rgba(255,255,255,.03);text-align:center;}
   .askbox b{color:var(--gold-soft);}
+  /* 中身と覆いを重ねる。grid で同じマスに置くと、
+     箱の高さは「高いほう」に合わせて決まり、ボタンが切れない。 */
+  .blurwrap{display:grid;border-radius:12px;overflow:hidden;}
+  .blurwrap>.blurred{grid-area:1/1;filter:blur(3.5px);opacity:.7;pointer-events:none;user-select:none;}
+  .blurwrap .blurcap{grid-area:1/1;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;gap:9px;padding:22px 14px;
+    background:linear-gradient(180deg,rgba(20,18,38,.20),rgba(20,18,38,.48));}
+  .blurwrap .blurcap .bm{font-size:24px;opacity:.9;}
+  .blurwrap .blurcap .bt{font-size:14px;color:var(--gold-soft);letter-spacing:.1em;font-weight:700;}
+  .blurwrap .blurcap .bb{font-size:13px;cursor:pointer;color:var(--gold-soft);font-weight:700;
+    border:1.5px solid var(--gold);border-radius:10px;padding:10px 20px;background:rgba(201,162,75,.16);}
+  .blurwrap .blurcap .bb:active{background:rgba(201,162,75,.32);}
   .askbtn{font-family:inherit;font-size:14px;margin-top:12px;cursor:pointer;
     background:rgba(201,162,75,.14);border:1.5px solid var(--gold);color:var(--gold-soft);
     border-radius:10px;padding:10px 22px;letter-spacing:.06em;font-weight:700;}
@@ -1341,13 +1353,14 @@ function cast(){
  // ハウスが出せるときはアセンダントを左に。
  // 出せないときは牡羊座0度を左に固定します。太陽の星座を左に置くと
  // 太陽がつねにアセンダントの位置に来て、日の出の空に見えてしまうためです。
- const originLon = H ? H.asc : 0;
+ const originLon = (H && canRead()) ? H.asc : 0;
  const rot=lon=>norm(lon-originLon);
  const ang=lon=>(rot(lon))*Math.PI/180;
  const pt=(lon,r)=>{const a=ang(lon);return [cx-r*Math.cos(a), cy+r*Math.sin(a)];};
 
- // ハウスの区切りと番号
- if(H){
+ // ハウスの区切りと番号。会員でないときは図にも出さない。
+ // 出すと、隠したはずのアセンダントとハウスが図から読めてしまう。
+ if(H && canRead()){
    for(let i=0;i<12;i++){
      const cl=H.cusps[i];
      const major=(i===0||i===3||i===6||i===9);   // ASC・IC・DSC・MC
@@ -1563,7 +1576,8 @@ function cast(){
    <div class="num-title"><span class="num">3</span>外から見えるあなた</div>
    <div class="rule"></div>
    <p style="font-size:13px;color:var(--mist);margin:-4px 0 12px;text-align:center">初対面の印象と、仕事で見せる顔</p>
-   <div class="angle-grid">
+   ${(function(){
+     const g=`<div class="angle-grid">
      <div class="angle">
        <div class="cap">Ascendant</div>
        <div class="jp">アセンダント ＝ <b>初対面の印象</b></div>
@@ -1577,6 +1591,8 @@ function cast(){
        <p>${MC_TXT[mi2]}</p>
      </div>
    </div>`;
+     return canRead()?g:blurHTML(g,'アセンダントとMC');
+   })()}`;
  } else {
    const lack = !timeKnown && !place ? "出生時刻と生まれた場所"
               : !timeKnown ? "出生時刻" : "生まれた場所";
@@ -1628,7 +1644,8 @@ function cast(){
    weekHtml=`
    <div class="num-title"><span class="num">6</span>今週の状況</div>
    <div class="rule"></div>
-   <ul class="week">${body}</ul>`;
+   ${canRead()?`<ul class="week">${body}</ul>`
+              :blurHTML(`<ul class="week">${body}</ul>`,'今週の状況')}`;
  }
 
  /* ===== 5 場面ごとの一覧（ハウスが出せるときだけ） ===== */
@@ -1671,12 +1688,15 @@ function cast(){
    <div class="num-title"><span class="num">5</span>どの場面で力が出るか</div>
    <div class="rule"></div>
    <p style="font-size:13px;color:var(--mist);margin:-4px 0 10px;text-align:center">人生の比重が大きい順に並べています</p>
-   <div class="hlist">${hrows}</div>
-   ${heavy.map(function(h){
-     return `<div class="hs-note"><div class="lb">${h}室・${HOUSE_NAME[h-1]}に${byHouse[h].length}天体</div>`
-       + `<p>${who}の人生は、この場面に時間とエネルギーが吸い寄せられます。`
-       + `他がうまくいかない時期でも、ここに戻れば力が湧きます。</p></div>`;
-   }).join("")}
+   ${(function(){
+     const inner=`<div class="hlist">${hrows}</div>`
+       + heavy.map(function(h){
+           return `<div class="hs-note"><div class="lb">${h}室・${HOUSE_NAME[h-1]}に${byHouse[h].length}天体</div>`
+             + `<p>${who}の人生は、この場面に時間とエネルギーが吸い寄せられます。`
+             + `他がうまくいかない時期でも、ここに戻れば力が湧きます。</p></div>`;
+         }).join("");
+     return canRead()?inner:blurHTML(inner,'力が出る場面');
+   })()}
    ${H.fallback
      ? `<p class="solar-tag">${H.fallback}ため<b>プラシーダス</b>が使えないので、<b>イコールハウス</b>で30度ずつ分割しています。</p>`
      : ``}`;
@@ -1704,7 +1724,7 @@ function cast(){
    <div class="wheel-wrap">${svg}</div>
    <div class="legend">
      <span><b style="color:#c9a24b">●</b> 生まれた時の天体</span>
-     ${H?`<span><b style="color:#e6cd8e">│</b> 太い線＝ASC・MC</span><span>細い点線＝ハウスの区切り</span>`:``}
+     ${(H&&canRead())?`<span><b style="color:#e6cd8e">│</b> 太い線＝ASC・MC</span><span>細い点線＝ハウスの区切り</span>`:``}
    </div>
    ${timeNote}
 
@@ -1722,7 +1742,8 @@ function cast(){
 
    <div class="num-title"><span class="num">4</span>性格のクセ</div>
    <div class="rule"></div>
-   <ul class="asp">${persHtml}</ul>
+   ${canRead()?`<ul class="asp">${persHtml}</ul>`
+              :blurHTML(`<ul class="asp">${persHtml}</ul>`,'性格のクセ')}
 
    ${houseHtml}
 
@@ -1777,6 +1798,15 @@ const FREE_END = new Date(2026, 7, 15, 23, 59, 59); // 2026年8月15日まで無
 const UNLOCK_MARK = '開門';
 function isFreePeriod(){ return new Date() <= FREE_END; }
 function openGate(){ document.getElementById('member-gate').classList.add('on'); }
+// 会員として読めるか
+function canRead(){ return isFreePeriod() || window.__unlocked; }
+// 見出しは見せ、中身だけぼかす
+function blurHTML(inner, label){
+  return '<div class="blurwrap"><div class="blurred">'+inner+'</div>'
+    + '<div class="blurcap"><div class="bm">&#128274;</div>'
+    + '<div class="bt">'+label+'</div>'
+    + '<div class="bb" onclick="openGate()">会員登録・ログインして見る</div></div></div>';
+}
 function closeGate(){
   if(isFreePeriod() || window.__unlocked) document.getElementById('member-gate').classList.remove('on');
 }
@@ -1789,10 +1819,9 @@ function closeGate(){
       banner.style.display='block';
       document.getElementById('gate-msg').innerHTML='会員のご案内<br>（8月15日までは全機能を無料でお使いいただけます）';
     }else{
+      // 入口は開けておき、結果の途中で止める
       banner.style.display='none';
-      document.getElementById('gate-back').style.display='none';
       document.getElementById('gate-msg').innerHTML='ここから先は会員の方の占い処です<br>ご購読またはログインをお願いします';
-      openGate();
     }
     const entry=document.getElementById('codoc-entry-jRBN6Pyw9w');
     if(entry){
