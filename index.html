@@ -146,6 +146,9 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .hrow .hpl{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px 14px;}
   .hrow .hpl span{font-size:13.5px;color:#ece7ff;white-space:nowrap;}
   .hrow .hpl span i{font-style:normal;color:var(--gold-soft);font-size:15px;margin-right:3px;}
+  .hrow .hway{font-size:13.5px;color:#cfc6ec;margin-top:7px;line-height:1.8;
+    padding-left:10px;border-left:2px solid rgba(201,162,75,.6);}
+  .hrow .hway b{color:var(--gold-soft);font-weight:700;}
   .hs-note{border-left:2.5px solid var(--gold);padding:2px 0 2px 12px;margin:14px 0 0;}
   .hs-note .lb{font-size:12px;letter-spacing:.1em;color:var(--gold-soft);}
   .hs-note p{font-size:14.5px;color:#efe9ff;margin-top:2px;}
@@ -984,6 +987,21 @@ const MC_TXT=[
  "人を癒やし、支える立場。福祉・医療・芸術の方面に縁があります。"
 ];
 /* ===== 12ハウス＝人生のどの場面か ===== */
+/* その場面に比重があると、どんな方向に向くか。上位3室にだけ添える。 */
+const HOUSE_WAY=[
+ "自分が前に出る。看板を背負う、独立する、顔が出る。誰かの下で埋もれるより、前に出たほうが伸びます。",
+ "手に職をつける。技術、金銭、ものを扱う仕事。形に残るもの、値の付くものを育てると力が出ます。",
+ "人に伝える。話す、書く、教える、つなぐ。人と情報が行き交う場所にいるほど本領が出ます。",
+ "居場所を守る。家、身内、地元。守るものがあってこそ、外で戦える人です。",
+ "好きなことをする。表現、遊び、恋愛、子ども。面白がれるものの中にいないと力が出ません。",
+ "人を支える。実務、管理、健康。日々の積み重ねが、そのまま信用になります。",
+ "誰かと組む。結婚、共同経営、一対一の関係。ひとりで抱えるより、組んだときに伸びます。",
+ "深く付き合う。受け継ぐもの、人の資産、腹を割った関係。浅い付き合いでは持ち味が出ません。",
+ "外の世界へ出る。学問、海外、専門分野、信じるもの。狭い世界に留まると窒息します。",
+ "社会で認められる。肩書き、実績、責任。世の中で位置を得ることが、人生の張りになります。",
+ "仲間とやる。チーム、同志、これからのこと。同じ方を向く人の中でこそ力が出ます。",
+ "ひとりで積む。裏方、支援、研究、内面。人知れず続けたことが、いつか形になります。"
+];
 const HOUSE_NAME=["自分自身","お金・才能","会話・学び","家庭・住まい","恋愛・楽しみ","日々の仕事・健康",
  "パートナー","深い縁","遠方・専門","立場・天職","仲間・希望","ひとりの時間"];
 /* ===== 今週の状況 =====
@@ -1632,15 +1650,19 @@ function cast(){
      return score(y)-score(x) || byHouse[y].length-byHouse[x].length || x-y;
    });
    const topScore=score(order[0]);
-   const hrows=order.map(function(h){
+   const hrows=order.map(function(h,idx){
      const list=byHouse[h];
      const top=(score(h)>=7 && score(h)===topScore);
      const chips=list.map(function(p){return `<span><i>${p.g}</i>${p.n}</span>`;}).join("");
+     // 比重の大きい上位3室にだけ、向かう方向を添える
+     const way = idx<3
+       ? `<div class="hway"><b>向かう方向</b><br>${HOUSE_WAY[h-1]}</div>` : ``;
      return `<div class="hrow${top?' top':''}">
        <div class="hno">${h}室</div>
        <div class="hbody">
          <div class="hname">${HOUSE_NAME[h-1]}${top?'<span class="star">人生の主戦場</span>':''}</div>
          <div class="hpl">${chips}</div>
+         ${way}
        </div>
      </div>`;
    }).join("");
