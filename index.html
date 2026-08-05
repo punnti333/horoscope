@@ -881,7 +881,7 @@ function inlineAskHTML(tag, needTime, needPlace){
     h+='<div><label>生まれた場所</label>'
       +'<select id="iask-pref-'+tag+'">'+opts+'</select></div>';
   }
-  h+='<button type="button" class="iask-go" onclick="applyInlineAsk(\''+tag+'\')">この内容でもう一度見る</button>';
+  h+='<button type="button" class="iask-go" onclick="applyInlineAsk(\''+tag+'\')">この内容で見る</button>';
   h+='<div class="iask-hint">アセンダントとハウスは、時刻と場所の両方がそろって初めて出せます。</div>';
   h+='</div>';
   return h;
@@ -1777,7 +1777,6 @@ function cast(){
    <div class="rule"></div>
    <div class="askbox">
      <b>${lack}</b>を入れると、ここに<br>10天体それぞれの「力が出る場面」が出ます。
-     ${inlineAskHTML('hou', !timeKnown, !place)}
    </div>`;
  }
 
