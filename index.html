@@ -119,16 +119,24 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 
   .warnbox{margin-top:10px;border:1.5px solid rgba(233,168,180,.55);border-radius:10px;
     background:rgba(233,168,180,.08);padding:10px 12px;font-size:12.5px;color:#f3d9de;line-height:1.7;}
-  .angle-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 2px;}
+  .angle-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0 2px;}
   @media(max-width:520px){.angle-grid{grid-template-columns:1fr;}}
-  .angle{border:1.5px solid var(--line);border-radius:14px;padding:14px 15px;background:rgba(255,255,255,.03);}
-  .angle .cap{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.3em;
-    text-transform:uppercase;color:var(--gold-soft);opacity:.9;}
-  .angle .jp{font-size:13px;color:var(--gold-soft);letter-spacing:.04em;margin-top:3px;}
-  .angle .jp b{color:#fff;font-weight:700;}
-  .angle .val{font-size:19px;font-weight:700;color:#fff;margin:6px 0 6px;letter-spacing:.04em;}
-  .angle .val .deg{font-size:13px;font-weight:500;color:var(--mist);margin-left:5px;}
-  .angle p{font-size:14px;color:#efe9ff;}
+  .angle{border:1.5px solid var(--line);border-radius:14px;padding:18px 18px 17px;
+    background:rgba(255,255,255,.045);}
+  /* 見出しは「何がわかるか」を日本語で先に。英字は添えるだけ */
+  .angle .jp{font-size:16px;font-weight:700;color:#fff;letter-spacing:.06em;line-height:1.5;}
+  .angle .cap{font-family:'Cormorant Garamond',serif;font-size:10.5px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--gold-soft);opacity:.7;margin-top:4px;line-height:1.5;}
+  .angle .cap i{font-style:normal;font-family:'Shippori Mincho',serif;
+    font-size:11.5px;letter-spacing:.06em;margin-left:9px;}
+  /* 星座名と度数は罫線で本文と分ける。度数は小さく丸囲みにして主役を譲る */
+  .angle .val{display:flex;align-items:baseline;flex-wrap:wrap;gap:9px;
+    font-size:22px;font-weight:700;color:#fff;letter-spacing:.04em;
+    margin:14px 0 0;padding-top:13px;border-top:1px solid rgba(201,162,75,.3);}
+  .angle .val .deg{font-size:12px;font-weight:500;color:var(--mist);letter-spacing:.06em;
+    margin-left:0;padding:2px 9px;line-height:1.5;
+    border:1px solid rgba(201,162,75,.38);border-radius:999px;}
+  .angle p{font-size:15px;line-height:1.95;color:#efe9ff;margin-top:11px;}
   .hlist{margin:12px 0 4px;}
   .hrow{display:flex;gap:12px;align-items:flex-start;padding:11px 10px;
     border-bottom:1px solid rgba(255,255,255,.08);}
@@ -1649,14 +1657,14 @@ function cast(){
    ${(function(){
      const g=`<div class="angle-grid">
      <div class="angle">
-       <div class="cap">Ascendant</div>
-       <div class="jp">アセンダント ＝ <b>初対面の印象</b></div>
+       <div class="jp">初対面の印象</div>
+       <div class="cap">Ascendant<i>アセンダント</i></div>
        <div class="val">${SIGNS[ai].g} ${SIGNS[ai].n}<span class="deg">${degStr(H.asc)}</span></div>
        <p>${ASC_TXT[ai]}</p>
      </div>
      <div class="angle">
-       <div class="cap">Midheaven</div>
-       <div class="jp">MC ＝ <b>仕事で見せる顔</b></div>
+       <div class="jp">仕事で見せる顔</div>
+       <div class="cap">Midheaven<i>MC</i></div>
        <div class="val">${SIGNS[mi2].g} ${SIGNS[mi2].n}<span class="deg">${degStr(H.mc)}</span></div>
        <p>${MC_TXT[mi2]}</p>
      </div>
