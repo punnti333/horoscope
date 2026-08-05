@@ -155,6 +155,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   .askbox{border:1.5px dashed var(--line);border-radius:14px;padding:16px 16px;margin:16px 0 2px;
     background:rgba(255,255,255,.03);text-align:center;}
   .askbox b{color:var(--gold-soft);}
+  .ask2{margin:16px 0 26px;}
   /* 中身と覆いを重ねる。grid で同じマスに置くと、
      箱の高さは「高いほう」に合わせて決まり、ボタンが切れない。 */
   .blurwrap{display:grid;border-radius:12px;overflow:hidden;}
@@ -912,7 +913,7 @@ function applyInlineAsk(tag){
   }
   cast();
   setTimeout(function(){
-    const a=document.getElementById('sec-asc');
+    const a=document.getElementById('sec-p2')||document.getElementById('sec-asc');
     if(a) a.scrollIntoView({behavior:'smooth', block:'start'});
   }, 120);
 }
@@ -1670,7 +1671,6 @@ function cast(){
    <div class="rule"></div>
    <div class="askbox">
      <b>${lack}</b>を入れると、ここに<br>アセンダント（初対面の印象）が出ます。
-     ${inlineAskHTML('asc', !timeKnown, !place)}
    </div>`;
  }
 
@@ -1780,6 +1780,12 @@ function cast(){
    </div>`;
  }
 
+ // 2番の頭に置く、その場入力。足りないものがあるときだけ出す
+ const ask2 = lackTop
+   ? `<div class="askbox ask2"><b>${lackTop}</b>を入れると、この先の内容が濃くなります。
+      ${inlineAskHTML('p2', !timeKnown, !place)}</div>`
+   : ``;
+
  const personalTitle = name
    ? `<div class="personal-title"><span class="pt-name">${name}</span>さんのホロスコープ</div>`
    : `<div class="personal-title">あなたのホロスコープ</div>`;
@@ -1802,8 +1808,9 @@ function cast(){
    <div class="rule"></div>
    <div class="garden">${carBars}<p class="verdict">${carVerdict}</p></div>
 
-   <div class="num-title"><span class="num">2</span>あなたの特徴</div>
+   <div class="num-title"><span class="num" id="sec-p2">2</span>あなたの特徴</div>
    <div class="rule"></div>
+   ${ask2}
    ${persPlanets}
 
    ${ascHtml}
