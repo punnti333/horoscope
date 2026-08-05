@@ -1115,7 +1115,11 @@ const TRW_ANG={0:{m:"☌",n:"重なる",c:"#e6cd8e",f:"強く出る"},
                120:{m:"△",n:"支え合う",c:"#7fd1a8",f:"追い風"},
                90:{m:"□",n:"ぶつかる",c:"#d98a9a",f:"注意"},
                180:{m:"☍",n:"引っぱり合う",c:"#d98a9a",f:"注意"}};
-const TRW_ORB=3;   // オーブ3度。金星で約5日、火星で約8日つづく幅
+const TRW_ORB=5;   // オーブ5度。窓の幅は前後で10度ぶん。
+                   // 接近中の側だけを拾うので、実際に効いている期間はその半分。
+                   // 金星でおよそ4日、火星でおよそ6〜10日（火星は速度の幅が大きい）
+const TRW_STEP=6*3600*1000; // 接近・離反の判定に使う先読み時間（6時間）
+const TRW_EXACT=0.2;        // これより正確なら、向きを問わず「効いている最中」とする
 
 /* 部屋の重み。天王星・海王星・冥王星は年単位で同じ場所にいるため、
    同世代の全員が同じ配置になります。個人を表さないので軽く見ます。 */
@@ -1684,23 +1688,33 @@ function cast(){
 
  /* ===== 6 今週の状況 =====
     いま空にいる金星・火星が、生まれた時の5天体に当たっているか。
-    オーブ3度以内、かつ接近中（これから重なりに向かう）ものだけを、近い順に3つまで。 */
+    オーブ5度以内、かつ接近中（これから重なりに向かう）ものだけを、近い順に3つまで。 */
  let weekHtml="";
  {
-   // 接近中か離反中かは見ません。数日で通り過ぎる天体なので、
-   // 窓に入っている＝いま効いている最中、と考えます。
+   // 接近中か離反中かは、6時間後のオーブと比べて判定します。
+   // 差が縮んでいれば接近中。この方法なら逆行中でもそのまま正しく出ます。
    const nowD=new Date();
+   const laterD=new Date(nowD.getTime()+TRW_STEP);
    const hits=[];
    for(const tp of ["ven","mar"]){
      const tNow=eclipticLon(tp, nowD);
+     const tLater=eclipticLon(tp, laterD);
      for(const np of ["sun","moon","mer","ven","mar"]){
        const N=natal.find(x=>x.k===np); if(!N) continue;
-       let diff=Math.abs(tNow-N.lon); if(diff>180) diff=360-diff;
+       // 出生天体との離角（0〜180度）
+       const sepFrom=function(lon){let d=Math.abs(lon-N.lon); if(d>180) d=360-d; return d;};
+       const diff=sepFrom(tNow), diffLater=sepFrom(tLater);
        for(const a of [0,120,90,180]){
          const orbNow=Math.abs(diff-a);
          if(orbNow<=TRW_ORB){
-           const txt=TRW[tp+"_"+np] && TRW[tp+"_"+np][a];
-           if(txt) hits.push({tp,np,a,orb:orbNow,txt,Nname:N.n});
+           const orbLater=Math.abs(diffLater-a);
+           // オーブが縮んでいれば接近中。
+           // ほぼ正確に当たっている瞬間は、6時間で通り過ぎて離反と判定されることが
+           // あるので、そこだけは向きを問わず「効いている最中」として残します。
+           if(orbLater<orbNow || orbNow<=TRW_EXACT){
+             const txt=TRW[tp+"_"+np] && TRW[tp+"_"+np][a];
+             if(txt) hits.push({tp,np,a,orb:orbNow,txt,Nname:N.n});
+           }
            break;
          }
        }
