@@ -171,6 +171,20 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     background:rgba(201,162,75,.14);border:1.5px solid var(--gold);color:var(--gold-soft);
     border-radius:10px;padding:10px 22px;letter-spacing:.06em;font-weight:700;}
   .askbtn:hover{background:rgba(201,162,75,.24);}
+  .iask{margin-top:14px;text-align:left;}
+  .iask .iask-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:9px;}
+  .iask label{font-size:12.5px;letter-spacing:.08em;color:var(--gold-soft);
+    display:block;margin-bottom:5px;}
+  .iask input,.iask select{font-family:inherit;font-size:15px;padding:9px 10px;border-radius:9px;
+    background:rgba(255,255,255,.06);border:1.5px solid var(--line);color:#efe9ff;}
+  .iask input{width:74px;text-align:center;}
+  .iask select{width:100%;}
+  .iask .unit{font-size:13px;color:#efe9ff;opacity:.8;}
+  .iask .iask-go{width:100%;margin-top:4px;font-family:inherit;font-size:15px;cursor:pointer;
+    background:rgba(201,162,75,.18);border:1.5px solid var(--gold);color:var(--gold-soft);
+    border-radius:10px;padding:12px 0;letter-spacing:.06em;font-weight:700;}
+  .iask .iask-go:active{background:rgba(201,162,75,.34);}
+  .iask .iask-hint{font-size:12px;color:#efe9ff;opacity:.7;margin-top:8px;line-height:1.6;}
   .topnudge{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 14px;
     border:1.5px dashed var(--line);border-radius:12px;padding:11px 14px;margin:0 0 16px;
     background:rgba(255,255,255,.03);font-size:13.5px;color:#efe9ff;}
@@ -847,6 +861,61 @@ try{ renderPeople(); }catch(e){}
 
 /* ===== 別の人で占う（入力欄を空にして先頭へ戻る） ===== */
 // 足りない項目の入力欄まで戻って、そこを光らせる
+/* 結果の中に置く、その場入力フォーム。
+   上のフォームまで戻らせないための仕組み。tag で id が重ならないようにする。 */
+function inlineAskHTML(tag, needTime, needPlace){
+  const src=document.getElementById('pref');
+  const opts=src?src.innerHTML:'';
+  const cur=src?src.value:'';
+  const hv=document.getElementById('hhh').value;
+  const mv=document.getElementById('mii').value;
+  let h='<div class="iask">';
+  if(needTime){
+    h+='<div><label>生まれた時刻</label><div class="iask-row">'
+      +'<input id="iask-h-'+tag+'" type="number" inputmode="numeric" min="0" max="23" placeholder="12" value="'+hv+'">'
+      +'<span class="unit">時</span>'
+      +'<input id="iask-mi-'+tag+'" type="number" inputmode="numeric" min="0" max="59" placeholder="0" value="'+mv+'">'
+      +'<span class="unit">分</span></div></div>';
+  }
+  if(needPlace){
+    h+='<div><label>生まれた場所</label>'
+      +'<select id="iask-pref-'+tag+'">'+opts+'</select></div>';
+  }
+  h+='<button type="button" class="iask-go" onclick="applyInlineAsk(\''+tag+'\')">この内容でもう一度見る</button>';
+  h+='<div class="iask-hint">アセンダントとハウスは、時刻と場所の両方がそろって初めて出せます。</div>';
+  h+='</div>';
+  return h;
+}
+function applyInlineAsk(tag){
+  const hIn=document.getElementById('iask-h-'+tag);
+  const miIn=document.getElementById('iask-mi-'+tag);
+  const pIn=document.getElementById('iask-pref-'+tag);
+  if(hIn){
+    const v=hIn.value;
+    if(v!==''){
+      const hh=+v; if(!(hh>=0&&hh<=23)){alert("時は0〜23で入れてください");return;}
+      const mm=(miIn&&miIn.value!=='')?+miIn.value:0;
+      if(!(mm>=0&&mm<=59)){alert("分は0〜59で入れてください");return;}
+      document.getElementById('hhh').value=hh;
+      document.getElementById('mii').value=mm;
+      const unk=document.getElementById('unknown-time');
+      if(unk&&unk.checked){ unk.checked=false; unk.dispatchEvent(new Event('change')); }
+    }
+  }
+  if(pIn&&pIn.value!==''){
+    const sel=document.getElementById('pref');
+    sel.value=pIn.value; sel.dispatchEvent(new Event('change'));
+    if(pIn.value==='manual'){
+      // 緯度経度は上のフォームでしか入れられないので、そこへ案内する
+      focusMissing(); return;
+    }
+  }
+  cast();
+  setTimeout(function(){
+    const a=document.getElementById('sec-asc');
+    if(a) a.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 120);
+}
 function focusMissing(){
   const unk=document.getElementById('unknown-time').checked;
   const target = unk ? document.getElementById('unknown-time').closest('.field')
@@ -1558,7 +1627,7 @@ function cast(){
  const topNudge = lackTop
    ? `<div class="topnudge"><span><b>${lackTop}</b>を足すと、アセンダント（初対面の印象）と
       ハウス（力が出る場面）も出ます。</span>
-      <button onclick="focusMissing()">入力する</button></div>`
+      <button onclick="focusMissing()">上の入力欄へ</button></div>`
    : ``;
 
  const timeNote=`<div style="text-align:center;font-size:12px;color:var(--mist);margin-top:6px;opacity:.85">`
@@ -1573,7 +1642,7 @@ function cast(){
  if(H){
    const ai=signIdx(H.asc), mi2=signIdx(H.mc);
    ascHtml=`
-   <div class="num-title"><span class="num">3</span>外から見えるあなた</div>
+   <div class="num-title"><span class="num" id="sec-asc">3</span>外から見えるあなた</div>
    <div class="rule"></div>
    <p style="font-size:13px;color:var(--mist);margin:-4px 0 12px;text-align:center">初対面の印象と、仕事で見せる顔</p>
    ${(function(){
@@ -1597,11 +1666,11 @@ function cast(){
    const lack = !timeKnown && !place ? "出生時刻と生まれた場所"
               : !timeKnown ? "出生時刻" : "生まれた場所";
    ascHtml=`
-   <div class="num-title"><span class="num">3</span>外から見えるあなた</div>
+   <div class="num-title"><span class="num" id="sec-asc">3</span>外から見えるあなた</div>
    <div class="rule"></div>
    <div class="askbox">
      <b>${lack}</b>を入れると、ここに<br>アセンダント（初対面の印象）が出ます。
-     <div><button class="askbtn" onclick="focusMissing()">入力する</button></div>
+     ${inlineAskHTML('asc', !timeKnown, !place)}
    </div>`;
  }
 
@@ -1708,7 +1777,7 @@ function cast(){
    <div class="rule"></div>
    <div class="askbox">
      <b>${lack}</b>を入れると、ここに<br>10天体それぞれの「力が出る場面」が出ます。
-     <div><button class="askbtn" onclick="focusMissing()">入力する</button></div>
+     ${inlineAskHTML('hou', !timeKnown, !place)}
    </div>`;
  }
 
