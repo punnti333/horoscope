@@ -704,9 +704,10 @@ for(let i=0;i<60;i++){const s=document.createElement('i');s.style.left=Math.rand
    dEl.max=last;
    if(+dEl.value>last) dEl.value=last;
  }
- // 三命クロス法から渡された生年月日があれば受け取る（例: ?y=1990&m=5&d=15&name=かぴ）
+ // 鑑定シート・三命クロス法から渡された生年月日があれば受け取る（例: ?y=1990&m=5&d=15&n=かぴ）
+ // 名前は鑑定シートが n、旧仕様が name で送るため、両方を受け付ける。
  const q=new URLSearchParams(location.search);
- const qy=q.get('y'), qm=q.get('m'), qd=q.get('d'), qn=q.get('name');
+ const qy=q.get('y'), qm=q.get('m'), qd=q.get('d'), qn=q.get('n')||q.get('name');
  const qh=q.get('h'), qmi=q.get('mi');
  let handed=false;
  if(qy&&qm&&qd){
