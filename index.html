@@ -1117,6 +1117,42 @@ const TRW_ANG={0:{m:"☌",n:"重なる",c:"#e6cd8e",f:"強く出る"},
                90:{m:"□",n:"ぶつかる",c:"#d98a9a",f:"注意"},
                180:{m:"☍",n:"引っぱり合う",c:"#d98a9a",f:"注意"}};
 const TRW_ORB=5;   // オーブ5度。窓の幅は前後で10度ぶん。
+
+/* ===== 7 今日の状況 で使う文章 =====
+   運行中の月を見ます。月は1日13度動くので、当たる相手が毎日入れ替わります。
+   場面＝太陽星座を1室とするソーラーサインで、今日の月がどの室にいるか。
+   色　＝今日の月が、生まれた時の6天体に当たっているか。 */
+const TDY_HOUSE=[
+ "自分がどう見えるかに気が向く。髪や服を整えると、そのまま調子が上がる日。",
+ "手元にあるものが気になる。買い足す前に、持っている中から使えるものを探して。",
+ "話し相手がほしくなる。近所の用事やきょうだいへの連絡は、今日のうちが動きやすい。",
+ "家に帰りたくなる。外の予定より、部屋の片付けや家族との時間を選んだほうが休まる。",
+ "好きなものに素直になれる。楽しみを我慢すると、その分だけ気持ちが荒れる。",
+ "やり残しが目につく。まとめて片付けたくなるが、体は正直なので詰め込みすぎないこと。",
+ "相手の反応が気になる。ひとりで結論を出さず、相手の言い分を先に聞いて。",
+ "自分の裁量では決まらない。お金や取り決めは、相手の意向が出るまで動かないほうがいい。",
+ "いつもの場所が窮屈になる。行き先を変えるか、知らないことに触れると気が晴れる。",
+ "人の目に入る。手を抜いたところほど見られるので、外向きの用事から先に。",
+ "ひとりだと空回りする。人の輪に入ると、抱えていたことが軽くなる。",
+ "人と会うと消耗する。予定を減らして、眠気や疲れは我慢せず受け取って。"];
+const TDY_HOUSE_N=["自分のこと","お金・持ち物","身近な人・連絡","家族・家のこと",
+ "恋愛・楽しみ","段取り・体調","パートナー・相手","深い関わり","遠出・学び",
+ "仕事・立場","仲間・友だち","ひとりの時間"];
+const TDY={
+ "sun":{0:"気持ちと行動がそろう。やりたいことに素直に動いていい。",120:"自分らしくいられる。人前に出る用事があるなら、今日に寄せて。",90:"やりたいことと気分がずれる。無理に決めず、明日に回して。",180:"人に合わせて疲れる。相手の顔色より、自分の予定を優先して。"},
+ "moon":{0:"生まれた時の心に戻る。ひとりの時間を取ると、考えがまとまる。",120:"気持ちが安定する。会いたい人に会っておくと、あとで効いてくる。",90:"気分の波が出る。決めごとは避けて、今日は流しておく。",180:"感情が振れる。言いたいことは、一晩おいてから伝えて。"},
+ "mer":{0:"言葉が出やすい。伝えそびれていたことを話すなら今日。",120:"話がまとまる。相談ごとや打ち合わせを入れると進む。",90:"考えすぎて空回りする。細かい判断は明日に。",180:"言い方がきつくなる。送る前に読み返して。"},
+ "ven":{0:"人当たりが柔らかくなる。頼みごとが通りやすい。",120:"好きなものに触れると整う。楽しみを後回しにしないこと。",90:"甘いものと衝動買いに気が向く。財布は持ち歩かないほうが安全。",180:"人によく思われたくなる。断れずに引き受けると、あとで潰れる。"},
+ "mar":{0:"勢いが出る。動き出すのはいいが、口調が強くなりやすい。",120:"気持ちと体が噛み合う。溜まっていた用事をまとめて片付けて。",90:"些細なことでいらつく。寝不足だと悪化するので、まず寝る。",180:"身内とぶつかりやすい。家の中でこそ、一段声を落として。"},
+ "sat":{0:"気持ちが重くなる。無理に上げようとせず、静かに過ごしていい。",120:"地道なことが進む。面倒で放っていた作業に手をつけて。",90:"自分を責めたくなる。今日の落ち込みは星のせい。判断材料にしないこと。",180:"孤立感が出る。人が離れたわけではないので、ひとりで結論を出さないで。"}
+};
+const TDY_QUIET=[
+ {t:"決めるのに向く日",p:"外からの声が入らない。迷っていたことを、今日のうちに自分で決めてしまって。"},
+ {t:"進めるのに向く日",p:"急な割り込みが起きにくい。やりかけで止まっている作業を、最後まで片付けて。"},
+ {t:"休むのに向く日",p:"気を張る相手がいない。予定を入れずに、体を休めるほうが後で効いてくる。"},
+ {t:"整えるのに向く日",p:"波風が立たない。散らかった場所や後回しの用事を、静かに片付けるのに向いている。"}];
+const TDY_ORB=6;              // 月は速いので6度。窓の幅12度＝およそ22時間ぶん
+const TDY_BAND={both:"終日",am:"午前のうちは",pm:"午後から"};
                    // 接近中の側だけを拾うので、実際に効いている期間はその半分。
                    // 金星でおよそ4日、火星でおよそ6〜10日（火星は速度の幅が大きい）
 const TRW_STEP=6*3600*1000; // 接近・離反の判定に使う先読み時間（6時間）
@@ -1740,6 +1776,67 @@ function cast(){
               :blurHTML(`<ul class="week">${body}</ul>`,'今週の状況')}`;
  }
 
+ /* ===== 7 今日の状況 =====
+    今日の月がどこにいて、生まれた時の天体に当たっているか。
+    午前（0〜12時）は6時、午後（12〜24時）は18時の空で判定します。
+    日付が変われば内容も変わりますが、同じ日のうちは何時に開いても同じです。 */
+ let dayHtml="";
+ {
+   // 日本時間での「今日」を取り出す
+   const nw=new Date();
+   const jst=new Date(nw.getTime()+(nw.getTimezoneOffset()+540)*60000);
+   const ty=jst.getFullYear(), tm=jst.getMonth()+1, td=jst.getDate();
+   const at=function(h){ return new Date(Date.UTC(ty,tm-1,td,h-9)); };
+   const amD=at(6), pmD=at(18), noonD=at(12);
+   // 場面＝太陽星座を1室として、今日の月が何室にいるか（正午で判定）
+   const nSun=natal.find(x=>x.k==="sun");
+   const hIdx=((signIdx(eclipticLon("moon",noonD))-signIdx(nSun.lon))%12+12)%12;
+   // 色＝今日の月と、生まれた時の6天体の角度
+   const sepOf=function(lon,nlon){let d=Math.abs(lon-nlon); if(d>180) d=360-d; return d;};
+   const scan=function(when){
+     const mLon=eclipticLon("moon",when);
+     const out={};
+     for(const np of ["sun","moon","mer","ven","mar","sat"]){
+       const N=natal.find(x=>x.k===np); if(!N) continue;
+       const diff=sepOf(mLon,N.lon);
+       for(const a of [0,120,90,180]){
+         if(Math.abs(diff-a)<=TDY_ORB){ out[np+"_"+a]={np:np,a:a,orb:Math.abs(diff-a),Nname:N.n}; break; }
+       }
+     }
+     return out;
+   };
+   const amH=scan(amD), pmH=scan(pmD);
+   const keys={};
+   Object.keys(amH).forEach(function(k){keys[k]=1;});
+   Object.keys(pmH).forEach(function(k){keys[k]=1;});
+   const hits=Object.keys(keys).map(function(k){
+     const h=amH[k]||pmH[k];
+     const band=(amH[k]&&pmH[k])?"both":(amH[k]?"am":"pm");
+     return {...h, band:band, orb:Math.min(amH[k]?amH[k].orb:99, pmH[k]?pmH[k].orb:99)};
+   }).sort(function(x,y){return x.orb-y.orb;}).slice(0,3);
+   const colorBody = hits.length
+     ? hits.map(function(h){
+         const A=TRW_ANG[h.a];
+         const txt=(TDY[h.np]&&TDY[h.np][h.a])||"";
+         return `<li>
+           <div class="ttl">${escHTML(h.Nname)}<span class="sym" style="color:${A.c}">${A.m}</span>月`
+           + `<span class="flag" style="background:${A.c}">${TDY_BAND[h.band]}</span></div>
+           <p>${txt}</p></li>`;
+       }).join("")
+     : (function(){
+         const q=TDY_QUIET[Math.floor(Date.UTC(ty,tm-1,td)/86400000)%TDY_QUIET.length];
+         return `<li class="quiet"><div class="ttl">${q.t}</div><p>${q.p}</p></li>`;
+       })();
+   const inner=`<ul class="week">
+     <li><div class="ttl">今日の場面<span class="flag" style="background:#e6cd8e">${TDY_HOUSE_N[hIdx]}</span></div>
+     <p>${TDY_HOUSE[hIdx]}</p></li>
+     ${colorBody}</ul>`;
+   dayHtml=`
+   <div class="num-title"><span class="num">7</span>今日の星占い</div>
+   <div class="rule"></div>
+   ${canRead()?inner:blurHTML(inner,'今日の星占い')}`;
+ }
+
  /* ===== 5 場面ごとの一覧（ハウスが出せるときだけ） ===== */
  let houseHtml="";
  if(H){
@@ -1846,6 +1943,8 @@ function cast(){
    ${houseHtml}
 
    ${weekHtml}
+
+   ${dayHtml}
 
    <div class="share-row"><button type="button" class="share-btn" onclick="resetForm()">別の人で占う</button></div>
 
