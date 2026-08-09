@@ -708,12 +708,23 @@ for(let i=0;i<60;i++){const s=document.createElement('i');s.style.left=Math.rand
  // 名前は鑑定シートが n、旧仕様が name で送るため、両方を受け付ける。
  const q=new URLSearchParams(location.search);
  const qy=q.get('y'), qm=q.get('m'), qd=q.get('d'), qn=q.get('n')||q.get('name');
+ // URLで渡されていないときは、他のアプリで保存された控えを使う
+ let sv=null;
+ if(!(qy&&qm&&qd)){
+   try{
+     const p=JSON.parse(localStorage.getItem('sanmei_profile')||'null');
+     if(p&&p.y&&p.m&&p.d) sv=p;
+   }catch(e){}
+ }
  const qh=q.get('h'), qmi=q.get('mi');
  let handed=false;
  if(qy&&qm&&qd){
    yEl.value=qy; mEl.value=qm; dEl.value=qd; handed=true;
+ }else if(sv){
+   yEl.value=sv.y; mEl.value=sv.m; dEl.value=sv.d;
  }
  if(qn&&nEl) nEl.value=qn;
+ else if(sv&&sv.name&&nEl) nEl.value=sv.name;
  // 出生時間「わからない」チェックの連動
  const hEl=document.getElementById('hhh'), miEl=document.getElementById('mii');
  const unkEl=document.getElementById('unknown-time');
@@ -1429,6 +1440,18 @@ function cast(){
  const m=+document.getElementById('mmm').value;
  const dd=+document.getElementById('ddd').value;
  if(!y||!m||!dd){alert("生年月日を入力してください");return;}
+
+ /* 三命クロス法・八字鑑定シートと共有する控え（同じ punnti333.github.io なので読み合えます）。
+    名前は生年月日とセットで持ちます。日付を変えたら名前も一緒に上書きされるので、
+    前に見た人の名前が別人の結果に残ることはありません。 */
+ try{
+   const prev=JSON.parse(localStorage.getItem('sanmei_profile')||'null');
+   const obj={y:y,m:m,d:dd};
+   if(name) obj.name=name;
+   // 同じ生年月日のときだけ、前に入れた性別を引き継ぐ
+   if(prev&&+prev.y===y&&+prev.m===m&&+prev.d===dd&&typeof prev.male!=='undefined') obj.male=prev.male;
+   localStorage.setItem('sanmei_profile',JSON.stringify(obj));
+ }catch(e){}
 
  // 出生時刻（日本時間）。「わからない」または未入力なら12時00分として扱う
  const hEl2=document.getElementById('hhh'), miEl2=document.getElementById('mii');
