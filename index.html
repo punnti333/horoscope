@@ -811,7 +811,7 @@ function svCommit(){
   const hv=document.getElementById('hhh').value, mv=document.getElementById('mii').value;
   const plv=document.getElementById('pref').value;
   const trec={};
-  if(!unk&&hv!==''){ trec.h=+hv; trec.mi=(mv===''?0:+mv); }
+  if(!unk&&hv!==''){ trec.h=+hv; trec.mi=(mv===''?0:+mv); rec.h=+hv; rec.mi=(mv===''?0:+mv); }
   if(plv){
     trec.pl=plv;
     if(plv==='manual'){
@@ -845,6 +845,8 @@ function usePerson(i){
   document.getElementById('ddd').value=p.d;
   const nEl=document.getElementById('name'); if(nEl)nEl.value=p.name;
   const t=loadTimes()[p.name]||{};
+  // horo_times に無くても、名簿（三命クロス法と共有）が時刻を持っていれば使う
+  if(typeof t.h!=='number' && typeof p.h==='number'){ t.h=p.h; t.mi=p.mi||0; }
   const unk=document.getElementById('unknown-time');
   const hEl=document.getElementById('hhh'), miEl=document.getElementById('mii');
   if(typeof t.h==='number'){
@@ -1453,17 +1455,6 @@ function cast(){
  const dd=+document.getElementById('ddd').value;
  if(!y||!m||!dd){alert("生年月日を入力してください");return;}
 
- /* 三命クロス法・八字鑑定シートと共有する控え（同じ punnti333.github.io なので読み合えます）。
-    名前は生年月日とセットで持ちます。日付を変えたら名前も一緒に上書きされるので、
-    前に見た人の名前が別人の結果に残ることはありません。 */
- try{
-   const prev=JSON.parse(localStorage.getItem('sanmei_profile')||'null');
-   const obj={y:y,m:m,d:dd};
-   if(name) obj.name=name;
-   // 同じ生年月日のときだけ、前に入れた性別を引き継ぐ
-   if(prev&&+prev.y===y&&+prev.m===m&&+prev.d===dd&&typeof prev.male!=='undefined') obj.male=prev.male;
-   localStorage.setItem('sanmei_profile',JSON.stringify(obj));
- }catch(e){}
 
  // 出生時刻（日本時間）。「わからない」または未入力なら12時00分として扱う
  const hEl2=document.getElementById('hhh'), miEl2=document.getElementById('mii');
@@ -1475,6 +1466,19 @@ function cast(){
    if(!(bh>=0&&bh<=23)){alert("時は0〜23で入れてください");return;}
    if(!(bmi>=0&&bmi<=59)){alert("分は0〜59で入れてください");return;}
  }
+
+ /* 三命クロス法・八字鑑定シートと共有する控え（同じ punnti333.github.io なので読み合えます）。
+    名前は生年月日とセットで持ちます。日付を変えたら名前も一緒に上書きされるので、
+    前に見た人の名前が別人の結果に残ることはありません。 */
+ try{
+   const prev=JSON.parse(localStorage.getItem('sanmei_profile')||'null');
+   const obj={y:y,m:m,d:dd};
+   if(name) obj.name=name;
+   if(timeKnown){ obj.h=bh; obj.mi=bmi; }   // 時刻も控える（三命クロス法が読みます）
+   // 同じ生年月日のときだけ、前に入れた性別を引き継ぐ
+   if(prev&&+prev.y===y&&+prev.m===m&&+prev.d===dd&&typeof prev.male!=='undefined') obj.male=prev.male;
+   localStorage.setItem('sanmei_profile',JSON.stringify(obj));
+ }catch(e){}
  // 出生地。日本は一律 UTC+9、海外は入力された時差を使います
  const place=getPlace();
  const tz=place?place.tz:9;
@@ -1870,6 +1874,7 @@ function cast(){
      ${colorBody}</ul>`;
    dayHtml=`
    <div class="num-title"><span class="num" id="sec-today">7</span>今日の星占い</div>
+   <p style="font-size:14.5px;color:var(--gold-soft);margin:2px 0 16px;text-align:center;letter-spacing:.04em">運行の月から、今日の気持ちを見ます</p>
    <div class="rule"></div>
    ${canRead()?inner:blurHTML(inner,'今日の星占い')}
    <div class="share-row"><a class="cta-btn" href="${SANMEI_DAILY}" target="_blank" rel="noopener">今日の運勢も見る（三命クロス法へ）</a></div>`;
