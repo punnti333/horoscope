@@ -725,6 +725,18 @@ for(let i=0;i<60;i++){const s=document.createElement('i');s.style.left=Math.rand
  }
  if(qn&&nEl) nEl.value=qn;
  else if(sv&&sv.name&&nEl) nEl.value=sv.name;
+ /* 三命クロス法から「今日の星占いへ」で来たときは、そのまま鑑定して7番まで運ぶ */
+ if(q.get('go')==='today' && yEl.value && mEl.value && dEl.value){
+   setTimeout(function(){
+     try{
+       cast();
+       setTimeout(function(){
+         const t=document.getElementById('sec-today');
+         if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+       },400);
+     }catch(e){}
+   },100);
+ }
  // 出生時間「わからない」チェックの連動
  const hEl=document.getElementById('hhh'), miEl=document.getElementById('mii');
  const unkEl=document.getElementById('unknown-time');
@@ -1805,6 +1817,8 @@ function cast(){
     日付が変われば内容も変わりますが、同じ日のうちは何時に開いても同じです。 */
  let dayHtml="";
  {
+   // 三日占断（三命クロス法）へ渡すリンク。go=daily で向こうが三日占断を開きます。
+   const SANMEI_DAILY='https://punnti333.github.io/sanmei-cross/?go=daily&y='+y+'&m='+m+'&d='+dd;
    // 日本時間での「今日」を取り出す
    const nw=new Date();
    const jst=new Date(nw.getTime()+(nw.getTimezoneOffset()+540)*60000);
@@ -1855,9 +1869,10 @@ function cast(){
      <p>${TDY_HOUSE[hIdx]}</p></li>
      ${colorBody}</ul>`;
    dayHtml=`
-   <div class="num-title"><span class="num">7</span>今日の星占い</div>
+   <div class="num-title"><span class="num" id="sec-today">7</span>今日の星占い</div>
    <div class="rule"></div>
-   ${canRead()?inner:blurHTML(inner,'今日の星占い')}`;
+   ${canRead()?inner:blurHTML(inner,'今日の星占い')}
+   <div class="share-row"><a class="cta-btn" href="${SANMEI_DAILY}" target="_blank" rel="noopener">今日の運勢も見る（三命クロス法へ）</a></div>`;
  }
 
  /* ===== 5 場面ごとの一覧（ハウスが出せるときだけ） ===== */
