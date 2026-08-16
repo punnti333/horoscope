@@ -3,6 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script>
+var APP_VERSION = '202608161558';
+</script>
+<script>
+(function(){
+  try{
+    if(location.protocol==='file:') return;
+    if(sessionStorage.getItem('checked_version')) return;
+    sessionStorage.setItem('checked_version','1');
+    fetch(location.pathname + '?_=' + Date.now(), {cache:'no-store'})
+      .then(function(r){ return r.text(); })
+      .then(function(txt){
+        var m = txt.match(/APP_VERSION\s*=\s*'([^']+)'/);
+        if(!m) return;
+        if(m[1] !== APP_VERSION){
+          location.reload(true);
+        }
+      })
+      .catch(function(){});
+  }catch(e){}
+})();
+</script>
 <title>かぴの西洋占星術 — 本質を読む</title>
 <script type="text/javascript">
 (function(c,l,a,r,i,t,y){
@@ -1757,7 +1782,7 @@ function cast(){
        <p>${MC_TXT[mi2]}</p>
      </div>
    </div>`;
-     return canRead()?g:blurHTML(g,'アセンダントとMC');
+     return canRead()?g:blurHTML('アセンダントとMC');
    })()}`;
  } else {
    const lack = !timeKnown && !place ? "出生時刻と生まれた場所"
@@ -1820,7 +1845,7 @@ function cast(){
    <div class="num-title"><span class="num">6</span>今週の状況</div>
    <div class="rule"></div>
    ${canRead()?`<ul class="week">${body}</ul>`
-              :blurHTML(`<ul class="week">${body}</ul>`,'今週の状況')}`;
+              :blurHTML('今週の状況')}`;
  }
 
  /* ===== 7 今日の状況 =====
@@ -1884,7 +1909,7 @@ function cast(){
    <div class="num-title"><span class="num" id="sec-today">7</span>今日の星占い</div>
    <p style="font-size:14.5px;color:var(--gold-soft);margin:2px 0 16px;text-align:center;letter-spacing:.04em">運行の月から、今日の気持ちを見ます</p>
    <div class="rule"></div>
-   ${canRead()?inner:blurHTML(inner,'今日の星占い')}
+   ${canRead()?inner:blurHTML('今日の星占い')}
    <div class="share-row"><a class="cta-btn2" href="${SANMEI_DAILY}" target="_blank" rel="noopener">今日の運勢も見る（三命クロス法へ）</a></div>`;
  }
 
@@ -1935,7 +1960,7 @@ function cast(){
              + `<p>${who}の人生は、この場面に時間とエネルギーが吸い寄せられます。`
              + `他がうまくいかない時期でも、ここに戻れば力が湧きます。</p></div>`;
          }).join("");
-     return canRead()?inner:blurHTML(inner,'力が出る場面');
+     return canRead()?inner:blurHTML('力が出る場面');
    })()}
    ${H.fallback
      ? `<p class="solar-tag">${H.fallback}ため<b>プラシーダス</b>が使えないので、<b>イコールハウス</b>で30度ずつ分割しています。</p>`
@@ -1989,7 +2014,7 @@ function cast(){
    <div class="num-title"><span class="num">4</span>性格のクセ</div>
    <div class="rule"></div>
    ${canRead()?`<ul class="asp">${persHtml}</ul>`
-              :blurHTML(`<ul class="asp">${persHtml}</ul>`,'性格のクセ')}
+              :blurHTML('性格のクセ')}
 
    ${houseHtml}
 
@@ -2051,19 +2076,28 @@ function openGate(){ document.getElementById('member-gate').classList.add('on');
    codocに所有者としてログインしていると購読できないため、その回避です。 */
 (function(){
   try{
-    const OWNER_KEY='ナラちゃん';
+    const OWNER_KEY='nara';
+    // 以前の合言葉も通す。すでに記録を持っている端末は、入り直さずにそのまま使える。
+    const OWNER_KEYS=['nara','ナラちゃん'];
     const q=new URLSearchParams(location.search);
-    if(q.get('key')===OWNER_KEY) localStorage.setItem('owner_pass',OWNER_KEY);
+    if(OWNER_KEYS.includes(q.get('key'))) localStorage.setItem('owner_pass',OWNER_KEY);
+    const saved=localStorage.getItem('owner_pass');
+    if(OWNER_KEYS.includes(saved) && saved!==OWNER_KEY) localStorage.setItem('owner_pass',OWNER_KEY);  // 静かに書き換える
   }catch(e){}
 })();
-function isOwner(){ try{ return localStorage.getItem('owner_pass')==='ナラちゃん'; }catch(e){ return false; } }
+function isOwner(){ try{ return ['nara','ナラちゃん'].includes(localStorage.getItem('owner_pass')); }catch(e){ return false; } }
 function canRead(){ return isFreePeriod() || window.__unlocked || isOwner(); }
 // 見出しは見せ、中身だけぼかす
-function blurHTML(inner, label){
-  return '<div class="blurwrap"><div class="blurred">'+inner+'</div>'
-    + '<div class="blurcap"><div class="bm">&#128274;</div>'
-    + '<div class="bt">'+label+'</div>'
-    + '<div class="bb" onclick="openGate()">会員登録・ログインして見る</div></div></div>';
+// ※以前はここに実際の鑑定文（inner）を渡し、CSSでぼかすだけだったため、
+//   ページのソースを見れば答えがそのまま読めてしまっていた（要修正点）。
+//   いまは中身を受け取らず、鍵アイコンと案内文だけを表示する。
+//   実際の鑑定文は、canRead() が真のときだけ呼び出し側で組み立てること。
+function blurHTML(label){
+  return '<div class="lockbox">'
+    + '<div class="lock-mark">&#128274;</div>'
+    + '<div class="lock-ttl">'+label+'</div>'
+    + '<div class="lock-btn" onclick="openGate()">会員登録・ログインして見る</div>'
+    + '</div>';
 }
 function closeGate(){
   if(isFreePeriod() || window.__unlocked) document.getElementById('member-gate').classList.remove('on');
