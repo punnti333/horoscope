@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script>
-var APP_VERSION = '202608161558';
+var APP_VERSION = '202610081000';
 </script>
 <script>
 (function(){
@@ -2083,20 +2083,31 @@ function openGate(){
   if(typeof window.__codocCheck==='function') window.__codocCheck();
 }
 // 会員として読めるか
-/* 作者用の合言葉。?key=ナラちゃん を一度つけて開くと、この端末が覚えます。
-   codocに所有者としてログインしていると購読できないため、その回避です。 */
+/* 作者用の合言葉（2026-10-08 変更：三命クロス法・八字鑑定シートと同じ合言葉・同じ仕組み）。
+   ・合言葉そのものはファイルに書かず、SHA-256 のハッシュだけを置く。
+   ・?key=合言葉 を一度つけて開くと、この端末が覚える。旧合言葉は無効。
+   ・合言葉を読み取ったら、アドレス欄から ?key=… を消して開き直す。
+   ・同じ punnti333.github.io の上にあるので、どのアプリで一度入れても共通で効く。 */
+const OWNER_HASH='68ae097a7f525fb662ade852b98e48dbc3aa330ad17b8a8f3226f10b1809f3de';
 (function(){
   try{
-    const OWNER_KEY='nara';
-    // 以前の合言葉も通す。すでに記録を持っている端末は、入り直さずにそのまま使える。
-    const OWNER_KEYS=['nara','ナラちゃん'];
-    const q=new URLSearchParams(location.search);
-    if(OWNER_KEYS.includes(q.get('key'))) localStorage.setItem('owner_pass',OWNER_KEY);
     const saved=localStorage.getItem('owner_pass');
-    if(OWNER_KEYS.includes(saved) && saved!==OWNER_KEY) localStorage.setItem('owner_pass',OWNER_KEY);  // 静かに書き換える
+    if(saved && saved!==OWNER_HASH) localStorage.removeItem('owner_pass');
+    const q=new URLSearchParams(location.search);
+    if(!q.has('key')) return;
+    const k=(q.get('key')||'').trim();
+    q.delete('key');
+    const clean=location.pathname+(q.toString()?'?'+q.toString():'')+location.hash;
+    const done=()=>location.replace(clean);
+    if(!(window.crypto&&crypto.subtle)){ done(); return; }
+    crypto.subtle.digest('SHA-256',new TextEncoder().encode(k)).then(buf=>{
+      const hex=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      if(hex===OWNER_HASH) localStorage.setItem('owner_pass',OWNER_HASH);
+      done();
+    }).catch(done);
   }catch(e){}
 })();
-function isOwner(){ try{ return ['nara','ナラちゃん'].includes(localStorage.getItem('owner_pass')); }catch(e){ return false; } }
+function isOwner(){ try{ return localStorage.getItem('owner_pass')===OWNER_HASH; }catch(e){ return false; } }
 function canRead(){ return isFreePeriod() || window.__unlocked || isOwner(); }
 // 見出しは見せ、中身だけぼかす
 // ※以前はここに実際の鑑定文（inner）を渡し、CSSでぼかすだけだったため、
@@ -2140,13 +2151,18 @@ function closeGate(){
     //   ・一定時間、繰り返し確かめる（codocの描画が遅れた場合の保険）
     const entry=document.getElementById('codoc-entry-jRBN6Pyw9w');
     if(entry){
+      // 2026-10-08：三命クロス法と同じ修正を移植。codocは #codoc-entry-… の要素そのものを
+      // 別idの新しい要素に丸ごと置き換えるため、idではなく外側の .codoc-wrap ごと見る。
+      const scanRoot = entry.closest('.codoc-wrap') || entry.parentElement || entry;
       const check=function(){
         if(window.__unlocked) return true;
-        const txt=(entry.textContent||'')+(entry.innerText||'');
+        const txt=(scanRoot.textContent||'')+(scanRoot.innerText||'');
         if(txt.indexOf(UNLOCK_MARK)>=0){
           window.__unlocked=true;
           document.getElementById('member-gate').classList.remove('on');
           const b=document.getElementById('free-banner'); if(b) b.style.display='none';
+          // すでに結果を出していれば、鍵なしの内容で出し直す
+          try{ const r=document.getElementById('result'); if(r && r.style.display==='block' && typeof cast==='function') cast(); }catch(e){}
           return true;
         }
         return false;
@@ -2155,7 +2171,7 @@ function closeGate(){
 
       if(!check()){
         const mo=new MutationObserver(function(){ if(check()) mo.disconnect(); });
-        mo.observe(entry,{childList:true,subtree:true,characterData:true});
+        mo.observe(scanRoot,{childList:true,subtree:true,characterData:true});
 
         // 保険：60秒間、0.5秒おきに確かめる
         let n=0;
